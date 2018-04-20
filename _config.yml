@@ -21,7 +21,7 @@ plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-t
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
 title:		           'Jens Laufer'
-description:	       'writes about Sofware Development, Data Science, Entrepreneurship, Traveling, Sports'
+description:	       'writes about Sofware Development, Data Science, Entrepreneurship, Traveling and Sports'
 author:              'Jens Laufer'
 
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
