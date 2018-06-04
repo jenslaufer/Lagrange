@@ -2,9 +2,7 @@
 layout: post
 title: Mongo DB Aggregation vs R dplyr
 categories:
-  - airbnb
-  - market analysis
-  - competition
+  - data analysis
 show_comments: true
 tags: R, dplyr, MongoDB, data analysis
 ---
