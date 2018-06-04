@@ -30,4 +30,4 @@ Today I am fascinated about live long learning, entrepreneurship, sofware develo
 
 Oh, I forgot traveling: I love traveling the world, especially southern africa.
 
-I live with my partner and our 2 kids in Karlstein a. Main, which is between Aschaffenburg and Hanau in the Rhine-Main-Area.
+I live with my partner and our two kids in Karlstein a. Main, which is between Aschaffenburg and Hanau in the Rhine-Main-Area.

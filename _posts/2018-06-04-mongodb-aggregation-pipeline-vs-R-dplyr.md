@@ -23,7 +23,7 @@ There are  powerful options to do the processing you want:
       dplyr is a grammar of data manipulation, providing a consistent set of verbs to solve most common data manipluation tasks. The framework is part of the [tidyverse](tidyverse) ecosystem in R.
 
 
-In this post I want to shortly compare the code needed for aggregated values site-by-site on a practial example on which I worked recently on: [Airbnb Local Market Analysis](http://bnbdata.co/products/airbnb_local_market_analysis/). In this projects live calendar data for all Airbnb listings for a region are scraped from their website and persisted into a MongoDB. For every day there is one document int the the data, that looks like this:
+In this post I want to shortly compare the code needed for aggregated values site-by-site on a practial example on which I worked recently on: [Airbnb Local Market Analysis](http://bnbdata.co/products/airbnb_local_market_analysis/). In this projects live calendar data for all Airbnb listings for a region are scraped from their website and persisted into a MongoDB. For every day in the calendar there is one document per listing in the database, that looks like this:
 
 ```javascript
 { 
@@ -56,10 +56,110 @@ In this post I want to shortly compare the code needed for aggregated values sit
 
 From the calendar data different metrics needed to be calculated: E.g. Occupancy which is the proportion a listing is booked out in a time period, or the average price a night is sold.
 
-This is a typical scenario for caluclating summarizing statistics from raw data.
+This is a typical scenario for calculating summary statistics from raw data.
 
 
-## Mongo DB aggregation framework
+## Mongo DB aggregation framework:
+
+
+Aggregation pipelines consist of different stages. Let's build the pipeline stage by stage:
+
+   - First we want to fetch all listings based on their geolocation. We want all the dates for all listing in an area 100,000 meters around  a geo location:
+
+
+```r
+{
+		"$geoNear": {
+			"near": {
+				"type": "Point",
+				"coordinates": [
+					10.9867379057,
+					49.4650778012
+				]
+			},
+			"spherical": 1,
+			"maxDistance": 100000,
+			"distanceField": "dist",
+			"limit": 100000
+		}
+}
+```
+
+   - Next two helper fields are added. One is the 'paid_price', which is price that was paid for a booking and 0 in case of a place not booked. The field 'unavailable' is needed as a helper field for calculation the number of unavailable days by replacing the boolean values with binary values.
+   
+```r
+{
+		'$addFields': {
+			'paid_price': {
+				'$cond': {
+					if: {
+						$eq: [
+							"$available",
+							false
+						]
+					},
+					then: '$price.local_adjusted_price',
+					else: 0
+				}
+			},
+			'unavailable': {
+				'$cond': {
+					if: {
+						$eq: [
+							"$available",
+							false
+						]
+					},
+					then: 1,
+					else: 0
+				}
+			}
+		}
+	}
+}
+```
+
+   - Next we group on the listing id and calculate helper variables for preperation of the final results. We calculate total revenue by adding up alle the paid prices, the number of all days for the group and the number of unavailable days:
+   
+```r
+{
+		'$group': {
+			'_id': '$id',
+			'total_revenue': {
+				'$sum': '$paid_price'
+			},
+			'num_unavailable': {
+				'$sum': '$unavailable'
+			},
+			'num_total': {
+				'$sum': 1
+			}
+		}
+}
+```
+
+   - Finally we calculate the metrics occupancy and average daily rate
+  
+```r
+{
+		'$project': {
+			'occupancy': {
+				$divide: [
+					"$num_unavailable",
+					'$num_total'
+				]
+			},
+			'average_daily_rate': {
+				$divide: [
+					"$total_revenue",
+					'$num_unavailable'
+				] 
+			}
+		}
+}
+```
+
+The final result:
 
 ```javascript
 [
@@ -80,7 +180,6 @@ This is a typical scenario for caluclating summarizing statistics from raw data.
 	},
 	{
 		'$addFields': {
-			'id': '$id',
 			'paid_price': {
 				'$cond': {
 					if: {
@@ -133,7 +232,7 @@ This is a typical scenario for caluclating summarizing statistics from raw data.
 				$divide: [
 					"$total_revenue",
 					'$num_unavailable'
-				]
+				] 
 			}
 		}
 	}
@@ -142,20 +241,99 @@ This is a typical scenario for caluclating summarizing statistics from raw data.
 
 ## dpylr Framework
 
- ```r
-calendar_df %>% 
-  group_by(id) %>% 
+
+With R we need to fetch the dates for the listings we are interested in. We could do this by simple fetch everything from the MongoDB and do everything with dplyr. 
+
+In this example we fetch the dates for all the listing near a location. We actually use the first stage from our pipeline on our MongoDB pipeline.
+
+```r
+pipeline <- '[
+	{
+		"$geoNear": {
+			"near": {
+				"type": "Point",
+				"coordinates": [
+					10.9867379057,
+					49.4650778012
+				]
+			},
+			"spherical": 1,
+			"maxDistance": 100000,
+			"distanceField": "dist",
+			"limit": 100000
+		}
+	}]'
+
+
+dates.collection <-
+  mongo("dates", "airbnb", url = "mongodb://localhost:27017")
+dates.df <- flatten(dates.collection$aggregate(pipeline))
+```
+
+Next we do the aggregation on the dates dataframe with dplyr:
+
+```r
+dates.df %>%
+  group_by(id) %>%
   summarize(
-     occupancy = sum(available == FALSE) / n(),
-     average_daily_rate = sum(price.local_adjusted_price[available == FALSE]) / 
-                          sum(available == FALSE)
+    occupancy = sum(available == FALSE) / n(),
+    average_daily_rate = sum(price.local_adjusted_price[available == FALSE]) 
+                         / sum(available == FALSE)
   )
+```
+
+Wow, this very simple and readable. Indeed it's simplier than in a Aggregation pipeline in MongoDB. 
+
+But we cheated a little bit, as the initial loading is done with an easy 1-stage-aggregation-pipeline in Mongo.
+
+
+```r
+library(tidyverse)
+library(jsonlite)
+library(mongolite)
+library(glue)
+
+
+
+pipeline <- '[
+	{
+		"$geoNear": {
+			"near": {
+				"type": "Point",
+				"coordinates": [
+					10.9867379057,
+					49.4650778012
+				]
+			},
+			"spherical": 1,
+			"maxDistance": 100000,
+			"distanceField": "dist",
+			"limit": 100000
+		}
+	}]'
+
+
+dates.collection <-
+  mongo("dates", "airbnb", url = "mongodb://localhost:27017")
+dates.df <- flatten(dates.collection$aggregate(pipeline))
+
+
+
+dates.df %>%
+  group_by(id) %>%
+  summarize(
+    occupancy = sum(available == FALSE) / n(),
+    average_daily_rate = sum(price.local_adjusted_price[available == FALSE]) 
+                         / sum(available == FALSE)
+  )
+
+
  ```
 
 ## Conclusion
 
 Both options for aggregation of new data are pretty straightforward and actually similiar.
-I would prefer the option with dplyr, because I like to have all complicated calculations and aggregations in my data analysis. I don't want to switch from MongoDB and R and back all the time.
 
-It's defintely worth your while to learn the aggregation framework form MongoDB as you have a way to double check the results generated from dpylr. The Aggregation Framework can be seen as a kind of SQL for MongoDB
+I would prefer the option with dplyr, because it's simple and I like to have all complicated calculations and aggregations in my data analysis code. I don't want to switch from MongoDB and R and back all the time.
 
+It's defintely worth your while to learn the aggregation framework from MongoDB as you can use it together (like we did with the geonear search) with dplyr.
