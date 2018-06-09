@@ -29,5 +29,3 @@ During the courses I discovered my passion for data, modeling and statistics whi
 Today I am fascinated about live long learning, entrepreneurship, sofware development, data science, [improvisational theatre](https://en.wikipedia.org/wiki/Improvisational_theatre), sports and nutrition. 
 
 Oh, I forgot traveling: I love traveling the world, especially southern africa.
-
-I live with my partner and our two kids in Karlstein a. Main, which is between Aschaffenburg and Hanau in the Rhine-Main-Area.
