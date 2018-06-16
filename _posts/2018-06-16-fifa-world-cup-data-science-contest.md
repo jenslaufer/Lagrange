@@ -30,11 +30,10 @@ So I first scraped the squads of the different teams taking part in the world cu
 
 Well, this took some time and at end I noticed that the data is ready to download on [Kaggle](http://kaggle.com):
 
-    
-    - [FIFA WORLD CUP 2018 Players](https://www.kaggle.com/djamshed/fifa-world-cup-2018-players), whch incldes weight, height, birth date, club etc.
-    - I want to use [FIFA 18 Updated Dataset for EA computer game](https://www.kaggle.com/piyushgandhi811/fifa-18-updated-dataset/data) which includes different metrics for 17,000 players for the computer game [EA FIFA 18](https://www.easports.com/de/fifa/2018-fifa-world-cup-update).
-      This metrics are very accurate as the community and even the players themselves are discussing about them. Based on this discussions these metrics are permanently changed. 
-    - Also promising is this: [FIFA 18 vs Real Life Football](https://www.kaggle.com/michaelmallon/fifa18-vs-reallife/data). 
+   - [FIFA WORLD CUP 2018 Players](https://www.kaggle.com/djamshed/fifa-world-cup-2018-players), whch incldes weight, height, birth date, club etc.
+   - I want to use [FIFA 18 Updated Dataset for EA computer game](https://www.kaggle.com/piyushgandhi811/fifa-18-updated-dataset/data) which includes different metrics for 17,000 players for the computer game [EA FIFA 18](https://www.easports.com/de/fifa/2018-fifa-world-cup-update).
+     This metrics are very accurate as the community and even the players themselves are discussing about them. Based on this discussions these metrics are permanently changed. 
+   - Also promising is this: [FIFA 18 vs Real Life Football](https://www.kaggle.com/michaelmallon/fifa18-vs-reallife/data). 
 
 
 What's always underestimated is the time it takes to clean the data. But I had another problem that took me a while to solve: I wanted to join the data from the FIFA WORLD CUP 2018 Players dataset with the FIFA 18 Updated Dataset for EA computer game, but this
@@ -57,4 +56,4 @@ So my first question I want to answer from the data:
 Voilà:
 
 
-![Most Valuable Players by Team](/img/most-valuable-players_by-team.png)
+![Most Valuable Players by Team](/assets/img/most-valuable-players-by-team.png)
