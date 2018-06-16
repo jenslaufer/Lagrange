@@ -56,4 +56,4 @@ So my first question I want to answer from the data:
 Voilà:
 
 
-![Most Valuable Players by Team](/assets/img/most-valuable-players-by-team.png)
+![Most Valuable Players by Team](/assets/img/most-valuable-players_by-team.png)
