@@ -58,6 +58,11 @@ Voilà:
 
 ![Most Valuable Players by Team](/assets/img/most-valuable-players_by-team.png)
 
+
 ## Day 2 (17/06/2018)
 
 Matchday for Germany!
+
+### Comparison squads Germany vs Mexico
+
+![Squad Comparison Germenay vs Mexico](/img/germanymexico.png)
