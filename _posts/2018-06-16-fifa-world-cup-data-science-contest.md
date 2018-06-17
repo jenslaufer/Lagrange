@@ -65,4 +65,4 @@ Matchday for Germany!
 
 ### Comparison squads Germany vs Mexico
 
-![Squad Comparison Germenay vs Mexico](/img/germanymexico.png)
+![Squad Comparison Germenay vs Mexico](/assets/img/germanymexico.png)
