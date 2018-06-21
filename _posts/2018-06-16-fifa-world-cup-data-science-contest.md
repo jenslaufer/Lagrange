@@ -40,7 +40,7 @@ What's always underestimated is the time it takes to clean the data. But I had a
 was not that easy as there was no unique criteria to do the join. So I had to do join based on a similarity of the names. In the one data set there is e.g "C. Ronaldo" and on the other one "Christiono Ronaldo". I used the similarity algorithms Levenshtein and Jaro Winkler.
 I got pretty good results, but there were about 70 players I had to fix by hand, which took me a while.
 
-## Day 1 (16/06/2018)
+## DAY 1 (16/06/2018)
 
 Today is Saturday and I have many tasks to do like cutting the lawn, shopping and other stuff and not forget the time with the family. 
 So today (and tomorrow) I have to cheat a bit and take a shortcut and just publishing one visualization to reach the goal of publishing somethin daily.
@@ -59,10 +59,47 @@ Voilà:
 ![Most Valuable Players by Team](/assets/img/most-valuable-players_by-team.png)
 
 
-## Day 2 (17/06/2018)
+## DAY 2 (17/06/2018)
 
 Matchday for Germany!
 
 ### Comparison squads Germany vs Mexico
 
 ![Squad Comparison Germenay vs Mexico](/assets/img/germanymexico.png)
+
+
+### DAY 3 (18/06/2018)
+
+Today I want to apply a  k means clustering algorithm to the players data. First of all I calculated
+the optimal cluster size with the Silhouette Metric:
+
+```r
+
+library(cluster)
+
+silhouette.df <- data_frame(n = numeric(), score = numeric())
+
+for(k in 2:20){
+  df <- players %>% select(ends_with("Index"))
+  km.res <- kmeans(df, centers = k)
+  ss <- silhouette(km.res$cluster, dist(df))
+  silhouette.df <-  add_row(silhouette.df, n=k, score=mean(ss[, 3]))
+} 
+
+
+optimal.cluster.size <- (silhouette.df %>%
+  arrange(desc(score)) %>%
+  head(1))$n
+
+```
+
+Afterwards I am doing the clustering:
+
+
+```r
+cluster <- kmeans(players %>% select(ends_with("Index")), cluster.size)
+players$cluster <- as.factor(cluster$cluster)
+```
+
+
+
