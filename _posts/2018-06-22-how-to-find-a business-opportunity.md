@@ -5,11 +5,10 @@ categories:
   - entrepreneurship
 show_comments: true
 tags: entrepreneurship, business, business opportunity, business idea, solopreneur
+image: runner.jpg
 ---
 
 ## ...or how to be BOD (=Business Opportunity Detective)
-
-![Runner](/assets/img/runner.jpg)
 
 A few days ago I was at a beach bar with a friend who is a freelancer like me. We met a young lady working at the counter who just finished university in sports psychology. She was interviewing us about our freelancership and asked us many questions. The questions were mostly about administrative stuff like e.g registration of the business or tax. I like everything about sports, so I asked what's her business model is, but she didn't have one yet, although she had many ideas. This is absolutly OK in the beginning, but instead of putting her focus on administrative stuff she should rather find a **valuable, scalable amd repeatable business model**. 
 
