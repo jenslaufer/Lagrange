@@ -5,7 +5,7 @@ categories:
   - productivity
 show_comments: true
 tags: entrepreneurship, lifehacking, nutrition, productivity
-img:
+img: routines2.jpg
 ---
 
 I optimized lately my daily routines to be more focused on my work and projects.
