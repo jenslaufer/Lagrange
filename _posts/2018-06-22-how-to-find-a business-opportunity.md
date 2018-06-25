@@ -72,4 +72,4 @@ I showed you in this post how to become a **Business Opportunity Detective (BOD)
 Instead of being creative in finding a business idea be rather creative how to search the web for business opportuntities.
 This is a lot fun and you can start with it today.
 
-Let me know what you think about it.
+Let me know what you think about it.  Just drop me message if you have any problems I can help you with.
