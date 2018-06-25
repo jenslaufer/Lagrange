@@ -11,7 +11,7 @@ tags: entrepreneurship, business, business opportunity, business idea, soloprene
 
 ![Runner](/assets/img/runner.jpg)
 
-A few days ago I was at a beach bar with a friend who is a freelancer like me. We met a young lady working at the counter who just finished university in sports psychology. She was interviewing us about our freelancership and asked us many questions. The questions were mostly about administrative stuff like e.g registration of the business or tax. I like everything about sports, so I asked what's her business model is, but she didn't have one yet, although she had many ideas. This is absolutly OK in the beginning, but instead of putting her focus on administrative stuff she should rather find a **valuable, scalable amd repeatable business model**. 
+A few days ago I was at a beach bar with a friend who is a freelancer like me. We met a young lady working at the counter who just finished university in sports psychology. She was interviewing us about our freelancership and asked us many questions. The questions were mostly about administrative stuff like e.g registration of the business or tax. I like everything about sports, so I asked what's her business model is, but she didn't have one yet, although she had many ideas. This is absolutly OK in the beginning, but instead of putting her focus on administrative stuff she should rather find a **valuable, scalable an repeatable business model**. 
 
 First, you need a starting point for your search for the business model:
 You could be just creative and find the ultimate  unique idea and try to realize it. Although you might start with a **minimal viable product (MVP)** to test your idea this has huge disadvantage: If it's something brandnew which is not existing yet it's often extremly difficult to marketize.
@@ -72,4 +72,4 @@ I showed you in this post how to become a **Business Opportunity Detective (BOD)
 Instead of being creative in finding a business idea be rather creative how to search the web for business opportuntities.
 This is a lot fun and you can start with it today.
 
-Good luck!
+Let me know what you think about it.
