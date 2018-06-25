@@ -26,6 +26,6 @@ I graduated with a master degree in electrical engineering in 1997. A few months
 I got a [Udacity Data Analysis Nanodegree](https://eu.udacity.com/course/data-analyst-nanodegree--nd002?gclid=EAIaIQobChMItr_YwqHQ2gIVKb7tCh0GxA9rEAAYASAAEgJcH_D_BwE) in 2017. Currently I am preparing for the [Machine Learning Nanodegree](https://eu.udacity.com/course/machine-learning-engineer-nanodegree--nd009?gclid=EAIaIQobChMIoY-J-aHQ2gIVxjobCh19YAkqEAAYASAAEgKvf_D_BwE).
 During the courses I discovered my passion for data, modeling and statistics which was sleeping around the surface for many years, but I must have had it already as a kid, when I was doing football statistics.
 
-Today I am fascinated about live long learning, entrepreneurship, sofware development, data science, [improvisational theatre](https://en.wikipedia.org/wiki/Improvisational_theatre), sports and nutrition. 
+Today I am fascinated about live long learning, entrepreneurship, software development, data science, [improvisational theatre](https://en.wikipedia.org/wiki/Improvisational_theatre), sports and nutrition. 
 
-Oh, I forgot traveling: I love traveling the world, especially southern africa.
+Oh, I forgot traveling: I love traveling the world, especially to southern africa.
