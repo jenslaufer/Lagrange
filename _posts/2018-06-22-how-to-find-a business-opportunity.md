@@ -4,7 +4,7 @@ title: "Case Study: How to find a Business Opportunity in Sports Psychology"
 categories:
   - entrepreneurship
 show_comments: true
-tags: entrepreneurship, business, business opportunity, business idea, , soloprneur
+tags: entrepreneurship, business, business opportunity, business idea, solopreneur
 ---
 
 ## ...or how to be BOD (=Business Opportunity Detective)
