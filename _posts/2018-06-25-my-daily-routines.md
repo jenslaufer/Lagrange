@@ -5,7 +5,7 @@ categories:
   - productivity
 show_comments: true
 tags: entrepreneurship, lifehacking, nutrition, productivity
-img: routines2.jpg
+image: routines1.jpg
 ---
 
 I optimized lately my daily routines to be more focused on my work and projects.
@@ -25,8 +25,8 @@ I was inspired by the book  of Nick Littlewhales who is the sleep coach of Chris
 
 
 
-![Fruit salad](/assets/img/routines0.jpg)
+![Fruit salad](/assets/img/routines2.jpg)
 
 
 
-![Salad](/assets/img/routines2.jpg)
+![Salad](/assets/img/routines3.jpg)
