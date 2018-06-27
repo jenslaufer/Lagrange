@@ -5,9 +5,9 @@ categories:
   - data analysis
 show_comments: true
 tags: R, dplyr, MongoDB, data analysis
+image: 16702185956_0313e29b69_z.jpg
 ---
 
-Sometimes aggregated variables need to be created on a data set. Let's assume we use [R](https://www.r-project.org/) for the data analysis and the data is persisted in a [MongoDB](https://mongodb.org): ~~bla~~
 
 There are  powerful options to do the processing you want:
 
