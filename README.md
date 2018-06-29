@@ -15,6 +15,7 @@
 
    - Markdown as your powerhorse for blogging, documentation, writing books and productivity
    - Git as your central tool of Entrepeneurship
+   - 19 Traction Channels
    - 10 ways to find a business opportunity (wie in case study)
    - Another 12 ways to find a business opportunity (check cheatsheet)
    - steps to test a business opportunity
