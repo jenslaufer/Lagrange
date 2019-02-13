@@ -1,0 +1,27 @@
+---
+title: ''
+output: pdf_document
+---
+
+# MongoDB GridFS as Filesystem for Scraping
+
+
+Normally it's a good approach to scrape the raw files and keep them for later. You can do the exraction of features in a second step. The scraping of the raw files is normlly easy to implement.
+Also you want to avoid to scrape a lot of files from a website over and over to avoid to get blocked. Maybe you need just a portion of data, but later you need more stuff.
+You don't need to download the file again.
+
+When scraping raw files into the local filesystem there are multiple disadvantages:
+
+- Yo are not able to persist meta information along with the file  
+- If you want to containerize the Scraper apllication is better to have a stateless container
+- number of files are limited per directory
+- not multiple versions of same files
+- Another big plus is that if we use the ordinary filesystem, we would have to handle backup/replication/scaling ourselves
+- Last but not least, we can keep information associated with the file (who has edited it, download count, description, etc.) right with the file itself.
+
+Therefore it is a good ide to put the files into a gridfs container which is provided by MongoDB
+- Files are compressed instead of 
+- File can eassily served with an API+
+- storing the files in gridfs is more efficient than storing them in the local filesystem
+- You are able to have different versions of the file
+- The files are replicated
