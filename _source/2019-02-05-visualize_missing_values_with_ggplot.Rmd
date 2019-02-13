@@ -76,11 +76,7 @@ missing.values.pct <- function(df) {
 ```
 
 
-# Missing values visualization
-
 ## A practical guide how to find and visualize missing data with tidyverse (ggplot2, dplyr, tidyr)
-
-![Missing values]()
 
 Finding missing values is an important task during the [Exploratory Data Analysis (EDA)](https://en.wikipedia.org/wiki/Exploratory_data_analysis). They can affect the quality of machine learning models and need to be cleaned before training models. This short practical guide will show you how to find missing values and visualize them with the help of the tidyverse ecosystem in R.
 
