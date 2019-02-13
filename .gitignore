@@ -6,3 +6,4 @@ Gemfile.lock
 _source/*.png
 _source/*.md
 _source/**/*.png
+_source/*.pdf
