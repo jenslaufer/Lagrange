@@ -1,16 +1,15 @@
 ---
-title: "Missing values visualization"
-image: missing_values.jpg
 layout: post
-output:
-  html_document:
-    df_print: paged
-  md_document: default
-  pdf_document:
-    fig_caption: yes
-show_comments: yes
+title: 'Missing values visualization'
+categories:
+  - data analysis
+show_comments: true
 tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
-categories: data analysis
+image: missing_values.jpg
+output:
+  pdf_document:
+    fig_caption: true
+  md_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -26,12 +25,6 @@ library(knitr)
 df <- read_csv('../_data/dataset.csv') %>% mutate(sales.rank=bsr) %>% 
   select(-X1, -currency, -bsr)
 ```
-
-```{r}
-#tt <- ttheme_default(core = list(padding=unit(c(2, 2), "mm")))
-tt <- ttheme_default()
-```
-
 
 ```{r}
 
@@ -92,14 +85,14 @@ Finding missing values is an important task during the [Exploratory Data Analysi
 
 The dataset is scraped from a eCommerce website with product data. Evaluating the missing values has an interesting side effect in this case: The quality of the scraper can be evaluated with the number of missing values for the features. A feature with a lot of missing values might be a indicator for a problem with the extraction logic for that feature.
 
-```{r echo=T, message=T, out.width='200%'}
+```{r echo=T, message=T}
 df %>% 
   
   head(10) %>% 
   
   select(price, reviews_count, reviews, weight, sales, dim_x, dim_y, dim_z) %>%
   
-  grid.table(theme=tt)
+  grid.table()
 ```
 
 ```{r show=T, message=T}
@@ -131,7 +124,7 @@ df.missing.summary <- function(df) {
 
 You can count the values of missing values for each feature in the dataset:
 
-```{r echo=T, message=T, fig.cap="Number of missing values for each variable", out.width='200%'}
+```{r echo=T, message=T, fig.cap="Number of missing values for each variable"}
 missing.values <- df %>%
   
     gather(key = "key", value = "val") %>%
@@ -148,7 +141,7 @@ missing.values <- df %>%
   
     arrange(desc(num.missing))
     
-missing.values %>% grid.table(theme=tt)
+missing.values %>% grid.table()
 ```
 
 You can use the gather function from tidyr to collapse the columns into key-value pairs. Then you create a new logical feature which is true in case of a missing value. You group on the key and the new logical feature to do a count. Then you filter on the locical feature to get the count where the value is missing. You skip the rows which are not needed and sort by the number of missing values. 
