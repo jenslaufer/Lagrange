@@ -13,5 +13,5 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_PAT
   on:
-    branch: development
+    branch: source
   target_branch: master
