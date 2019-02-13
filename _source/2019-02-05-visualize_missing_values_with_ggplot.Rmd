@@ -97,7 +97,7 @@ df %>%
   grid.table(theme=tt)
 ```
 
-```{r show=T, message=T}
+```{r show=T, message=T, echo=T}
 df %>% dim()
 ```
 
