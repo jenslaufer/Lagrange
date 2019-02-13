@@ -7,3 +7,4 @@ _source/*.png
 _source/*.md
 _source/**/*.png
 _source/*.pdf
+_source/*.html
