@@ -24,7 +24,8 @@ library(gridExtra)
 library(knitr)
 ```
 ```{r}
-df <- read_csv('../_data/dataset.csv') %>% mutate(sales.rank=bsr) %>% 
+df <- read_csv('../_data/dataset.csv') %>% 
+  mutate(sales.rank=bsr) %>% 
   select(-X1, -currency, -bsr)
 ```
 
@@ -91,11 +92,8 @@ The dataset is scraped from a eCommerce website with product data. Evaluating th
 
 ```{r echo=T, message=T, out.width='200%'}
 df %>% 
-  
   head(10) %>% 
-  
   select(price, reviews_count, reviews, weight, sales, dim_x, dim_y, dim_z) %>%
-  
   grid.table(theme=tt)
 ```
 
@@ -130,21 +128,14 @@ You can count the values of missing values for each feature in the dataset:
 
 ```{r echo=T, message=T, out.width="150%"}
 missing.values <- df %>%
-  
     gather(key = "key", value = "val") %>%
-  
     mutate(is.missing = is.na(val)) %>%
-  
     group_by(key, is.missing) %>%
-  
     summarise(num.missing = n()) %>%
-  
     filter(is.missing==T) %>%
-  
     select(-is.missing) %>%
-  
     arrange(desc(num.missing))
-    
+
 missing.values %>% grid.table(theme=tt)
 ```
 
@@ -160,11 +151,8 @@ You can visualize from above with a simple bar chart in ggplot2:
 
 ```{r message=T, echo=T}
 missing.values %>%
-  
   ggplot() +
-  
     geom_bar(aes(x=key, y=num.missing), stat = 'identity') +
-  
     labs(x='variable', y="number of missing values", title='Number of missing values')
 ```
 
@@ -203,28 +191,18 @@ levels <-
     (missing.values  %>% filter(isna == T) %>% arrange(desc(pct)))$key
   
 df %>%
-  
   mutate(id = row_number()) %>%
-  
   gather(-id, key = "key", value = "val") %>%
-  
   mutate(isna = is.na(val)) %>%
-  
   ggplot(aes(key, id, fill = isna)) +
-  
     geom_raster(alpha=0.8) +
-  
     scale_fill_manual(name = "",
         values = c('steelblue', 'tomato3'),
         labels = c("Present", "Missing")) +
-  
     scale_x_discrete(limits = levels) +
-  
     labs(x = "Variable",
            y = "Row Number", title = "Missing values in rows") +
-  
     coord_flip()
-  
 ```
 This plot lets you find patterns which cannot be found with our bar chart. You can see links between missing values for different features.
 
