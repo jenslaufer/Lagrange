@@ -108,7 +108,6 @@ The dataset consists of 11 variables (2 qualitative and 9 quantitative) with 217
 ### Table with missing values 
  
 ```{r}
-
 df.missing.summary <- function(df) {
   summary <- df %>%
     gather(key = "key", value = "val") %>%
@@ -121,7 +120,6 @@ df.missing.summary <- function(df) {
   
   return(summary)
 }
-
 ```
 
 You can count the values of missing values for each feature in the dataset:
