@@ -28,8 +28,9 @@ df <- read_csv('../_data/dataset.csv') %>% mutate(sales.rank=bsr) %>%
 ```
 
 ```{r}
-#tt <- ttheme_default(core = list(padding=unit(c(2, 2), "mm")))
 tt <- ttheme_default()
+theme_set(theme_get() + theme(plot.title = element_text(size=21), axis.title.x = element_text(size=19), legend.text = element_text(size=17),
+                              axis.title.y = element_text(size=19), axis.text.x  = element_text(size=17), axis.text.y = element_text(size=17)))
 ```
 
 
@@ -56,10 +57,9 @@ missing.values.rows <- function(df) {
         labels = c("Present", "Missing")
       ) +
       scale_x_discrete(limits = levels) +
-      theme_minimal() +
-      theme(axis.text.x  = element_text(angle = 45, vjust = 0.5)) +
       labs(x = "Variable",
            y = "Row Number", title = "Missing values in rows") +
+      
       coord_flip()
   )
 }
@@ -74,9 +74,8 @@ missing.values.pct <- function(df) {
       geom_bar(aes(x = reorder(key, desc(
         pct
       )), y = pct), stat = 'identity', fill = 'tomato3', alpha=0.8) +
-      theme_minimal() +
       coord_flip() +
-      labs(title = "Percentage of missing values per variable", x =
+      labs(title = "Percentage of missing values", x =
              'Variable', y = "% of missing values")
   )
 }
@@ -88,7 +87,7 @@ missing.values.pct <- function(df) {
 Finding missing values is an important task during the [Exploratory Data Analysis (EDA)](https://en.wikipedia.org/wiki/Exploratory_data_analysis). They can affect the quality of machine learning models and need to be cleaned before training models. This short practical guide will show you how to find missing values and visualize them with the help of the tidyverse ecosystem in R.
 
 
-## The dataset
+### The dataset
 
 The dataset is scraped from a eCommerce website with product data. Evaluating the missing values has an interesting side effect in this case: The quality of the scraper can be evaluated with the number of missing values for the features. A feature with a lot of missing values might be a indicator for a problem with the extraction logic for that feature.
 
@@ -110,7 +109,7 @@ df %>% dim()
 The dataset consists of 11 variables (2 qualitative and 9 quantitative) with 2172 rows.
 
 
-## Table with missing values 
+### Table with missing values 
  
 ```{r}
 
@@ -131,7 +130,7 @@ df.missing.summary <- function(df) {
 
 You can count the values of missing values for each feature in the dataset:
 
-```{r echo=T, message=T, fig.cap="Number of missing values for each variable", out.width='200%'}
+```{r echo=T, message=T, out.width="100%"}
 missing.values <- df %>%
   
     gather(key = "key", value = "val") %>%
@@ -153,7 +152,7 @@ missing.values %>% grid.table(theme=tt)
 
 You can use the gather function from tidyr to collapse the columns into key-value pairs. Then you create a new logical feature which is true in case of a missing value. You group on the key and the new logical feature to do a count. Then you filter on the locical feature to get the count where the value is missing. You skip the rows which are not needed and sort by the number of missing values. 
 
-## Visualize missing data
+### Visualize missing data
 
 
 __Tables__ with their rows and columns  are read by our verbal system. This system is very slow. 
@@ -163,9 +162,12 @@ You can visualize from above with a simple bar chart in ggplot2:
 
 ```{r message=T, echo=T}
 missing.values %>%
+  
   ggplot() +
+  
     geom_bar(aes(x=key, y=num.missing), stat = 'identity') +
-  labs(x='variable', y="number of missing values", title='Number of missing values per variable')
+  
+    labs(x='variable', y="number of missing values", title='Number of missing values')
 ```
 
 You can improve this graph by calculating the percentages of missing values for each feature. This is more meaningful. The visual appearance can be improved by swapping the axises to make the feature names readable. Sorting the bars by it's length is another improvement. Proper axis labeling is always a must. The use of the color red as visual cue for the missing values (=bad) is used as red stands for danger and that you have to act.
@@ -187,9 +189,8 @@ missing.values %>%
       geom_bar(aes(x = reorder(key, desc(
         pct
       )), y = pct), stat = 'identity', fill = 'tomato3', alpha=0.8) +
-      theme_minimal() +
       coord_flip() +
-      labs(title = "Percentage of missing values per variable", x =
+      labs(title = "Percentage of missing values", x =
              'Variable', y = "% of missing values")
 ```
 
@@ -204,21 +205,26 @@ levels <-
     (missing.values  %>% filter(isna == T) %>% arrange(desc(pct)))$key
   
 df %>%
+  
   mutate(id = row_number()) %>%
+  
   gather(-id, key = "key", value = "val") %>%
+  
   mutate(isna = is.na(val)) %>%
+  
   ggplot(aes(key, id, fill = isna)) +
+  
     geom_raster(alpha=0.8) +
-    scale_fill_manual(
-        name = "",
+  
+    scale_fill_manual(name = "",
         values = c('steelblue', 'tomato3'),
-        labels = c("Present", "Missing")
-    ) +
+        labels = c("Present", "Missing")) +
+  
     scale_x_discrete(limits = levels) +
-    theme_minimal() +
-    theme(axis.text.x  = element_text(angle = 45, vjust = 0.5)) +
+  
     labs(x = "Variable",
            y = "Row Number", title = "Missing values in rows") +
+  
     coord_flip()
   
 ```
@@ -226,7 +232,7 @@ This plot lets you find patterns which cannot be found with our bar chart. You c
 
 The missing values for the features sales_rank and and sales are indeed linked to each other. This is what you expect. In the barchart you could see that also the reviews_count has about the same percentage of missing values. You would expect a linkage to sales and sales rank. Our second plot shows that there is no linkage.
 
-You can put the two visualizations into one gridExtra package. 
+You can put the two visualizations into one with the gridExtra package. 
 
 
 
@@ -235,7 +241,7 @@ missing.values.overview(df)
 ```
 
 
-## Conclusion
+### Conclusion
 
 You visualied missing values in data set in two ways. This you find weak points in the data scraper logic. 
 
