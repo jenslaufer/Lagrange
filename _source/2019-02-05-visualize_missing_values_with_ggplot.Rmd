@@ -29,8 +29,8 @@ df <- read_csv('../_data/dataset.csv') %>% mutate(sales.rank=bsr) %>%
 
 ```{r}
 tt <- ttheme_default()
-theme_set(theme_get() + theme(plot.title = element_text(size=21), axis.title.x = element_text(size=19), legend.text = element_text(size=17),
-                              axis.title.y = element_text(size=19), axis.text.x  = element_text(size=17), axis.text.y = element_text(size=17)))
+theme_set(theme_minimal() + theme(plot.title = element_text(size=25), axis.title.x = element_text(size=22), legend.text = element_text(size=20),
+                              axis.title.y = element_text(size=22), axis.text.x  = element_text(size=20), axis.text.y = element_text(size=20)))
 ```
 
 
@@ -130,7 +130,7 @@ df.missing.summary <- function(df) {
 
 You can count the values of missing values for each feature in the dataset:
 
-```{r echo=T, message=T, out.width="100%"}
+```{r echo=T, message=T, out.width="150%"}
 missing.values <- df %>%
   
     gather(key = "key", value = "val") %>%
