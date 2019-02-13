@@ -1,5 +1,11 @@
 ---
-title: ""
+layout: post
+title: 'Missing values visualization'
+categories:
+  - data analysis
+show_comments: true
+tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
+image: missing_values.jpg
 output:
   md_document: default
   pdf_document:
@@ -16,7 +22,7 @@ library(gridExtra)
 library(knitr)
 ```
 ```{r}
-df <- read_csv('../data/dataset.csv') %>% mutate(sales.rank=bsr) %>% 
+df <- read_csv('../_data/dataset.csv') %>% mutate(sales.rank=bsr) %>% 
   select(-X1, -currency, -bsr)
 ```
 
