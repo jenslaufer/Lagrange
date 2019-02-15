@@ -62,6 +62,12 @@ for(intensity in intensities){
   }
 }
 
+for(i in 1:length(types)){
+  for(intensity in intensities){
+    print(intensity)
+  }
+}
+
 activities %>% kable()
 ```
 
