@@ -1,0 +1,25 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lessons learned from scraping
+
+- Scrape every resources once
+  - Implement a oudate date
+  - implement a force to force scraping
+- Keep the raw files
+- Use Proxies (10 prxies per thread/process)
+- Software design by busines use case not techncailly like scrapy
+- Check the results with data anlysis
+- Scraping is itereative process (check data analyis)
+- Use a datbase for the raw files instead of filesystem
+- Use a database for parsed data
+- MongoDB! From Apis you get often json which can be persisted 1-1
+- MongoDB GridFS
+- Invest if there is an underlying API you can use instead of pasring HTML
+- Rotate useragents (-> github project of mine)
