@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "10 lessons from scraping websites"
 output: html_document
 ---
 
@@ -15,59 +15,62 @@ knitr::opts_chunk$set(echo = TRUE)
 
 I scraped a lot websites in the last years to retrieve data for my data science projects. I want to share some insights I ot from this.
 
-1. __Check the Legal Stuff__
+### 1. Check the Legal Stuff
       
-Before you scrape a website __ALWAYS__ check the _Terms of Service_ of the Site and the robots.txt, which content you are allowed to fetch and which not. This saves you a lot of trouble and the risk of getting sued. Remember that get the data with scraping is a bit of grey zone.
+Before you scrape a website __ALWAYS__ check the _Terms of Service_ of the Site and the robots.txt, which content you are allowed to fetch and which not. This saves you a lot of trouble and the risk of getting sued. Remember that get the data with scraping is a dangerous grey zone. Do you want to get sued by Google or Amazon?
 
-2, __Scrape every resource just once__
+### 2. Invest time for a technical research
+
+It's worth to invest time before start scraping. Sometimes you don't need to scrape the raw HTML files as there exist a internal Rest API under the hood. Modern webpages use JavaScript Frameworks which use Rest Apis. You don't even not able to parse HTML as the logic is executed in the browser. In these secenario you might need a framework like [Selenium](https://www.seleniumhq.org/). In this bad scenario you have the chance that there is restful APi under the hood. This APIs just send JSON back, which is much better than extracting the data from HTML.
+
+### 3. Use software design that reflects the business use case
+
+Popular scraping frameworks like [scrapy](https://scrapy.org/) use a technical design for parsing. You feed them with a bunch of URLs which are then scraped and immediatly parsed. I noticed that every scraping project is diffrent and does not fit into this technical desogn. This often doesn't reflect the business use case why you are scraping. Instead you have a business use like this: "Finding proftitable niches on website XY".  Often you don#T want to scrape the whole websiet
+
+### 4. Scrape every resource just once
 
 I try to scrape each resource just once. Just once!
+
 You don't want to download the same resource over and over again, especially during development. We all have kind of trial and error style. So you write a bit of code and you test if it works or not. When scraping a site und you try out diffrent headers and URLs and it's parameters you risk to get blocked already. Especially the big famous website, just block you quicker than you think. The block is sometimes just for a few hours, but I am sure the log the IP somewhere, which you should you avoid.
 Keep this in  ind:
-
+ 
     - You don't want to send too useless requests to a website. It's also a kind of respect to value data the website offers you.
     - You don't want to get blocked or banned as said before
 
 Implement a flag that you are able to force the resource can be downloaded when it is outdated. Oudated means for me several weeks rather than several hours. This depends for sure also what you want to do. If you need the data more often, try to scrape with more proxies.
     
-3. __Always keep the raw files (the raw oil!)__
+### 5. Always keep the raw files (the raw oil!)
 
 In 2. I wrote that you should try to avoid scraping the resource to often. Therefore it's essential to always keep the raw file once it is scraped. Ofen you are interested in data you werent't interested first. The raw files are like diamonds or the raw oil and very valuable. So your steps:
 
 1. Write a dump scraper and save the downloaded file
 2. Always write the Parser in the second step, when you enough raw files.
 
-Another advantage of having the raw that you can throw the extracted data away in case your parsing sucks.
+Another advantage of having the raw that you can throw the extracted data away in case your parsing is bad.
 
-This way you can start your scraping project even before you know what data you interested in details.  This saves a lot of time.
+This way you can start your scraping project even before you know what data you interested in details.  This saves a lot of time, as the dump raw data scraper is devoloped wuickly.
 
-4. __Always use first class proxies for scraping__
+### 6. Always use first class proxies for scraping
 
-Use proxies already during development. This saves you a lot of troubles. My rule of thumb 10 proxies per scraping process/thread.
+Use proxies already during development. This saves you a lot of troubles. My rule of thumb 10 proxies per scraping process/thread. Try to void free proxies list. The proxies on these list are often slow or already blocked.
 
-5. __Use a database for te raw files__
+### 7. Mimic browser headers
+
+Set proper headers, when fecthing a website. In my experience the most is the user agent header. I developed a library which takes randomly a user agent out of thousands.
+
+### 8. Use a database for te raw files
 
 Save the raw file in a database. I love MongoDB's GridFS for this. You have diffrent andvantages with this:
 
-- You are able to save metadata with the file (e.g scraping date, search query). Example: Airbnb
-- You can have a history of raw files for resource (very valuable)
+- You are able to save metadata with the file (e.g scraping date, search query). Example: Airbnb 
+- You can have a history of raw files for a resource (very valuable)
 
-6. __Use a database for the raw files__
+### 9. Use a database for extracted data
 
 Use a database for the scraped data. With databases you able to group data. MongoDB is very valuable here, as you don't need a scheme, you can just save the data as it is. Especially if you able to scrape from an internal API. From Apis you get JSON and you are able to save the Json just like it is into the MongoDB.
 
-7. __Do a data anaylsis on the parsed data__
+### 10. Ensure data quality with Data Auditing techniques
 
-Always check for percentage 
+Once you have a bunch of raw file and your parser is written do Exploratory Data Analysis to check [data quality](https://en.wikipedia.org/wiki/Data_cleansing#Data_quality). [Check for missing values](http://jenslaufer.com/data/analysis/visualize_missing_values_with_ggplot.html). Do an univariate data analisis to check for outliers for each feature.
 
-- Software design by busines use case not techncailly like scrapy
-- Check the results with data anlysis
-- Scraping is itereative process (check data analyis)
-- Use a datbase for the raw files instead of filesystem
-  - metadata
-  - history
-- Use a database for parsed data
-- MongoDB! From Apis you get often json which can be persisted 1-1
-- MongoDB GridFS
-- Invest if there is an underlying API you can use instead of pasring HTML
-- Rotate useragents (-> github project of mine)
+This step is essential and missed out by many people. You find the weak points of your parsing logic. You might got through several iterations to improve the parsing logic till you happy.
