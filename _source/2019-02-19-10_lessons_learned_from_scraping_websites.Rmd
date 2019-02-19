@@ -1,19 +1,31 @@
 ---
-title: "10 lessons from scraping websites"
-output: html_document
+layout: post
+title: "10 Lessons Learned from Scraping Websites"
+subtitle: "Valuable insights from retrieving data from many websites over the last years  I want to share with you"
+categories:
+  - data analysis
+show_comments: true
+tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
+image: missing_values.jpg
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Lessons learned from scraping
-
-
 > "Data is the new oil. It's valuable, but if unrefined it cannot really be used. It has to be changed into gas, plastic, chemicals, etc to create a valuable entity that drives profitable activity; so must data be broken down, analyzed for it to have value." 
 -- <cite>Clive Humby</cite>
 
-I scraped a lot websites in the last years to retrieve data for my data science projects. I want to share some insights I ot from this.
+A frequent critism of Kaggle and MOOC (Massive Open Online Courses) is that the data retrieval part is not described, although it is an important part of data science.
+You deal in the courses with data set that from the real world or pre cleaned.
+
+Retrieving the data you need is an essential part as the data is most essential part of the journey. As data scientist either in company or as entrepreneur be able to get the data you need can make the difference to make an impact.
+
+Unless you are working for an enterprise you don't have access to the data you need. As entrepreuneru
+
+I got my hands dirty over the last years to learn data science and to build up data products. In this time I scraped data from many websites and learned my lessons. I want to share my insights with you.
 
 ### 1. Check the Legal Stuff
       
@@ -26,6 +38,8 @@ It's worth to invest time before start scraping. Sometimes you don't need to scr
 ### 3. Use software design that reflects the business use case
 
 Popular scraping frameworks like [scrapy](https://scrapy.org/) use a technical design for parsing. You feed them with a bunch of URLs which are then scraped and immediatly parsed. I noticed that every scraping project is diffrent and does not fit into this technical desogn. This often doesn't reflect the business use case why you are scraping. Instead you have a business use like this: "Finding proftitable niches on website XY".  Often you don#T want to scrape the whole websiet
+
+### 4. Write a dump scraper first and the parser in the second step
 
 ### 4. Scrape every resource just once
 
