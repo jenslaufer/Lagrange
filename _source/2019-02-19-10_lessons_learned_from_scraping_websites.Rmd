@@ -17,17 +17,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 > "Data is the new oil. It's valuable, but if unrefined it cannot really be used. It has to be changed into gas, plastic, chemicals, etc. to create a valuable entity that drives profitable activity; so must data be broken down, analysed for it to have value." - Clive Humby
 
-A frequent criticism of Kaggle and MOOC (Massive Open Online Courses) is that they use pre-cleaned or non-real-world datasets. Data Science is more than that. Data retrieval and cleansing are essential parts of the process too. We know that data can make a difference. If you are able to get better data, you perform better. You think that is a task for a data engineer? In a small startup or as an entrepreneur following your passions, you just don't have access to a data engineering team. You just don't have access to data at all. The only way to get data is to scrape it from websites, although this seems unethical
+A frequent criticism of Kaggle and MOOC (Massive Open Online Courses) is that they use pre-cleaned or non-real-world datasets. Data Science is more than that. Data retrieval and cleansing are essential parts of the process too. You and I know that data can make a difference. If you can get better data, you perform better. Do you think that is a task for a data engineer? In a small startup or as an entrepreneur following your passions, you don't have access to one. You don't have data at all. What is the solution to this problem? 
 
-I got my hands dirty over the last years to learn data science and to build up my own data products. In this time I scraped data from many websites and learned my lessons. I want to share my insights with you:
+Scraping the data from websites is a solution. Web scraping has a bad reputation, as people think that you are stealing the data. It is unethical in my eyes in case you build up a competitive product with the data. But what is about taking the labelled photos to teach a neural network? I think this is OK. You might give the company even something valuable back or push their business with your data product.
+
+I got my hands dirty over the last years to learn data science and to build up my data products. In this time I scraped data from many websites and learned a lot. I want to share the most important lessons with you:
 
 ### 1. Check the Legal Stuff
 
-Before you scrape a website ALWAYS check the Terms of Service of the Site and the robots.txt, which content you are allowed to fetch and which not. This saves you a lot of trouble and the risk of getting sued. Remember that get the data with scraping is a dangerous grey zone. Do you want to get sued by Google or Amazon?
+Before you scrape a website __ALWAYS__ check the [Terms of Service](https://en.wikipedia.org/wiki/Terms_of_service) of the site and their [robots.txt](https://en.wikipedia.org/wiki/Robots_exclusion_standard), which content you are allowed to fetch and which not. This saves you a lot of trouble and the risk of getting sued. Remember that get the data with scraping is a dangerous grey zone. Do you want to get sued by Google or Amazon?
 
 ### 2. Invest time for technical research
 
-It's worth to invest time before start scraping. Sometimes you don't need to scrape the raw HTML files as there exists an internal Rest API under the hood. Modern webpages use JavaScript Frameworks which use Rest Apis. You don't even not able to parse HTML as the logic is executed in the browser. In these scenarios, you might need a framework like Selenium. In this lousy scenario you have the chance that there is restful API under the hood. This APIs just send JSON back, which is much better than extracting the data from HTML.
+It's worth to invest time before start scraping. Sometimes you don't need to scrape/parse the raw HTML files as there exists an internal REST API under the hood. Modern webpages use JavaScript Frameworks which use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs. You don't even not able to parse HTML as the logic is executed in the browser. In this scenario, you might need a framework like [Selenium](https://www.seleniumhq.org/), that uses a modern browser in headless mode that is executing the JavaScript code. In this lousy scenario you have the chance that there is RESTful API under the hood. These APIs just send JSON or XML back, which is even better than extracting the data from HTML. 
+
+You also need to check what headers your browser sends to your website. The developer tools of the browsers e.g [Mozilla Browser Developer Tools](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools) are your best friend here.
 
 ### 3. Use software design that reflects the business use case
 Popular scraping frameworks like scrapy use a technical design for parsing. You feed them with a bunch of URLs which are then scraped and immediately parsed. I noticed that every scraping project is different and does not fit into this technical design. This often doesn't reflect the business use case why you are scraping. Instead, you have a business use like this: "Finding profitable niches on website XY". Often you don#T want to scrape the whole website
@@ -36,14 +40,14 @@ Popular scraping frameworks like scrapy use a technical design for parsing. You 
 
 ### 4. Write a dump scraper first and the parser in the second step
 
-### 4. Scrape every resource just once
+### 4. Scrape every unique URL rarely
 
-I try to scrape each resource only once. Just once!
+I try to scrape each URL only once. Or very very rarely!
 
-You don't want to download the same resource over and over again, especially during development. We all have a kind of trial and error style. So you write a bit of code and you test if it works or not. When scraping a site and you try out different headers and URLs, and it's parameters you risk to get blocked already. Especially the big famous website, just block you quicker than you think. The block is sometimes only for a few hours, but I am sure the log the IP somewhere, which you should avoid. Keep this in mind:
+You don't want to download the same resource over and over again, especially during development. We all have a kind of trial and error programming style. We write a piece of code and try if it works or not, do some bug fixing. When scraping a site and you try out different headers and URLs, and it's parameters you risk to get blocked already. Especially the big famous websites, just block you quicker than you think. The block is sometimes only for a few hours, but I am sure thye log the IP somewhere, which you should avoid. Keep this in mind:
 
-- You don't want to send too useless requests to a website. It's also a kind of respect to value data the site offers you.
-- You don't want to get blocked or banned as said before
+- Don't send too many useless requests to a website. It's also a kind of respect to valuable data the site offers you. You don't want to get blocked or banned as said before
+- Don't download massive amount of data in the beginning in multiple threads/processes. Try to download single resources until your scraping code works.
 
 Implement a flag that you are able to force the resource can be downloaded when it is outdated. Outdated means for me several weeks rather than several hours. This depends for sure also what you want to do. If you need the data more often, try to scrape with more proxies.
 
