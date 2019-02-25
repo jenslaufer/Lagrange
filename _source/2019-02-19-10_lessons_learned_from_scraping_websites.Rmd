@@ -17,9 +17,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 > "Data is the new oil. It's valuable, but if unrefined it cannot really be used. It has to be changed into gas, plastic, chemicals, etc. to create a valuable entity that drives profitable activity; so must data be broken down, analysed for it to have value." - Clive Humby
 
-A frequent criticism of Kaggle and MOOC (Massive Open Online Courses) is that they use pre-cleaned or non-real-world datasets. Data Science is more than that. Data retrieval and cleansing are essential parts of the process too. You and I know that data can make a difference. If you can get better data, you perform better. Do you think that is a task for a data engineer? In a small startup or as an entrepreneur following your passions, you don't have access to one. You might have any data. What is the solution to this problem? 
+A frequent criticism of Kaggle and MOOC (Massive Open Online Courses) is that they use pre-cleaned or non-real-world datasets. Data Science is more than that. Data retrieval and cleansing are essential parts of the process too. You and I know that data can make a difference. If you can get better data, you perform better. Do you think data retrieval is a task for a data engineer? In a small startup or as an entrepreneur following your passions, you don't have access to one. You might have any data. What is the solution to this problem? 
 
-Scraping the data from websites is a solution. Web scraping has a bad reputation, as people think that you are stealing the data. It is unethical in my eyes in case you build up a competitive product with the data. But what is about taking the labelled photos to teach a neural network? I think this is OK. You might give the company even something valuable back or push their business with your data product.
+Scraping the data from websites is a solution. Web scraping has a bad reputation, as people think that you are stealing the data. It is unethical in my eyes in case you are building up a competitive product with the data. But what is about taking the labelled photos to teach a neural network? I think this is OK. You might give the company even something valuable back or push their business with your data product.
 
 I got my hands dirty over the last years to learn data science and to build up my own data products. In this time I scraped data from many websites and learned a lot. I want to share the most important lessons with you:
 
@@ -29,66 +29,60 @@ Before you scrape a website __ALWAYS__ check their [Terms of Service](https://en
 
 ### 2. Invest time for technical research
 
-It's worth to invest time before start scraping. Sometimes you don't need to scrape/parse the raw HTML files as there exists an internal REST API under the hood. Modern webpages use JavaScript Frameworks which use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs. You even not able to parse HTML as the logic is executed in the browser. In this scenario, you might need a framework like [Selenium](https://www.seleniumhq.org/), that uses a modern browser in headless mode that is executing the JavaScript code. In this lousy scenario you have the chance that there is RESTful API under the hood. These APIs just send JSON or XML back, which is even better than extracting the data from HTML. 
+It's worth to invest time before start scraping. Sometimes you don't need to scrape/parse the raw HTML files as there exists an internal REST API under the hood. Modern webpages use JavaScript Frameworks which use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) APIs. You even not able to parse HTML as the logic is executed in the browser. In this scenario, you might need a framework like [Selenium](https://www.seleniumhq.org/), that uses a modern browser in headless mode that is executing the JavaScript code. That are bad news, but you have the chance that there is a RESTful API in this case. These APIs just send JSON or XML back, which is even better than extracting the data from HTML. 
 
 You also need to check what headers your browser sends to your website. The developer tools of the browsers e.g [Mozilla Browser Developer Tools](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools) are your best friend here.
 
 
 ### 3. Dockerize your scraping application
 
-Build a docker container for your scraping application. Scra configurations can be
+Build a docker container for your scraping application. Scraping configuration can be a bit complicated, especially if you fetch the data from the resource with Selenium, whiches uses a browser like Chromium of Firefox. You need  an operating system dependent driver for this situation. You can use my [docker image with Firefox/Geckodriver and Chromium/Chromedriver](https://cloud.docker.com/repository/docker/jenslaufer/docker-chromedriver-geckodriver) on Dockerhub. The source can be downloaded from [Github](https://github.com/jenslaufer/docker-chromedriver-geckodriver) as base. If you are not familiar with [Docker](https://github.com) then try it out. It's a secret weapon for reliable runtime environments in all kind of data science projects.
 
 
 ### 4. Always use first class proxies for scraping
 
-Use proxies already during development. Rotate the proxies randomly. This saves you a lot of trouble. My rule of a thumb is to use 10 proxies per scraping process/thread. Try to avoid free proxies lists. The proxies on these lists are often slow or already blocked. It is a waste of time to try them out. Google for proxy providers. You need to invest some money.
+Use proxies already during development. Rotate the proxies randomly. This saves you a lot of trouble. My rule of a thumb is to use 10 proxies per scraping process/thread. Try to avoid free proxies lists. The proxies on these lists are often slow or already blocked. It is a waste of time to try them out. Google for proxy providers. You need to invest some money here. You can even buy non-shared proxies, but they have their costs.
 
 
-### 5. First write a dump scraper, Second write a parser
-
-Write first a scraper that just fetches a resource and saves it. Enure that this data is the same as the data downloaded from your browser. If this the case you can increase the number of processes/threads and load more data. Once you have a bunch of raw data files (not too many!) you start to develop the parser. Extract the data you need and check if the data is OK. Do an exploratory data analysis, check for data anomalities like missing values or outliers.  
+### 5. Write a dump scraper first, then the parser
 
 
+Write first a scraper that just fetches a resource and saves it. Ensure that this data is the same as the data downloaded from your browser. If this the case you can increase the number of processes/threads and load more data. Once you have a bunch of raw data files (not too many!) you start to develop the parser. Extract the data you need and check if the data is OK. Do an exploratory data analysis, check for data anomalities like missing values or outliers to ensure high quality parsing logic.  
 
-### 3. Use software design that reflects the business use case
-
-Popular scraping frameworks like scrapy use a technical design for parsing. You feed them with a bunch of URLs which are then scraped and immediately parsed. I noticed that every scraping project is different and does not fit into this technical design. This often doesn't reflect the business use case why you are scraping. Instead, you have a business use like this: "Finding profitable niches on website XY". Often you don#T want to scrape the whole website
+__Keep the scraping logic seperated from the parsing logic.__
 
 
-### 4. Scrape every unique URL rarely
+### 6. Scrape every unique URL rarely
 
 I try to scrape each URL only once. Or very very rarely!
 
-You don't want to download the same resource over and over again, especially during development. We all have a kind of trial and error programming style. We write a piece of code and try if it works or not, do some bug fixing. When scraping a site and you try out different headers and URLs, and it's parameters you risk to get blocked already. Especially the big famous websites, just block you quicker than you think. The block is sometimes only for a few hours, but I am sure thye log the IP somewhere, which you should avoid. Keep this in mind:
+You don't want to download the same resource over and over again, especially during development. We all have a kind of trial and error programming style. We write a piece of code and try if it works or not, do some bug fixing. When scraping a site and you try out different headers and URLs, and it's parameters you risk to get blocked already. Especially the big famous websites, just block you quicker than you think. The block is sometimes only for a few hours, but I am sure they log the IP somewhere, which you should avoid. Keep this in mind:
 
 - Don't send too many useless requests to a website. It's also a kind of respect to valuable data the site offers you. You don't want to get blocked or banned as said before
 - Don't download massive amount of data in the beginning in multiple threads/processes. Try to download single resources until your scraping code works.
 
-Implement a flag that you are able to force the resource can be downloaded when it is outdated. Outdated means for me several weeks rather than several hours. This depends for sure also what you want to do. If you need the data more often, try to scrape with more proxies.
+Implement a flag that you are able to force the resource download when it is outdated. Outdated means for me several weeks rather than several hours. This depends for sure also what you want to do. If you need the data more often, try to scrape with more proxies.
 
-### 5. Always keep the raw files (raw oil!)
+### 7. Always keep the raw files (raw oil!)
 
 it's essential to keep the raw data once the resource is scraped. This has several adavantages
 
-1. You can improve the parser logic in as many iterations as you need.
-2. Raw data is like diamonds. You can find more interesting data, you weren#T interested in first iterations
-3. You avoid to get blocked, because you scrape the resource more seldomly
+1. You can improve the parser logic in as many iterations as you need, without having risk of being blocked
+2. Raw data are like diamonds. You can find more interesting data, you weren#T interested in first iterations
+3. You reduce the blocking risk
 
+### 8. Mimic browser headers
 
+Set proper headers, when fetching a website. Check what's your browser is sending and mimic a real browser with you code requests. In my experience one of the most important one is the user agent header. I am sharing a very [simple python module for useragent rotation](https://github.com/jenslaufer/pyuseragents) with you. It takes randomly one use agent out of thousands.
 
-### 7. Mimic browser headers
+### 9. Use a database for your data
 
-Set proper headers, when fetching a website. In my experience, most are the user agent header. I developed a library which takes a user agent randomly out of thousands.
+Save the raw data in a database. I love [MongoDB's GridFS](https://docs.mongodb.com/manual/core/gridfs/) for this task. The API is very simple. You have different advantages to this:
 
-### 8. Use a database for the raw files
+- You are able to save metadata with the file (e.g. scraping date, search query, outdate, location data)
+- You can have a history of raw files for a resource (very precious)
 
-Save the raw data in a database. I love MongoDB's GridFS for this. You have different advantages to this:
-
-You are able to save metadata with the file (e.g. scraping date, search query). Example: Airbnb
-You can have a history of raw files for a resource (precious)
-
-### 9. Use a database for extracted data
-Use a database for the scraped data. With databases you able to group data. MongoDB is an excellent choice here, as you don't need a scheme, you can just save the data as it is. Especially if you able to scrape from an internal API. From Apis you get JSON, and you are able to keep the JSON just like it is into the MongoDB.
+Use a database for the parsed data. With databases you able to group data. MongoDB is an excellent choice here, as you don't need a scheme, you can just save the data as it is. Especially if you able to scrape from an internal API. From Apis you get JSON, and you are able to keep the JSON just like it is into the MongoDB.
 
 ### 10. Ensure data quality with Data Auditing techniques
 
