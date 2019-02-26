@@ -6,5 +6,5 @@ Gemfile.lock
 _source/*.png
 _source/*.md
 _source/**/*.png
-_source/2019-02-05-visualize_missing_values_with_ggplot.html
-_source/2019-02-05-visualize_missing_values_with_ggplot.pdf
+_source/*.pdf
+_source/*.html
