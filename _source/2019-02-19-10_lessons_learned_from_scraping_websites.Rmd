@@ -3,10 +3,10 @@ layout: post
 title: "10 Lessons Learned from Scraping Websites"
 subtitle: "Valuable insights from retrieving data from many websites over the last years which I want to share with you"
 categories:
-  - data analysis
+  - data retrieval
 show_comments: true
-tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
-image: missing_values.jpg
+tags: scraping, "data retrieval"
+image: scraping.jpg
 output:
   html_document: default
 ---
@@ -25,7 +25,7 @@ I got my hands dirty over the last years to learn data science and to build up m
 
 ### 1. Check the Legal Stuff
 
-Before you scrape a website __ALWAYS__ check their [Terms of Service](https://en.wikipedia.org/wiki/Terms_of_service) and the  [robots.txt](https://en.wikipedia.org/wiki/Robots_exclusion_standard) to answer the question what you are allowed to fetch and what not. This saves you a lot of trouble and the risk of a court case. Please remember that scraping is a grey zone. Do you want to get sued by Google or Amazon?
+Before you scrape a website __ALWAYS__ check it's [Terms of Service](https://en.wikipedia.org/wiki/Terms_of_service) and the  [robots.txt](https://en.wikipedia.org/wiki/Robots_exclusion_standard) to answer the question what you are allowed to fetch and what not. This saves you a lot of trouble and the risk of a court case. Please remember that scraping is a grey zone. Do you want to get sued by Google or Amazon?
 
 ### 2. Invest time for technical research
 
