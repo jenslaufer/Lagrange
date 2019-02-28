@@ -94,4 +94,4 @@ Once you have a bunch of raw files and your parser is written do an Exploratory 
 
 This step is essential and missed out by many people. You find the weak points in your parsing logic. You might go through several iterations to improve the parsing logic until you are happy.
 
-Feel free to [send me a message](mailto:jenslaufer@gmail.com) in case you need support in your scraping project.
+_Feel free to [send me a message](mailto:jenslaufer@gmail.com) in case you need support in your scraping project._
