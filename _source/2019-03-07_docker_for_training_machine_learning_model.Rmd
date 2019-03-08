@@ -71,6 +71,11 @@ docker-machine create --driver amazonec2 \
 
 
 ```code
-
 docker-machine ssh ec2-p2
+```
+
+
+```code
+
+
 ```
