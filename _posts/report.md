@@ -25,17 +25,17 @@ decisions in different domains. Especially in eCommerce, where we cannot
 touch things they are very important. They have therefore a big
 influence on our product purchasing decisions.
 
-<img src="resources/airbnb.png" alt="Which room to book?" width="50%" />
+<img src="../assets/img/airbnb.png" alt="Which room to book?" width="50%" />
 <p class="caption">
 Which room to book?
 </p>
 
-<img src="resources/date.png" alt="Which guy to date?" width="50%" />
+<img src="../assets/img/date.png" alt="Which guy to date?" width="50%" />
 <p class="caption">
 Which guy to date?
 </p>
 
-<img src="resources/food.png" alt="Which food to order?" width="50%" />
+<img src="../assets/img/food.png" alt="Which food to order?" width="50%" />
 <p class="caption">
 Which food to order?
 </p>
@@ -232,12 +232,12 @@ were collected from www.dpchallenge.com.
 
 #### Sample images
 
-<img src="resources/unnamed-chunk-16-1.png" alt="Best rated images"  />
+<img src="../assets/img/unnamed-chunk-16-1.png" alt="Best rated images"  />
 <p class="caption">
 Best rated images
 </p>
 
-<img src="resources/unnamed-chunk-17-1.png" alt="Worst rated images"  />
+<img src="../assets/img/unnamed-chunk-17-1.png" alt="Worst rated images"  />
 <p class="caption">
 Worst rated images
 </p>
@@ -328,7 +328,7 @@ Worst rated images
 
 #### Distribution of number of Ratings
 
-<img src="resources/unnamed-chunk-20-1.png" alt="Number of ratings per image: Majority is rated by more than 100 raters"  />
+<img src="../assets/img/unnamed-chunk-20-1.png" alt="Number of ratings per image: Majority is rated by more than 100 raters"  />
 <p class="caption">
 Number of ratings per image: Majority is rated by more than 100 raters
 </p>
@@ -343,7 +343,7 @@ needed.
 
 #### Distribution of Mean Ratings
 
-<img src="resources/unnamed-chunk-21-1.png" alt="Distribution of rating mean"  />
+<img src="../assets/img/unnamed-chunk-21-1.png" alt="Distribution of rating mean"  />
 <p class="caption">
 Distribution of rating mean
 </p>
@@ -370,7 +370,7 @@ CNNs consist of an input, an output layer and several hidden layers. The
 hidden layers are typically a convolutional layer followed by a pooling
 layer.
 
-<img src="resources/Typical_cnn.png" alt="Structure of a typical CNN for image classification. The network has multiple filtering kernels for each convolution layer, which extract features. Subsampling or Pooling layers are used for information reduction. (Source Wikipedia)" width="70%" />
+<img src="../assets/img/Typical_cnn.png" alt="Structure of a typical CNN for image classification. The network has multiple filtering kernels for each convolution layer, which extract features. Subsampling or Pooling layers are used for information reduction. (Source Wikipedia)" width="70%" />
 <p class="caption">
 Structure of a typical CNN for image classification. The network has
 multiple filtering kernels for each convolution layer, which extract
@@ -384,7 +384,7 @@ The purpose of the convolutional layer is to extract features from the
 input image. They preserve the spatial relationship between pixels by
 learning image features using small squares of input data.
 
-<img src="resources/3_conv.png" alt="Convolutional operation to extract features" width="750" />
+<img src="../assets/img/3_conv.png" alt="Convolutional operation to extract features" width="750" />
 <p class="caption">
 Convolutional operation to extract features
 </p>
@@ -398,7 +398,7 @@ next layer. This is done for the following reasons
 -   Reduction of memory and increase in execution speed
 -   Reduction of overfitting
 
-<img src="resources/Max_pooling.png" alt="MaxPooling layer, that extracts the maximum value in a region to reduce information. (Source Wikipedia)" width="60%" />
+<img src="../assets/img/Max_pooling.png" alt="MaxPooling layer, that extracts the maximum value in a region to reduce information. (Source Wikipedia)" width="60%" />
 <p class="caption">
 MaxPooling layer, that extracts the maximum value in a region to reduce
 information. (Source Wikipedia)
@@ -427,7 +427,7 @@ one that we want to solve. Accordingly, due to the computational cost of
 training such models, it is common practice to import and use models
 from published literature (e.g. VGG, Inception, MobileNet).
 
-<img src="resources/transferlearning.png" alt="Transfer learning" width="50%" />
+<img src="../assets/img/transferlearning.png" alt="Transfer learning" width="50%" />
 <p class="caption">
 Transfer learning
 </p>
@@ -623,7 +623,7 @@ with a softmax activation to predict the distribution of ratings. A Adam
 optimizer with different learning rates and learning rate decays is used
 for training.
 
-<img src="resources/top_model_plot.png" alt="Design of top model: Dropout Layer for avoiding overfitting, Dense layer with 10 output classes" width="300%" />
+<img src="../assets/img/top_model_plot.png" alt="Design of top model: Dropout Layer for avoiding overfitting, Dense layer with 10 output classes" width="300%" />
 <p class="caption">
 Design of top model: Dropout Layer for avoiding overfitting, Dense layer
 with 10 output classes
@@ -651,7 +651,7 @@ The training process is supervised with plots for the loss on the
 training and validation set to check if everything works well and to
 optimize the learning process.
 
-<img src="resources/training_history.png" alt="The plots for training history is used to find the best number of  epochs for the two learning phases. During phase 1 validation loss flattens at epoch 5 (4 in plot ) and in phase 2 the val loss flattens at epoch 8 (12 in plot)" width="80%" />
+<img src="../assets/img/training_history.png" alt="The plots for training history is used to find the best number of  epochs for the two learning phases. During phase 1 validation loss flattens at epoch 5 (4 in plot ) and in phase 2 the val loss flattens at epoch 8 (12 in plot)" width="80%" />
 <p class="caption">
 The plots for training history is used to find the best number of epochs
 for the two learning phases. During phase 1 validation loss flattens at
@@ -747,7 +747,7 @@ covered well by the model. This due the fact, that there are not many
 images with very high and low ratings. So model is not capable to rate
 these extreme outliers correctly, because of the lack of examples.
 
-<img src="resources/unnamed-chunk-30-1.png" alt="Big figure: Distribution of pedicted mean ratings and ground truth rating on test set. Small figures: Distribution on lower and upper end on test set."  />
+<img src="../assets/img/unnamed-chunk-30-1.png" alt="Big figure: Distribution of pedicted mean ratings and ground truth rating on test set. Small figures: Distribution on lower and upper end on test set."  />
 <p class="caption">
 Big figure: Distribution of pedicted mean ratings and ground truth
 rating on test set. Small figures: Distribution on lower and upper end
@@ -834,17 +834,17 @@ For a final quick and dirty test the images from the "Project overview"
 section are rated with the model. The images are not part of the AVA
 dataset.
 
-<img src="resources/airbnb.png" alt="Left Image: 4.23 Right image: 3.91" width="50%" />
+<img src="../assets/img/airbnb.png" alt="Left Image: 4.23 Right image: 3.91" width="50%" />
 <p class="caption">
 Left Image: 4.23 Right image: 3.91
 </p>
 
-<img src="resources/date.png" alt="Left Image: 3.27 Right image: 4.00" width="50%" />
+<img src="../assets/img/date.png" alt="Left Image: 3.27 Right image: 4.00" width="50%" />
 <p class="caption">
 Left Image: 3.27 Right image: 4.00
 </p>
 
-<img src="resources/food.png" alt="Left Image: 3.98 Right image: 4.67" width="50%" />
+<img src="../assets/img/food.png" alt="Left Image: 3.98 Right image: 4.67" width="50%" />
 <p class="caption">
 Left Image: 3.98 Right image: 4.67
 </p>
