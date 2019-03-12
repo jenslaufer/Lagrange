@@ -232,12 +232,12 @@ were collected from www.dpchallenge.com.
 
 #### Sample images
 
-<img src="report_files/figure-markdown_strict/unnamed-chunk-16-1.png" alt="Best rated images"  />
+<img src="resources/unnamed-chunk-16-1.png" alt="Best rated images"  />
 <p class="caption">
 Best rated images
 </p>
 
-<img src="report_files/figure-markdown_strict/unnamed-chunk-17-1.png" alt="Worst rated images"  />
+<img src="resources/unnamed-chunk-17-1.png" alt="Worst rated images"  />
 <p class="caption">
 Worst rated images
 </p>
@@ -328,7 +328,7 @@ Worst rated images
 
 #### Distribution of number of Ratings
 
-<img src="report_files/figure-markdown_strict/unnamed-chunk-20-1.png" alt="Number of ratings per image: Majority is rated by more than 100 raters"  />
+<img src="resources/unnamed-chunk-20-1.png" alt="Number of ratings per image: Majority is rated by more than 100 raters"  />
 <p class="caption">
 Number of ratings per image: Majority is rated by more than 100 raters
 </p>
@@ -343,7 +343,7 @@ needed.
 
 #### Distribution of Mean Ratings
 
-<img src="report_files/figure-markdown_strict/unnamed-chunk-21-1.png" alt="Distribution of rating mean"  />
+<img src="resources/unnamed-chunk-21-1.png" alt="Distribution of rating mean"  />
 <p class="caption">
 Distribution of rating mean
 </p>
@@ -747,7 +747,7 @@ covered well by the model. This due the fact, that there are not many
 images with very high and low ratings. So model is not capable to rate
 these extreme outliers correctly, because of the lack of examples.
 
-<img src="report_files/figure-markdown_strict/unnamed-chunk-30-1.png" alt="Big figure: Distribution of pedicted mean ratings and ground truth rating on test set. Small figures: Distribution on lower and upper end on test set."  />
+<img src="resources/unnamed-chunk-30-1.png" alt="Big figure: Distribution of pedicted mean ratings and ground truth rating on test set. Small figures: Distribution on lower and upper end on test set."  />
 <p class="caption">
 Big figure: Distribution of pedicted mean ratings and ground truth
 rating on test set. Small figures: Distribution on lower and upper end
