@@ -40,7 +40,7 @@ prepare.time.series <- function(date_series_df, date_field) {
   return(date_series_df)
 }
 
-heatmap <- function(df, var, title_label, fill_label, gradient_colours = c("darkblue", "grey", "darkred")) {
+heatmap <- function(df, var, title_label, fill_label, gradient_colours = c("lightgreen", "grey", "orange2")) {
     df %>% 
       ggplot(aes(x = weekdayf, y = monthweek)) + 
       geom_tile(aes(fill = var)) +
@@ -48,7 +48,7 @@ heatmap <- function(df, var, title_label, fill_label, gradient_colours = c("dark
       scale_y_discrete(limits = rev(levels(df$monthweek)), labels = c("", "", "", "", "", "")) + 
       scale_x_discrete(limits = c("Mo","Tu", "We", "Th", "Fr", "Sa", "Su")) + 
       scale_fill_gradientn(colours = gradient_colours, breaks = pretty(var)) + 
-      labs(x = "Day Of Week", y = "", fill = fill_label, title = title_label) + 
+      labs(x = "", y = "", fill = fill_label, title = title_label) + 
       facet_grid(year ~ monthf) + 
       theme(line = element_blank())
 }
@@ -56,16 +56,16 @@ heatmap <- function(df, var, title_label, fill_label, gradient_colours = c("dark
 ```
 
 ```{r}
-heatmap.data <- read_csv("../_data/heatmap_data.csv")
+heatmap.data <- read_csv("../_data/heatmap_data.csv") %>% mutate(occupancy=occupancy*100)
 ```
 
 ```{r}
-heatmap.data <- prepare.time.series(heatmap.data, 'date') %>% mutate(occupancy=occupancy*100)
+heatmap.data <- prepare.time.series(heatmap.data, 'date') 
 ```
 
 
-```{r , fig.width=20, fig.height=8}
-heatmap(heatmap.data, heatmap.data$occupancy, fill_label = 'Occupancy', title_label='Demo Heatmap')
+```{r , fig.width=20, fig.height=6}
+heatmap(heatmap.data, heatmap.data$occupancy, fill_label = 'Occupancy in %', title_label='Demo Heatmap')
 ```
 
 
