@@ -1,6 +1,6 @@
 ---
-title: "Missing value visualization with tidyverse in R"
-subtitle: "A short practical guide how to find and visualize missing data with ggplot2, dplyr, tidyr"
+title: "Quantification of image aesthetics with a convolutional neural network (CNN)"
+subtitle: ""
 image: missing_values.jpg
 layout: post
 output:
@@ -10,12 +10,9 @@ output:
   pdf_document:
     fig_caption: yes
 show_comments: yes
-tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
-categories: data analysis
+tags: CNN, "data science", "transfer learning"
+categories: "machine learning"
 ---
-
-I. Definition
--------------
 
 ### Project Overview
 
@@ -119,8 +116,6 @@ $$ACC = \\frac{TP+TN}{TP+FP+TN+FN}$$
 
 *T**P* : *T**r**u**e**P**o**s**i**t**i**v**e**s*, *T**N* : *T**r**u**e**N**e**g**a**t**i**v**e**s*, *F**N* : *F**a**l**s**e**N**e**g**a**t**i**v**e**s*, *F**P* : *F**a**l**s**e**P**o**s**i**t**i**v**e*
 
-II. Analysis
-------------
 
 ### Data Exploration
 
