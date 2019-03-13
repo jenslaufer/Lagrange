@@ -1,7 +1,8 @@
 ---
 title: "Quantification of image aesthetics with a convolutional neural network (CNN)"
 subtitle: ""
-image: missing_values.jpg
+image: nima.jpg
+image_subtitle: "Photo by Jakob Owens on Unsplash"
 layout: post
 output:
   html_document:
