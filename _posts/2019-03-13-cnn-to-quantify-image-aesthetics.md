@@ -70,14 +70,14 @@ Neural Network as it seems a good fit to tackle the problem.
 
 To solve the problem these steps are needed:
 
-1.  Find a dataset with images with quality annotations
-2.  Exploratory Data Analysis (EDA) on the dataset, to evaluate the
+1. Find a dataset with images with quality annotations
+2. Exploratory Data Analysis (EDA) on the dataset, to evaluate the
     characteristics and suitabilty for the problem space
-3.  Cleanup and preprocessing of the dataset
-4.  Design a architecture for the CNN
-5.  Training of the CNN
-6.  Test the model against benchmarks
-7.  Analysis of the results
+3. Cleanup and preprocessing of the dataset
+4. Design a architecture for the CNN
+5. Training of the CNN
+6. Test the model against benchmarks
+7. Analysis of the results
 
 There will be several iterations for the steps 4.-7.
 
@@ -104,7 +104,7 @@ transport the mass of one distribution (histogram) to the other. (Hou,
 Yu, and Samaras 2016)(Rubner, Tomasi, and Guibas 2000)(Talebi and
 Milanfar 2018)
 
-$$EMD(P,Q) = \\dfrac{\\sum\\limits\_{i=1}^m \\sum\\limits\_{j=1}^n f\_{ij} d\_{ij}}{\\sum\\limits\_{i=1}^m\\sum\\limits\_{j=1}^n f\_{ij}}$$
+![emd_formula](/assets/img/emd.gif)
 
 #### Accuracy
 
@@ -113,10 +113,7 @@ the ratio of correct predictions. In this case the ground-truth and
 predicted mean scores using a threshold of 5 on the "official" test set,
 as this is the standard practice for AVA dataset.
 
-$$ACC = \\frac{TP+TN}{TP+FP+TN+FN}$$
-
-*T**P* : *T**r**u**e**P**o**s**i**t**i**v**e**s*, *T**N* : *T**r**u**e**N**e**g**a**t**i**v**e**s*, *F**N* : *F**a**l**s**e**N**e**g**a**t**i**v**e**s*, *F**P* : *F**a**l**s**e**P**o**s**i**t**i**v**e*
-
+![acc_formula](/assets/img/acc.gif)
 
 ### Data Exploration
 
@@ -512,7 +509,7 @@ The data preprocessing can be devided into two parts: The first part was
 done during the exploratory data analysis. In this step the following
 checks and cleanings were performed:
 
-1.  Removal of images
+1. Removal of images
 
     -   Several images had to be removed from meta data as they did not
         exist.
@@ -520,7 +517,7 @@ checks and cleanings were performed:
     -   Several corrupted images were identified with a script. The
         corrupted images were deleted from the meta data.
 
-2.  Technical image properties were engineered to check image
+2. Technical image properties were engineered to check image
     anomalities
 
     Several technnical image properties (file size, resolution, aspect
@@ -529,29 +526,29 @@ checks and cleanings were performed:
 
 The second preprocessing step is performed during training:
 
-1.  Splitting of the data into training and validation set
+1. Splitting of the data into training and validation set
 
     10% of images of the training set are used for validation.
 
-2.  Basemodel specific preprocessing were performed
+2. Basemodel specific preprocessing were performed
 
     Each basemodel provided by Keras offers a preprocessing function
     with specific preprocessing steps for this model. This preprocessing
     step is applied to a ImageGenerator which loads the images for
     training and model evaluation.
 
-3.  Normalization of distribution
+3. Normalization of distribution
 
     The rating distribution was normalized, because each image was rated
     by a diffrent number of people.
 
-4.  Image resizing and random cropping
+4. Image resizing and random cropping
 
     The training images are rescaled to 256 x 256 px and afterwards a
     randomly performed crop of 224 x 224 px is extracted. This is
     reported to reduce overfitting issues. (Talebi and Milanfar 2018)
 
-5.  Undersampling of the data
+5. Undersampling of the data
 
     For earlier tainings sessions the number of images are reduced by
     cutting the data in 10 rating bins and taking the top n samples of
@@ -569,36 +566,36 @@ parameterized from outsite for triggering the different trainings. To
 reduce the lines of code of this training script, it orchestrates the
 building blocks of the training with a pipeline script.
 
-1.  All needed libraries are identified and put into a requirements.txt
+1. All needed libraries are identified and put into a requirements.txt
 
-2.  An internal library to download the AVA images and the meta data is
+2. An internal library to download the AVA images and the meta data is
     implemented.
 
-3.  A training script was created with building blocks for training
+3. A training script was created with building blocks for training
     (loading data, preparing data, train, evaluate)
 
-4.  Building blocks of the training script are moved to a pipeline
+4. Building blocks of the training script are moved to a pipeline
     script. The scripts saves different artifacts: Model architecture,
     Model weights, training history, time for training, training
     visualization
 
-5.  A model class is created, which encapsulates the basemodel and top
+5. A model class is created, which encapsulates the basemodel and top
     model and offers helper functions to change optimizer and freeze
     layers on the fly
 
-6.  The EMD loss function is created
+6. The EMD loss function is created
 
-7.  The image generator is created for loading the images and perform
+7. The image generator is created for loading the images and perform
     the preprocessing of the images
 
-8.  Several helper functions for model evaluation are implemented
+8. Several helper functions for model evaluation are implemented
 
 The actual training is performed in 2 Steps:
 
-1.  Base model weights are frozen and just the top model is trained with
+1. Base model weights are frozen and just the top model is trained with
     a higher learning rate
 
-2.  Base model weights are unfrozen and the full network is trained with
+2. Base model weights are unfrozen and the full network is trained with
     a lower learning rate
 
 #### Model design of the CNN
@@ -854,14 +851,14 @@ almost the same quality.
 The process used for this project can be summarized using the following
 steps
 
-1.  A relevant problem was found
-2.  A research for relevant papers was done
-3.  Datasets for the problem were researched, analyzed and the best
+1. A relevant problem was found
+2. A research for relevant papers was done
+3. Datasets for the problem were researched, analyzed and the best
     suitable dataset was selected
-4.  The dataset was cleaned
-5.  Model benchmarks were extracted from papers
-6.  The technical infrastructure for the project was set up
-7.  Models were trained and finetuned and checked against the
+4. The dataset was cleaned
+5. Model benchmarks were extracted from papers
+6. The technical infrastructure for the project was set up
+7. Models were trained and finetuned and checked against the
     benchmarks, till a good enough model was found, that solves the
     problem
 
