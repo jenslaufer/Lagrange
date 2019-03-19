@@ -126,14 +126,9 @@ were collected from www.dpchallenge.com.
 
 <img src="/assets/img/unnamed-chunk-16-1.png" alt="Best rated images"  />
 <br><i><small>Best rated images</small></i><br>
-<p class="caption">
-
-</p>
 
 <img src="/assets/img/unnamed-chunk-17-1.png" alt="Worst rated images"  />
-<p class="caption">
-Worst rated images
-</p>
+<br><i><small>Worst rated images</small></i><br>
 
 #### Desciptive Statistics of number of ratings
 
@@ -148,9 +143,8 @@ Worst rated images
 #### Distribution of number of Ratings
 
 <img src="/assets/img/unnamed-chunk-20-1.png" alt="Number of ratings per image: Majority is rated by more than 100 raters"  />
-<p class="caption">
-Number of ratings per image: Majority is rated by more than 100 raters
-</p>
+
+<br><i><small>Number of ratings per image: Majority is rated by more than 100 raters</small></i><br>
 
 The number of ratings for the images ranges from 78 to 549 with an
 average of 210 on a scale from 1 to 10.
@@ -163,9 +157,8 @@ needed.
 #### Distribution of Mean Ratings
 
 <img src="/assets/img/unnamed-chunk-21-1.png" alt="Distribution of rating mean"  />
-<p class="caption">
-Distribution of rating mean
-</p>
+
+<br><i><small>Distribution of rating mean</small></i><br>
 
 It can be seen from the distribution and the descriptive statistics that
 50% of images has a rating mean within 4.9 and 5.9 and about 85% are
@@ -190,12 +183,12 @@ hidden layers are typically a convolutional layer followed by a pooling
 layer.
 
 <img src="/assets/img/Typical_cnn.png" alt="Structure of a typical CNN for image classification. The network has multiple filtering kernels for each convolution layer, which extract features. Subsampling or Pooling layers are used for information reduction. (Source Wikipedia)" width="70%" />
-<p class="caption">
+
+<br><i><small>
 Structure of a typical CNN for image classification. The network has
 multiple filtering kernels for each convolution layer, which extract
 features. Subsampling or Pooling layers are used for information
-reduction. (Source Wikipedia)
-</p>
+reduction. (Source Wikipedia)</small></i><br>
 
 *Convolutional Layer*
 
@@ -204,9 +197,8 @@ input image. They preserve the spatial relationship between pixels by
 learning image features using small squares of input data.
 
 <img src="/assets/img/3_conv.png" alt="Convolutional operation to extract features" width="750" />
-<p class="caption">
-Convolutional operation to extract features
-</p>
+
+<br><i><small>Convolutional operation to extract features</small></i><br>
 
 *Pooling Layer*
 
@@ -218,10 +210,9 @@ next layer. This is done for the following reasons
 -   Reduction of overfitting
 
 <img src="/assets/img/Max_pooling.png" alt="MaxPooling layer, that extracts the maximum value in a region to reduce information. (Source Wikipedia)" width="60%" />
-<p class="caption">
-MaxPooling layer, that extracts the maximum value in a region to reduce
-information. (Source Wikipedia)
-</p>
+
+<br><i><small>MaxPooling layer, that extracts the maximum value in a region to reduce
+information. (Source Wikipedia)</small></i><br>
 
 *Fully connected Layer*
 
@@ -247,9 +238,8 @@ training such models, it is common practice to import and use models
 from published literature (e.g. VGG, Inception, MobileNet).
 
 <img src="/assets/img/transferlearning.png" alt="Transfer learning" width="50%" />
-<p class="caption">
-Transfer learning
-</p>
+
+<br><i><small>Transfer learning</small></i><br>
 
 Several state-of-the-art image classification applications are based on
 the transfer learning solutions (He et al. 2016), (Szegedy et al. 2016)
@@ -390,10 +380,9 @@ optimizer with different learning rates and learning rate decays is used
 for training.
 
 <img src="/assets/img/top_model_plot.png" alt="Design of top model: Dropout Layer for avoiding overfitting, Dense layer with 10 output classes" width="300%" />
-<p class="caption">
-Design of top model: Dropout Layer for avoiding overfitting, Dense layer
-with 10 output classes
-</p>
+
+<br><i><small>Design of top model: Dropout Layer for avoiding overfitting, Dense layer
+with 10 output classes</small></i><br>
 
 ### Refinement
 
@@ -418,12 +407,12 @@ training and validation set to check if everything works well and to
 optimize the learning process.
 
 <img src="/assets/img/training_history.png" alt="The plots for training history is used to find the best number of  epochs for the two learning phases. During phase 1 validation loss flattens at epoch 5 (4 in plot ) and in phase 2 the val loss flattens at epoch 8 (12 in plot)" width="80%" />
-<p class="caption">
+
+<br><i><small>
 The plots for training history is used to find the best number of epochs
 for the two learning phases. During phase 1 validation loss flattens at
 epoch 5 (4 in plot ) and in phase 2 the val loss flattens at epoch 8 (12
-in plot)
-</p>
+in plot)</small></i><br>
 
 IV. Results
 -----------
@@ -454,11 +443,11 @@ images with very high and low ratings. So model is not capable to rate
 these extreme outliers correctly, because of the lack of examples.
 
 <img src="/assets/img/unnamed-chunk-30-1.png" alt="Big figure: Distribution of pedicted mean ratings and ground truth rating on test set. Small figures: Distribution on lower and upper end on test set."  />
-<p class="caption">
+
+<br><i><small>
 Big figure: Distribution of pedicted mean ratings and ground truth
 rating on test set. Small figures: Distribution on lower and upper end
-on test set.
-</p>
+on test set.</small></i><br>
 
 ### Justification
 
@@ -483,19 +472,16 @@ section are rated with the model. The images are not part of the AVA
 dataset.
 
 <img src="/assets/img/airbnb.png" alt="Left Image: 4.23 Right image: 3.91" width="50%" />
-<p class="caption">
-Left Image: 4.23 Right image: 3.91
-</p>
+
+<br><i><small>Left Image: 4.23 Right image: 3.91</small></i><br>
 
 <img src="/assets/img/date.png" alt="Left Image: 3.27 Right image: 4.00" width="50%" />
-<p class="caption">
-Left Image: 3.27 Right image: 4.00
-</p>
+
+<br><i><small>Left Image: 3.27 Right image: 4.00</small></i><br>
 
 <img src="/assets/img/food.png" alt="Left Image: 3.98 Right image: 4.67" width="50%" />
-<p class="caption">
-Left Image: 3.98 Right image: 4.67
-</p>
+
+<br><i><small>LLeft Image: 3.98 Right image: 4.67</small></i><br>
 
 It can be seen, that the images which we as a human being would rate
 better are also rated better by the model, although the food images are
