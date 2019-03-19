@@ -24,19 +24,13 @@ touch things they are very important. They have therefore a big
 influence on our product purchasing decisions.
 
 <img src="/assets/img/airbnb.png" alt="Which room to book?" width="50%" />
-<p class="caption">
-Which room to book?
-</p>
+<br><i><small>Which room to book?</small></i><br>
 
 <img src="/assets/img/date.png" alt="Which guy to date?" width="50%" />
-<p class="caption">
-Which guy to date?
-</p>
+<br><i><small>Which guy to date?</small></i><br>
 
 <img src="/assets/img/food.png" alt="Which food to order?" width="50%" />
-<p class="caption">
-Which food to order?
-</p>
+<br><i><small>Which food to order?</small></i><br>
 
 The goal of this project is to create a model that is able to quantify
 the aesthetics of images.
@@ -104,7 +98,7 @@ transport the mass of one distribution (histogram) to the other. (Hou,
 Yu, and Samaras 2016)(Rubner, Tomasi, and Guibas 2000)(Talebi and
 Milanfar 2018)
 
-![emd_formula](/assets/img/emd.gif)
+![emd_formula](/assets/img/emd.png)
 
 #### Accuracy
 
@@ -113,7 +107,7 @@ the ratio of correct predictions. In this case the ground-truth and
 predicted mean scores using a threshold of 5 on the "official" test set,
 as this is the standard practice for AVA dataset.
 
-![acc_formula](/assets/img/acc.gif)
+![acc_formula](/assets/img/acc.png)
 
 ### Data Exploration
 
@@ -126,108 +120,14 @@ were collected from www.dpchallenge.com.
 
 #### Sample rows
 
-<table>
-<thead>
-<tr class="header">
-<th align="right">image.id</th>
-<th align="right">1</th>
-<th align="right">2</th>
-<th align="right">3</th>
-<th align="right">4</th>
-<th align="right">5</th>
-<th align="right">6</th>
-<th align="right">7</th>
-<th align="right">8</th>
-<th align="right">9</th>
-<th align="right">10</th>
-<th align="right">rating.mean</th>
-<th align="right">rating.sd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">340753</td>
-<td align="right">3</td>
-<td align="right">2</td>
-<td align="right">5</td>
-<td align="right">43</td>
-<td align="right">100</td>
-<td align="right">80</td>
-<td align="right">23</td>
-<td align="right">10</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">5.360595</td>
-<td align="right">1.225537</td>
-</tr>
-<tr class="even">
-<td align="right">674342</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">9</td>
-<td align="right">39</td>
-<td align="right">56</td>
-<td align="right">31</td>
-<td align="right">21</td>
-<td align="right">15</td>
-<td align="right">6</td>
-<td align="right">6.355191</td>
-<td align="right">1.595610</td>
-</tr>
-<tr class="odd">
-<td align="right">737669</td>
-<td align="right">8</td>
-<td align="right">16</td>
-<td align="right">29</td>
-<td align="right">55</td>
-<td align="right">81</td>
-<td align="right">18</td>
-<td align="right">6</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">4.234742</td>
-<td align="right">1.300529</td>
-</tr>
-<tr class="even">
-<td align="right">16606</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">13</td>
-<td align="right">24</td>
-<td align="right">46</td>
-<td align="right">55</td>
-<td align="right">40</td>
-<td align="right">14</td>
-<td align="right">5</td>
-<td align="right">2</td>
-<td align="right">5.770000</td>
-<td align="right">1.478885</td>
-</tr>
-<tr class="odd">
-<td align="right">344449</td>
-<td align="right">1</td>
-<td align="right">6</td>
-<td align="right">17</td>
-<td align="right">52</td>
-<td align="right">91</td>
-<td align="right">47</td>
-<td align="right">25</td>
-<td align="right">6</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">5.044715</td>
-<td align="right">1.285485</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/sample_rows.png)
 
 #### Sample images
 
 <img src="/assets/img/unnamed-chunk-16-1.png" alt="Best rated images"  />
+<br><i><small>Best rated images</small></i><br>
 <p class="caption">
-Best rated images
+
 </p>
 
 <img src="/assets/img/unnamed-chunk-17-1.png" alt="Worst rated images"  />
@@ -237,85 +137,11 @@ Worst rated images
 
 #### Desciptive Statistics of number of ratings
 
-<table>
-<thead>
-<tr class="header">
-<th align="right"> </th>
-<th align="right">value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right"><strong>Mean</strong></td>
-<td align="right">210.14</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Std.Dev.</strong></td>
-<td align="right">61.51</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Min</strong></td>
-<td align="right">78.00</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Q1</strong></td>
-<td align="right">164.00</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Median</strong></td>
-<td align="right">201.00</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Q3</strong></td>
-<td align="right">247.00</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Max</strong></td>
-<td align="right">549.00</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/num_ratings_summary.png)
 
 #### Desciptive Statistics of rating.mean
 
-<table>
-<thead>
-<tr class="header">
-<th align="right"> </th>
-<th align="right">value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right"><strong>Mean</strong></td>
-<td align="right">5.38</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Std.Dev.</strong></td>
-<td align="right">0.73</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Min</strong></td>
-<td align="right">1.81</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Q1</strong></td>
-<td align="right">4.91</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Median</strong></td>
-<td align="right">5.39</td>
-</tr>
-<tr class="even">
-<td align="right"><strong>Q3</strong></td>
-<td align="right">5.87</td>
-</tr>
-<tr class="odd">
-<td align="right"><strong>Max</strong></td>
-<td align="right">8.60</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/rating_mean_summary.png)
 
 ### Exploratory Visualization
 
@@ -445,60 +271,7 @@ which are created in this project. The benchmarks are based on the
 68% which is above the lower boundary of the relevant papers for image
 aesthetics.
 
-<table>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>Reference</th>
-<th align="right">Accuracy (2 classes)</th>
-<th align="right">EMD</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Murray</td>
-<td><span class="citation">(Murray, Marchesotti, and Perronnin 2012b)</span></td>
-<td align="right">68.00%</td>
-<td align="right">--</td>
-</tr>
-<tr class="even">
-<td>Reg</td>
-<td><span class="citation">(Kong et al. 2016)</span></td>
-<td align="right">72.04%</td>
-<td align="right">--</td>
-</tr>
-<tr class="odd">
-<td>DCNN</td>
-<td><span class="citation">(Lu et al. 2014)</span></td>
-<td align="right">73.25%</td>
-<td align="right">--</td>
-</tr>
-<tr class="even">
-<td>DMA</td>
-<td><span class="citation">(Lu et al. 2015)</span></td>
-<td align="right">74.46%</td>
-<td align="right">--</td>
-</tr>
-<tr class="odd">
-<td>Schwarz</td>
-<td><span class="citation">(Schwarz, Wieschollek, and Lensch 2018)</span></td>
-<td align="right">75.83%</td>
-<td align="right">--</td>
-</tr>
-<tr class="even">
-<td>NIMA(MobileNet)</td>
-<td><span class="citation">(Talebi and Milanfar 2018)</span></td>
-<td align="right">80.36%</td>
-<td align="right">0.081</td>
-</tr>
-<tr class="odd">
-<td>NIMA(Inception-v2)</td>
-<td><span class="citation">(Talebi and Milanfar 2018)</span></td>
-<td align="right">81.51%</td>
-<td align="right">0.050</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/benchmark.png)
 
 III. Methodology
 ----------------
@@ -665,72 +438,12 @@ validation. An interesting fact is that this model performs slightly
 better than model9, which was trained with double the amount of training
 images.
 
-<table>
-<thead>
-<tr class="header">
-<th align="left">model</th>
-<th align="right">acc</th>
-<th align="right">emd</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">model8</td>
-<td align="right">75.22</td>
-<td align="right">0.094</td>
-</tr>
-<tr class="even">
-<td align="left">model6</td>
-<td align="right">74.89</td>
-<td align="right">0.117</td>
-</tr>
-<tr class="odd">
-<td align="left">model9</td>
-<td align="right">74.85</td>
-<td align="right">0.095</td>
-</tr>
-<tr class="even">
-<td align="left">model5</td>
-<td align="right">73.94</td>
-<td align="right">0.121</td>
-</tr>
-<tr class="odd">
-<td align="left">model7</td>
-<td align="right">70.42</td>
-<td align="right">0.105</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/models.png)
 
 The best model is based on the MobileNet architecture and the following
 parameters are used. All these parameters seem reasonable:
 
-<table>
-<thead>
-<tr class="header">
-<th align="right">Dropout</th>
-<th align="right">n training samples</th>
-<th align="right">lr(dense)</th>
-<th align="right">lr(all)</th>
-<th align="right">lr decay(dense)</th>
-<th align="right">lr decay(all)</th>
-<th align="right">Epochs (dense)</th>
-<th align="right">Epochs (all)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">0.75</td>
-<td align="right">13914</td>
-<td align="right">0.001</td>
-<td align="right">3e-05</td>
-<td align="right">0</td>
-<td align="right">2.3e-05</td>
-<td align="right">5</td>
-<td align="right">9</td>
-</tr>
-</tbody>
-</table>
+![sample metadata rows](/assets/img/best_model_parameters.png)
 
 It can be seen from the figure below, that the distribution of the
 ground truth mean ratings and the predicted mean ratings are very
@@ -757,66 +470,8 @@ The result are quite impressive, as the model was trained with just
 13914 images. The models in the papers were trained with the full
 training set.
 
-<table>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>Reference</th>
-<th align="right">Accuracy (2 classes)</th>
-<th align="right">EMD</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Murray</td>
-<td><span class="citation">(Murray, Marchesotti, and Perronnin 2012b)</span></td>
-<td align="right">68.00%</td>
-<td align="right">--</td>
-</tr>
-<tr class="even">
-<td>Reg</td>
-<td><span class="citation">(Kong et al. 2016)</span></td>
-<td align="right">72.04%</td>
-<td align="right">--</td>
-</tr>
-<tr class="odd">
-<td>DCNN</td>
-<td><span class="citation">(Lu et al. 2014)</span></td>
-<td align="right">73.25%</td>
-<td align="right">--</td>
-</tr>
-<tr class="even">
-<td>DMA</td>
-<td><span class="citation">(Lu et al. 2015)</span></td>
-<td align="right">74.46%</td>
-<td align="right">--</td>
-</tr>
-<tr class="odd">
-<td><strong>My Model</strong></td>
-<td><strong>--</strong></td>
-<td align="right"><strong>75.22%</strong></td>
-<td align="right"><strong>0.094</strong></td>
-</tr>
-<tr class="even">
-<td>Schwarz</td>
-<td><span class="citation">(Schwarz, Wieschollek, and Lensch 2018)</span></td>
-<td align="right">75.83%</td>
-<td align="right">--</td>
-</tr>
-<tr class="odd">
-<td>NIMA(MobileNet)</td>
-<td><span class="citation">(Talebi and Milanfar 2018)</span></td>
-<td align="right">80.36%</td>
-<td align="right">0.081</td>
-</tr>
-<tr class="even">
-<td>NIMA(Inception-v2)</td>
-<td><span class="citation">(Talebi and Milanfar 2018)</span></td>
-<td align="right">81.51%</td>
-<td align="right">0.050</td>
-</tr>
-</tbody>
-</table>
+
+![sample metadata rows](/assets/img/benchmark_with_my_model.png)
 
 V. Conclusion
 -------------
