@@ -1,6 +1,6 @@
 ---
-title: "Quantification of image aesthetics with a convolutional neural network (CNN)"
-subtitle: ""
+title: "Image aesthetics quantification with a convolutional neural network (CNN)"
+subtitle: "Project report for training a MobileNetV1 based convolutional neural network (CNN) with  only 14,000 images with transfer learning"
 image: nima.jpg
 image_subtitle: "Photo by Jakob Owens on Unsplash"
 layout: post
@@ -65,8 +65,7 @@ Neural Network as it seems an excellent fit to tackle the problem.
 These steps are needed:
 
 1. Find a dataset with images with quality annotations
-2. Exploratory Data Analysis (EDA) on the dataset, to evaluate the
-    characteristics and suitability for the problem space
+2. Exploratory Data Analysis (EDA) on the dataset, to evaluate the characteristics and suitability for the problem space
 3. Cleanup and preprocessing of the dataset
 4. Design architecture for the CNN
 5. Training of the CNN
@@ -268,17 +267,12 @@ checks and cleanings were performed:
 
 1. Removal of images
 
-    - Several images had to be removed from metadata as they did not
-        exist.
+    - Several images had to be removed from metadata as they did not exist.
+    - Several corrupted images were identified with a script. The corrupted images were deleted from the metadata.
 
-    - Several corrupted images were identified with a script. The
-        corrupted images were deleted from the metadata.
+2. Technical image properties were engineered to check image anomalies
 
-2. Technical image properties were engineered to check image
-    anomalies
-
-    Several technical image properties (file size, resolution, aspect ratio) were engineered and checked for anomalies. No abnormal images
-    could be identified here with these properties.
+    Several technical image properties (file size, resolution, aspect ratio) were engineered and checked for anomalies. No abnormal images could be identified here with these properties.
 
 The second preprocessing step is performed during training:
 
@@ -288,8 +282,7 @@ The second preprocessing step is performed during training:
 
 2. Base model specific preprocessing were performed
 
-    Each base model provided by Keras offers a preprocessing function with specific preprocessing steps for this model. This preprocessing step is applied to an ImageGenerator which loads the images for
-    training and model evaluation.
+    Each base model provided by Keras offers a preprocessing function with specific preprocessing steps for this model. This preprocessing step is applied to an ImageGenerator which loads the images for training and model evaluation.
 
 3. Normalisation of distribution
 
@@ -298,12 +291,11 @@ The second preprocessing step is performed during training:
 
 4. Image resizing and random cropping
 
-    The training images are rescaled to 256 x 256 px, and afterwards, a
-    randomly performed crop of 224 x 224 px is extracted. This is reported to reduce overfitting issues. (Talebi and Milanfar 2018)
+    The training images are rescaled to 256 x 256 px, and afterwards, a randomly performed crop of 224 x 224 px is extracted. This is reported to reduce overfitting issues. (Talebi and Milanfar 2018)
 
 5. Undersampling of the data
 
-For earlier training sessions the number of images is reduced by cutting the data in 10 rating bins and taking the top n samples of each bin. This is done because of two reasons: As the computing power is limited. This reduces the time to train the model. Another reason is that the data is unbalanced. There are just a few images with very low and high ratings. It was expected that the undersampling reduces the effect of overfitting to the images around the most common ratings.
+    For earlier training sessions the number of images is reduced by cutting the data in 10 rating bins and taking the top n samples of each bin. This is done because of two reasons: As the computing power is limited. This reduces the time to train the model. Another reason is that the data is unbalanced. There are just a few images with very low and high ratings. It was expected that the undersampling reduces the effect of overfitting to the images around the most common ratings.
 
 ### Implementation
 
@@ -316,29 +308,23 @@ building blocks of the training with a pipeline script.
 
 2. An internal library to download the AVA images and the metadata is implemented.
 
-3. A training script was created with building blocks for training
-    (loading data, preparing data, train, evaluate)
+3. A training script was created with building blocks for training (loading data, preparing data, train, evaluate)
 
 4. Building blocks of the training script are moved to a pipeline script. The scripts save different artefacts: Model architecture, model weights, training history, time for training, training visualisation
 
-5. A model class is created, which encapsulates the base model and top
-    model and offers helper functions to change optimiser and freeze
-    layers on the fly
+5. A model class is created, which encapsulates the base model and top model and offers helper functions to change optimiser and freeze layers on the fly
 
 6. The EMD loss function is created
 
-7. The image generator is created for loading the images and perform
-    the preprocessing of the images
+7. The image generator is created for loading the images and perform the preprocessing of the images
 
 8. Several helper functions for model evaluation are implemented
 
 The actual training is performed in 2 Steps:
 
-1. Base model weights are frozen, and just the top model is trained with
-    a higher learning rate
+1. Base model weights are frozen, and just the top model is trained with a higher learning rate
 
-2. Base model weights are unfrozen, and the full network is trained with
-    a lower learning rate
+2. Base model weights are unfrozen, and the full network is trained with a lower learning rate
 
 #### Model design of the CNN
 
@@ -470,14 +456,11 @@ steps
 
 1. A relevant problem was found
 2. Research for relevant papers was done
-3. Datasets for the problem were researched, analysed and the best
-    a suitable dataset was selected
+3. Datasets for the problem were researched, analysed and the best a suitable dataset was selected
 4. The dataset was cleaned
 5. Model benchmarks were extracted from papers
 6. The technical infrastructure for the project was set up
-7. Models were trained and fine-tuned and checked against the
-    benchmarks, till a good enough model was found, that solves the
-    problem
+7. Models were trained and fine-tuned and checked against the benchmarks, till a good enough model was found, that solves the problem
 
 The project was very challenging for me as I had limited computing power
 and the dataset is extensive. Till the end, I was not able to train the
