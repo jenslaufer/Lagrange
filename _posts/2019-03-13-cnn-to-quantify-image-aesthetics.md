@@ -1,4 +1,3 @@
-
 ---
 title: "Quantification of image aesthetics with a convolutional neural network (CNN)"
 subtitle: ""
@@ -15,6 +14,8 @@ show_comments: yes
 tags: CNN, "data science", "transfer learning"
 categories: "machine learning"
 ---
+
+## I. Definition
 
 ### Project Overview
 
