@@ -1,61 +1,21 @@
 ---
-title: "A practical guide to Docker for Data Science"
+title: "X use cases of Docker in Data Science"
+subtitle: 'Or how to avoid the "it works on my computer, but nowhere else"'
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
 ```
-Everybody you does something with computer knows this saying. "but it works on my computer".
 
-(I could be a little comic)
+```{r}
+library(tidyverse)
+```
 
-We had it most probably fro both sites. "well you forgot to install the blabla lib". 
-"i have it" 
-"oh"
-"you need version 2.3.7"
-"o i have 2.2.1"
-"still not working"
+![But it works on my machine](http://i.imgur.com/PnvK7v6.png)
+This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
+illustrates what you often face also in data science. You are preparing a data analysis or predictive model, 
+but when you want to share share you share it, it does not work on someone else machine. It fails, 
+because libraries are missing, libaries are having the wrong version or the other machines are configured in a different manner.
 
-We waste a lot of time with. Docker minimalizes this problem as you deliver the application in a conatiner with verything is needed.
-
-Problem with installed libraries (e.g. requirements.txt, ). You ship a juypter notebook and instalation instructions in natural langugage
-.The problem with natural language is that people don't understand it or miss a step. Things get even woth in case we need operation system specific installations.
-With docker you ship a conatiner which everything what is needed for the special use case. You can run the container as it is (no instlallation)
-You have that with python virtual environments or anaconda. But maybe you need it more lightweight or you need avery weird enviroment.
-You can build containers with the weirdes environment. You can put container (similiar to libs) to repositories. The future might be polyglot, which Dokcer can easily handle
-It come with it's price (container get easly very big)
-
-
-## What is Docker?
-
-Docker is a lightweight container for packing applications together
-
-- Advantages over other virtualizations techniques like Python virtual environments or anaconda or virtual OS
-- What differs it to these platforms
-- Avoid the "It works on may computer"
-- Reliable enviroment
-- Exkurs on Kubernetes (make your application easily scalabe)
-
-
-Research on what it differs to other virtualization platforms
-
-## Simple example of container
-
-Example of simple scraping container
-
-
-## Docker compose for multiple container applications:
-
-With docker compose you are able to pack more complex multi container applcations.
-
-
-## Use case of Docker for Data Science
-
-- Container for scraping data
-- Container for Data Product like Shiny App
-- Container with a static web site
-- Container for training in machine learning training pipeline
-- Conatiner wit a trained model
-
-
+But there is gerate way to solve this problem: Docker. It solves the problem of reproducability in lightweight manner, but also offers you many other advantages.
