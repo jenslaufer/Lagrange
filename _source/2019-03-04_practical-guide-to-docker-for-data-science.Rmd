@@ -1,5 +1,5 @@
 ---
-title: "X use cases of Docker in Data Science"
+title: "Use cases of Docker in the Data Science pipeline"
 subtitle: 'Or how to avoid the "it works on my computer, but nowhere else"'
 output: html_document
 ---
@@ -14,8 +14,71 @@ library(tidyverse)
 
 ![But it works on my machine](http://i.imgur.com/PnvK7v6.png)
 This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
-illustrates what you often face also in data science. You are preparing a data analysis or predictive model, 
-but when you want to share share you share it, it does not work on someone else machine. It fails, 
-because libraries are missing, libaries are having the wrong version or the other machines are configured in a different manner.
+illustrates what you often face in software development but also in data science. You are preparing a data analysis or predictive model, 
+but when you want to share share, it does not work on someone else machine. It fails, 
+because libraries are missing, libaries are having the wrong version or other machines are configured in a different manner.
 
-But there is gerate way to solve this problem: Docker. It solves the problem of reproducability in lightweight manner, but also offers you many other advantages.
+But there is great way to solve this problem: [Docker](https://www.docker.com/). It solves the problem of reproducability in a lightweight manner, but also offers you many other.
+advantages. 
+
+__What is docker?__
+
+Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. By doing so, thanks to the container, the developer can rest assured that the application will run on any other Linux machine regardless of any customized settings that machine might have that could differ from the machine used for writing and testing the code.
+
+__Advantages of Docker__:
+
+1. Time: The amount of time that you save on not installing packages in itself makes this framework worth it.
+
+2. Reproducible Research: I think of Docker as akin to setting the random number seed in a report. The same dependencies and versions of libraries that was used in your machine are used on the other person’s machine. This makes sure that the analysis that you are generating will run on any other analysts machine.
+
+3. Distribution: Not only are you distributing your code, but you are also distributing the environment in which that code was run.
+
+But how can we use docker in the data science pipeline.
+
+
+## the use cases of Docker in Data Science
+
+Docker can be used in all parts of the data science pipeline nd process. The diffrent cntainer may have complete different toolset and programing languages. The diffrent application, containers can be run on one unique paltform which is suitable to run docker containers.
+
+
+- : Container for scraping data
+- Container for Data Product like Shiny App
+- Container with a static web site
+- Container for training in machine learning training pipeline
+- Conatiner wit a trained model
+
+### 1. Obtaining data
+
+Data may be generated from clinical trials, scientific experiments, surveys, web pages, computer simulations 
+
+  - Application for Scraping data 
+  - Application for labeling data with mechanical turks 
+  - Database container
+
+### 2. Scrubbing data
+
+Scrubbing data refers to the preprocessing needed to prepare data for analysis. This may involve removing particular rows or columns, handling missing data, fixing inconsistencies due to data entry errors, transforming dates, generating derived variables, combining data from multiple sources
+
+  - Data cleaning & munging
+  
+
+### 3. Exploring data
+
+In the exploration phase, all we have to do is go Understand what patterns and values are in the hands of the data. 
+
+  - Share notebooks with the results from EDA with docker containers in a reproducable way
+  - Data Exploring Dashboard Apllications, Shiny, Kibana etc.
+  
+
+### 4. Modeling data
+
+Now, we have come to a very interesting step. The so-called model is the general model in statistics. You can think of a machine learning model as a tool lying in your toolbox. You have a lot of algorithms to choose from, and you can use them to help achieve different business goals. The better the features you choose, the better your predictive ability will be. After cleaning up the data and extracting important features, we can use the model as a predictive tool to improve the effectiveness of business decisions.
+
+Predictive Analytics has become the key to changing the rules of the game. What predictive analysis does is not to look back at the “what happened”, but to help managers answer questions such as “What will be next?” and “How should we respond?” (from Forbes Magazine).
+
+- Models as microservices
+- Containers for the model training process to train and test models
+
+### 5. Interpreting data
+
+Tell the stories 
