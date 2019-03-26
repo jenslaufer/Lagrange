@@ -15,30 +15,59 @@ library(tidyverse)
 ![But it works on my machine](http://i.imgur.com/PnvK7v6.png)
 This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
 illustrates what you often face in software development but also in data science. You are preparing a data analysis or predictive model, 
-but when you want to share share, it does not work on someone else machine. It fails, 
-because libraries are missing, libaries are having the wrong version or other machines are configured in a different manner.
+but when you want to share it, it does not work on someone else machine. It fails, 
+because libraries are missing, libaries are having the wrong version ("dependency hell") or other machines are configured in a different manner.
 
-But there is great way to solve this problem: [Docker](https://www.docker.com/). It solves the problem of reproducability in a lightweight manner, but also offers you many other.
-advantages. 
+But there is great way to solve this problem: [Docker](https://www.docker.com/). It solves the problem of reproducability in a lightweight manner, but also offers you many other advantages. 
 
-__What is docker?__
+__What is Docker?__
 
-Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. By doing so, thanks to the container, the developer can rest assured that the application will run on any other Linux machine regardless of any customized settings that machine might have that could differ from the machine used for writing and testing the code.
+Docker is a free software that performs operating-system-level virtualization.
+Docker is used to run software packages called containers. Containers are isolated from each other and bundle their own application, tools, libraries and configuration files. All containers are run by a single operating-system kernel and are thus more lightweight than virtual machines. [Wikipedia on Docker](https://en.wikipedia.org/wiki/Docker_(software))
+
+Docker makes it easy to create, run, deploy and distribute applications using containers. Applications can be packaged up with all the parts it needs and shipped in one package. The containers ensure that the container can be run on other docker runtime environments.
 
 __Advantages of Docker__:
 
-1. Time: The amount of time that you save on not installing packages in itself makes this framework worth it.
+1. _Reproducibility_
 
-2. Reproducible Research: I think of Docker as akin to setting the random number seed in a report. The same dependencies and versions of libraries that was used in your machine are used on the other person’s machine. This makes sure that the analysis that you are generating will run on any other analysts machine.
+    With docker container you can ensure that you application or analysis can be run without friction. Your shipments are more robust and reliable, as the container contains everything what's need for the application. You are not distributing only the code, but also the environment the code can be run.
 
-3. Distribution: Not only are you distributing your code, but you are also distributing the environment in which that code was run.
+2. _Consisitency_
 
-But how can we use docker in the data science pipeline.
+    Using docker containers let's you have one uniform and conistent runtime environment for all kinds of software artifacts: Data Analyises, Machine Learning Models, Dashboard applications, Web Applications, Statc websites, Machine Learning Model Training. This saves enorumous time for system administration and let's you focus on your core work. You might know something from anaconda environrents, but docker is beyond this for the whole software ecosystem
+
+3. _Tracability:_ 
+
+    a.) Uniform distribution environment for all artifacts
+
+    Docker containers can be stored in one uniform and consistent docker repository within your organisation with all it's version history.
+
+    b.) Version controlling of Docker container code
+
+    Docker containers are build from scripts which can be version controlled. It provides a human readable summary of the necessary software dependencies and  environmental variables.
+
+4. _Portability_
+
+    Docker containers can easyliy ported from one docker environment to another, with tools like docker-machine. Interesting is also docker-swarm ad kubernetes which provide runtime environments which can be easily scaled
+
+
+But what are use cases in the data science universe. I concencrate on the common data science OSEMN workflow: 
+
+__O__: Obtaining data
+
+__S__: Scrubbing data
+
+__E__: Exploring data
+
+__M__: Moodeling
+
+__N__: Interpreting data
 
 
 ## the use cases of Docker in Data Science
 
-Docker can be used in all parts of the data science pipeline nd process. The diffrent cntainer may have complete different toolset and programing languages. The diffrent application, containers can be run on one unique paltform which is suitable to run docker containers.
+Docker can be used in all parts of the data science pipeline nd process. The diffrent cntainer may have complete different toolset and programing languages. The different application, containers can be run on one unique paltform which is suitable to run docker containers.
 
 
 - : Container for scraping data
@@ -49,17 +78,25 @@ Docker can be used in all parts of the data science pipeline nd process. The dif
 
 ### 1. Obtaining data
 
-Data may be generated from clinical trials, scientific experiments, surveys, web pages, computer simulations 
+Data may be generated from clinical trials, scientific experiments, surveys, web pages or computer simulations:
 
-  - Application for Scraping data 
-  - Application for labeling data with mechanical turks 
-  - Database container
+  - Application for scraping data and persisting the data in databases, which are shared in the data workflow
+  - Web Application allowing mechanical turks to label data
+  - Web application for surveys
+  - Corporate web application used by the customers which generates data
+  - Computer simulation that persists it's results into database
+  
+All these kinds of data obtaining applications can be packed into docker containers. They might not even in the hand of data science team and programmed in languages that are not part of the data science stack. They might use different kind of databases, which can easily set up with docker along with application and suits perfectly for the use case.
 
 ### 2. Scrubbing data
 
 Scrubbing data refers to the preprocessing needed to prepare data for analysis. This may involve removing particular rows or columns, handling missing data, fixing inconsistencies due to data entry errors, transforming dates, generating derived variables, combining data from multiple sources
 
-  - Data cleaning & munging
+  - Applications that aggregate new data from raw data 
+  - Applications that aggregate 
+  - Application that clean data to ensure data  quality
+  
+These in containers, which This depends also what kind of technology backgorund the team has. Some might work with R, others with Python. You might have people that work with SQL or use aggregation framework from MongoDB. 
   
 
 ### 3. Exploring data

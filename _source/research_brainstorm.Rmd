@@ -95,6 +95,10 @@ With docker compose you are able to pack more complex multi container applcation
 [https://towardsdatascience.com/docker-for-data-scientists-5732501f0ba4](Docker for Data Scientists):
 
 What is Docker?
+
+
+Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package. By doing so, thanks to the container, the developer can rest assured that the application will run on any other Linux machine regardless of any customized settings that machine might have that could differ from the machine used for writing and testing the code.
+
 It’s a software container platform that provides an isolated container for us to have everything we need for our experiments to run. Essentially, it’s a light-weight VM that’s built from a script that can be version controlled; so we can now version control our data science environment! Developers use Docker when collaborating on code with coworkers and they also use it to build agile software delivery pipelines to ship new features faster. Any of this sound familiar?
 
 - “Not sure why it’s not working on your computer, it’s working on mine.”
