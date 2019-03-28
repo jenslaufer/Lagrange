@@ -1,6 +1,6 @@
 ---
-title: "Use cases of Docker in the Data Science pipeline"
-subtitle: 'or how to avoid the It-works-on-may-computer-but-nowhere-else-problem'
+title: "Use cases of Docker in the Data Science Process"
+subtitle: 'or how to avoid the It-works-on-my-computer-but-nowhere-else-problem'
 output: html_document
 ---
 
@@ -13,6 +13,7 @@ library(tidyverse)
 ```
 
 ![But it works on my machine](http://i.imgur.com/PnvK7v6.png)
+
 This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
 illustrates what you often face in software development but also in data science. You are preparing a data analysis or predictive model, 
 but when you want to share it, it does not work on someone else machine. It fails, 
@@ -23,29 +24,30 @@ The solution is not far away: [Docker](https://www.docker.com/) solves the probl
 __What is Docker?__
 
 Docker is a free software that performs operating-system-level virtualisation.
-Docker is used to running software packages called containers. Containers are isolated from each other and bundle their application, tools, libraries and configuration files. All containers are run by a single operating system kernel and are thus more lightweight than virtual machines. [Wikipedia on Docker](https://en.wikipedia.org/wiki/Docker_(software))
+Docker is used to running software packages called containers. Containers are isolated from each other and bundle their application, tools, libraries and configuration files. All containers are run by a single operating system kernel and are thus more lightweight than virtual machines. [[Wikipedia on Docker](https://en.wikipedia.org/wiki/Docker_(software))]
 
-Docker makes it easy to create, run, deploy and distribute applications using containers. Applications can be packaged up with all the parts it needs and shipped in one package. The concept ensures that the container can be run on other docker runtime environments.
+Docker makes it easy to create, run and distribute and applications. Applications are packaged up with everything that is needed to run the application. The concept guarantees that the container can be run on every docker runtime environment.
 
 __Advantages of Docker__:
 
 1. _Reproducibility_
 
-    With Docker, you can ensure that your application or analysis is runnable smoothly. Your shipments are more robust and reliable, as the container contains everything that's needed for the use. You are not distributing only the code, but also the environment the code can be run.
+    With Docker, you ensure that your software artefact (application, data analysis, model) runs on all docker runtime environment. Your shipments are more robust and reliable, as the container contains everything that's needed to run your artefact. You are not distributing only the code, but also the environment the code can be run.
 
 2. _Consisitency_
 
-    Using docker containers lets you have one uniform and consistent runtime environment for all kinds of software artefacts: Data Analyses, Machine Learning Models, Dashboard applications, Web Applications, static websites, Machine Learning Model Training. It saves enormous time for system administration and lets you focus on your core work. You might know something from anaconda environments, but docker is beyond this for the whole software ecosystem
+    Using docker containers lets you have one uniform and consistent runtime environment for all kinds of software artefacts: Data Analyses, Machine Learning Models, Dashboard applications, Web Applications, Static websites, Machine Learning Model Trainings. It saves enormous time for system administration and lets you focus on your core work. You might know Anaconda environments, Docker is the the tool for the whole software ecosystem.
 
 3. _Tracability:_ 
 
-    a.) Uniform distribution environment for all artefacts
+    a.) Version controlling of Docker container code
 
-    Docker containers are stored in one uniform and consistent docker repository within your organisation with all its version history.
+    A Docker container is built from a script which is a human readable summary of the necessary software dependencies and environment. This script can be version controlled. This makes all changes of the script tracable.
 
-    b.) Version controlling of Docker container code
 
-    Docker containers are built from scripts which can be version controlled. It provides a human-readable summary of the necessary software dependencies and environmental variables.
+    b.) Uniform distribution environment for all artefacts
+
+    Docker containers can be stored in a repository within your organisation. You keep the whole version history this way.
 
 4. _Portability_
 
@@ -54,31 +56,20 @@ __Advantages of Docker__:
 
 However, what are the use-cases for Docker in the data science universe? I will concentrate on the data science OSEMN workflow: 
 
-__O__: Obtaining data
-
-__S__: Scrubbing data
-
-__E__: Exploring data
-
-__M__: Moodeling
-
-__N__: Interpreting data
 
 
-## The use cases of Docker in Data Science
+![OSEMN: Data Science Process](https://cdn-images-1.medium.com/max/1000/1*eE8DP4biqtaIK3aIy1S2zA.png)
+
+
+
+## The use cases of Docker in the Data Science Process
 
 Docker can be used in all parts of the data science pipeline nd process. The different container may have completely different toolset and programming languages. The various applications, containers can be run on one unique paltform which is suitable to run docker containers.
 
 
-- : Container for scraping data
-- Container for Data Product like Shiny App
-- Container with a static web site
-- Container for training in machine learning training pipeline
-- Conatiner wit a trained model
+### 1. Obtaining: Gather Data from relevant sources
 
-### 1. Obtaining data
-
-Data may be generated from clinical trials, scientific experiments, surveys, web pages or computer simulations:
+Data may be generated from clinical trials, web scraping, surveys, scientific experiments, corporate applications or simulations:
 
   - Application for scraping data and persisting the data in databases, which are shared in the data workflow
   - Web Application allowing mechanical turks to label data
@@ -128,4 +119,4 @@ Tell the stories with the insights you got from data.
 
 ## Conclusion
 
-Docker is a powerful tool also for data scientists and can be applied to all stages in the OSEMN pipeline. You can provide all kind of applications in a consistent, reproducible and traceable way. The applications can be very different in their technology stack, which is the reality in data science projects. There data engineers who work with databases like Oracle, MongoDB and programming languages like Java, Python or C++. In the analytics and modelling team people might work with R, Python, Julia or Scala, while data storytellers tell their story with d3.js in JavaScript. As specialists are rare, it's better to let work with the stuff they know instead of pushing people into specific technology stacks they are not familiar with. Docker helps with its consistent, portable and reliable runtime environment to manage this heterogeneous application. 
+Docker is a powerful tool also for data scientists and can be applied to all stages in the OSEMN pipeline. You can provide all kind of applications in a consistent, reproducible and traceable way. The applications can be very different in their technology stack, which is the reality in data science projects. There data engineers who work with databases like Oracle, MongoDB and programming languages like Java, Python or C++. In the analytics and modelling team people might work with R, Python, Julia or Scala, while data storytellers tell their story with d3.js in JavaScript. As specialists are rare, it's better to let work with the stuff they know instead of pushing people into specific technology stacks they are not familiar with. Docker helps with its consistent, portable and reliable runtime environment to manage this heterogeneous application landscape. 
