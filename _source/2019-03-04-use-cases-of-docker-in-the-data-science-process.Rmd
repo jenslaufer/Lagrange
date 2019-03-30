@@ -1,7 +1,12 @@
 ---
 title: "Use cases of Docker in the Data Science Process"
 subtitle: 'or how to avoid the It-works-on-my-computer-but-nowhere-else-problem'
+image: 'PnvK7v6.png'
 output: html_document
+layout: post
+show_comments: yes
+tags: docker, process, data science
+categories: data science
 ---
 
 ```{r setup, include=FALSE}
@@ -12,12 +17,11 @@ knitr::opts_chunk$set(echo = F, message = F, warning = F)
 library(tidyverse)
 ```
 
-![But it works on my machine](http://i.imgur.com/PnvK7v6.png)
 
 This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
 illustrates what you often face in software development but also in data science. You are preparing a data analysis or predictive model, 
 but when you want to share it, it does not work on someone else machine. It fails, 
-because libraries are missing, libraries have the wrong version ("dependency hell"), or configuration differ. Time-Consuming troubleshooting starts.
+because libraries are missing, libraries have the wrong version ("dependency hell"), or configurations differ. Time-Consuming troubleshooting starts.
 
 The solution is not far away: [Docker](https://www.docker.com/) solves the problem of reproducibility in a lightweight manner, but also offers you many other advantages. 
 
@@ -64,36 +68,34 @@ However, what are the use-cases for Docker in the data science universe? I will 
 
 ## The use cases of Docker in the Data Science Process
 
-You can use Docker in all parts of the data science process. The different containers may have different toolset and programming languages. 
+Reality is today that the process has a big variety of tools and programming languages. Docker is the goto platform to manage these hetergogenous technology stacks, as each container just provides the runtime environment it needs to run exactly the one application it is packed around. The interference of technology stacks is reduced this way.
 
 ### 1. Obtain: Gather Data from relevant sources
 
-Data may be generated from clinical trials, web scraping, surveys, scientific experiments, corporate applications or simulations:
+Data is the oil for data science. You need to retrieve it from surveys, clinical trials, web scraping, scientific experiments, corporate applications or simulations. The technology stack is very hetergogenous in this field, as different stakeholders run applications that generate data. Docker is ideal for such hetergogenous environments
 
-  - Application for scraping data and persisting the data in databases, which are shared in the data workflow
-  - Web Application allowing mechanical turks to label data
-  - Web application for surveys
-  - A corporate web application used by the customers which generate data
-  - A computer simulation that persists its results into a database
-  
-All these kinds of data obtaining applications can be packed into docker containers. They might not even in the hand of the data science team and programmed in languages that are not part of the data science stack. They might use different kind of databases, which can easily set up with docker along with application and suits ideally for the use case.
+  - Application for scraping data from the web
+  - Application to label images 
+  - Microsite for surveys 
+  - Corporate web application that generates data while customers use it
+  - Computer simulation that 
+  - Asynchronous data streams that distributes data from low level devices
 
 ### 2. Scrub: Clean and aggregate data to formats the machine understands
 
-Scrubbing data refers to the preprocessing needed to prepare data for analysis. This may involve removing particular rows or columns, handling missing data, fixing inconsistencies due to data entry errors, transforming dates, generating derived variables, combining data from multiple sources.
+The Data which was obtained in Step 1 is the oil, but right now it's raw oil. You need to clean, process and combine it to the data you need for analysis and modelling. This involves a technology stack with a variety of database systems and programming languages.
 
-  - Applications that aggregate new data from raw data 
-  - Applications that aggregate 
-  - An application that clean data to ensure data  quality
-  
-These in containers, which This also depends on what kind of technology background the team has. Some might work with R, others with Python. You might have people that work with SQL or use aggregation framework from MongoDB. 
+  - Applications which aggregate new data from raw data and persist it to new databases
+  - Applications which combine data from different data sources
+  - Apllications which clean the data 
   
 
 ### 3. Explore: Find patterns and trends
 
 In the exploration phase, all you have to do is understand what patterns and values are in the hands of the data. You want to make the results available to everyone interested.
+The a
 
-  - Share notebooks with the results from EDA with Docker containers in a reproducible way
+  - Data Analysis notebooks with the results from exploratory data analysis with Docker containers in a reproducible way
   - Interactive Data Exploring Dashboard Applications Shiny, Dash, Kibana, Tableau etc.
   
 
