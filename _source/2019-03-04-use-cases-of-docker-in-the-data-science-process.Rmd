@@ -1,5 +1,5 @@
 ---
-title: "Use cases of Docker in the Data Science Process"
+title: "Example Use cases of Docker in the Data Science Process"
 subtitle: 'or how to avoid the It-works-on-my-computer-but-nowhere-else-problem'
 image: 'PnvK7v6.png'
 output: html_document
@@ -40,7 +40,7 @@ __Advantages of Docker__:
 
 2. _Consisitency_
 
-    Using docker containers lets you have one uniform and consistent runtime environment for all kinds of software artefacts: Data Analyses, Machine Learning Models, Dashboard Applications, Web Applications, Static Websites, Machine Learning Model Trainings. It reduces the time for system administration and lets you focus on your core work. You might know Anaconda environments; Docker is something similar for the __whole software ecosystem__.
+    Docker equips you with one uniform and consistent runtime environment for all kinds of software artefacts: Data Analyses, Machine Learning Models, Dashboard Applications, Web Applications, Static Websites, Machine Learning Model Trainings. It reduces the time for system administration and lets you focus on your core work. You might know Anaconda environments; Docker is something similar for the __whole software ecosystem__.
 
 3. _Tracability:_ 
 
@@ -55,7 +55,7 @@ __Advantages of Docker__:
 
 4. _Portability_
 
-    Docker containers can easily be ported from one docker environment to another, with tools like docker-machine.  [Docker Swarm](https://docs.docker.com/engine/swarm/) or [Kubernetes](https://kubernetes.io/) provide you with scalable cloud runtime environments.
+    Docker containers can easily be ported from one docker environment to another, with tools like docker-machine.  [Docker Swarm](https://docs.docker.com/engine/swarm/) or [Kubernetes](https://kubernetes.io/) let you scale applications automatically.
 
 
 However, what are the use-cases for Docker in the data science universe? I will concentrate on the data science [OSEMN process](https://www.thelead.io/data-science/5-steps-to-a-data-science-project-lifecycle): 
@@ -68,35 +68,37 @@ However, what are the use-cases for Docker in the data science universe? I will 
 
 ## The use cases of Docker in the Data Science Process
 
-Reality is today that the process has a big variety of tools and programming languages. Docker is the goto platform to manage these hetergogenous technology stacks, as each container just provides the runtime environment it needs to run exactly the one application it is packed around. The interference of technology stacks is reduced this way.
+Reality is today that the process consists of a big variety of tools and programming languages. Docker is the goto platform to manage these hetergogenous technology stacks, as each container provides the runtime environment it needs to run exactly the one application it is packed around. The interference of technology stacks is reduced this way.
 
 ### 1. Obtain: Gather Data from relevant sources
 
-Data is the oil for data science. You need to retrieve it from surveys, clinical trials, web scraping, scientific experiments, corporate applications or simulations. The technology stack is very hetergogenous in this field, as different stakeholders run applications that generate data. Docker is ideal for such hetergogenous environments
+Data is the oil for data science. You need to retrieve it from surveys, clinical trials, web scraping, scientific experiments, corporate applications or simulations. Typiscally data engineers are dealing with the data, but also stackholders from other fields are involved, which leads to a wide diversity of database systems and programming languages.  
 
-  - Application for scraping data from the web
-  - Application to label images 
-  - Microsite for surveys 
-  - Corporate web application that generates data while customers use it
-  - Computer simulation that 
-  - Asynchronous data streams that distributes data from low level devices
+  - Webscraping: Python application with low level dependencies to Selenium Chrome extension and a Postgres for the data is packed as multi container application with [Docker Compose](https://docs.docker.com/compose/)
+  - Labeling images: Lean web application with Vue.js, a NodeJS backend and a MongoDB is used to label images
+  - Surveys: Small static microsite in plain HTML with a integrated SurveyMonkey form build by the marketing team 
+  - Corporate application: Banking web application implemented in AngularJs and Java in the backend with a Oracle database produces valuable banking data from the customers
+  - Computer simulation: Simulation programmed in C++ stores its results in JSON on Amazon S3 
+  - Asynchronous data streams:  Sensors in cars sending its data to Kafka, which is distributing the data to all application within the company which are interested in it
 
 ### 2. Scrub: Clean and aggregate data to formats the machine understands
 
 The Data which was obtained in Step 1 is the oil, but right now it's raw oil. You need to clean, process and combine it to the data you need for analysis and modelling. This involves a technology stack with a variety of database systems and programming languages.
 
-  - Applications which aggregate new data from raw data and persist it to new databases
-  - Applications which combine data from different data sources
-  - Apllications which clean the data 
+  - Aggregation: Application in Java that gets the data from Kafka streams, does some aggregations and stores it to Oracle
+  - Data analysts clean and preprocess the data from a corporate web application as preparation for answering a business question with a RMarkdown Notebook, which they want to share with the management
+  - Machine Learning engineer combines data from different data sources, cleans and preprocesses data for a predictive model in a Juypter Notebook 
+  - Data is combined, cleaned, aggregated and preprocessed and persited for hugh level interactive dashboard applications for the managers for a Dash application
   
 
 ### 3. Explore: Find patterns and trends
 
 In the exploration phase, all you have to do is understand what patterns and values are in the hands of the data. You want to make the results available to everyone interested.
-The a
 
-  - Data Analysis notebooks with the results from exploratory data analysis with Docker containers in a reproducible way
-  - Interactive Data Exploring Dashboard Applications Shiny, Dash, Kibana, Tableau etc.
+
+  - Data Analysts are creating Jupyter or RMarkdown Notebooks to answer question they need to share with everyone who is interested
+  - Data Analyst cluster the customers into new segments based on data analysis which is persisted in a new Customomer Segment MySQL Database 
+  - Interactive Data Exploring Dashboard Applications Shiny, Dash, Kibana, Tableau etc. Data Analysts build interactive web applications for high level data exploring for the management in Shiny, Dash, Tableau or Kibana
   
 
 ### 4. Model: Construct models to predict and forecast
@@ -105,8 +107,8 @@ Now, we have come to an exciting step. The so-called model is the general model 
 
 Predictive Analytics has become the key to changing the rules of the game. What predictive analysis does is not to look back at the “what happened”, but to help managers answer questions such as “What will be next?” and “How should we respond?” (from Forbes Magazine).
 
-- Container for training machine learning model
-- Microservices which provide a machine learning model
+- The complete training process for a neural network for object detection on images is isolated to a docker container, which is run on GPU-enhanced cloud instance ([Nvidia Docker](https://github.com/NVIDIA/nvidia-docker)). The instance is runnable on Azure, Google Cloud, AWS or Alibaba cloud with no effort.
+- A Keras model as a result is imported into DeepLearning4J and published as aJava Microservice due to performance issues with Python
 
 ### 5. Interpret: Put the results into good use
 
@@ -116,10 +118,14 @@ Tell the stories with the insights you got from data.
 
 - Static website to provide data story articles
 - Microsites  to tell the data story
-- Tableau server to tell data stories
-- Microservices, which offer models 
+- A predictive machine learning model in Python is released as microservice
+- A REST microservice  in Java with aggregated data is realeased to payed B2B customers
+- A product recommender Service in Python is integrated into the company's web application
+- A compelling data story with d3.js visualizations is shared to the public
+- Another story is published on the company's Tableau Server
+- Interested insights from data analysts is shared by data story tellers from the content management team to the public on the static company blog, which is run with Ruby Jekyll
 
 
 ## Conclusion
 
-Docker is a powerful tool also for data scientists and can be applied to all stages in the OSEMN process. You can provide all kind of applications in a consistent, reproducible and traceable way. The applications can be very different in their technology stack, which is the reality in data science projects. Data engineers work with databases like Oracle, MySQL, MongoDB, Reddis or ElasticSearch or programming languages like Java, Python or C++. In the analytics and modelling team, people might work with R, Python, Julia or Scala, while data storytellers tell their story with d3.js in JavaScript or use Tableau. As specialists are rare, it's better to let the people work with the stuff they know instead of them into specific technology stacks they are not familiar with. You get better results faster. Docker is the way to go to manage this heterogeneous application landscape. 
+Docker is a powerful tool also for data scientists and can be applied to all stages in the OSEMN process. You can provide all kind of applications in a consistent, reproducible and traceable way. The applications can be very different in their technology stack, which is the reality in data science projects. Data engineers work with databases like Oracle, MySQL, MongoDB, Reddis or ElasticSearch or programming languages like Java, Python or C++. In the analytics and modelling team, people might work with R, Python, Julia or Scala, while data storytellers tell their story with d3.js in JavaScript or use Tableau. As specialists are rare, it's better to let the people work with the stuff they know instead of them into specific technology stacks they are not familiar with. You get better results faster. Docker is the way to go to manage this heterogeneous technology landscape in data science.
