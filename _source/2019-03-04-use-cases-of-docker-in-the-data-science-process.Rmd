@@ -18,7 +18,7 @@ library(tidyverse)
 ```
 
 
-This excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
+The excellent [comic by Jeff Lofvers](http://donthitsave.com/comic/2016/07/15/it-works-on-my-computer) 
 illustrates what you often face in software development but also in data science. You are preparing a data analysis or predictive model, 
 but when you want to share it, it does not work on someone else machine. It fails, 
 because libraries are missing, libraries have the wrong version ("dependency hell"), or configurations differ. Time-Consuming troubleshooting starts.
@@ -84,6 +84,7 @@ Data is the oil for data science. You retrieve it from surveys, clinical trials,
 ### 2. Scrub: Clean and aggregate data to formats the machine understands
 
 The Data which was obtained in Step 1 is the oil, but right now it's raw oil. You need to clean, process and combine it to the data you need for analysis and modelling.
+
   - Aggregation: An Application in Java gets the data from Kafka streams, does aggregations on the low-level data and stores it to an Oracle database
   - Data analysts clean and preprocess the data from a corporate web application as preparation for answering a business question with an RMarkdown Notebook, which they want to share with the management
   - Machine Learning engineer combines data from different data sources, cleans and preprocesses data for a predictive model in a Juypter Notebook 
@@ -96,13 +97,13 @@ In the exploration phase, all you have to do is understand what patterns and val
 
 
   - Data Analysts are creating Jupyter or RMarkdown Notebooks to answer a question they need to share with everyone interested in it.
-  - Data Analyst cluster the customers into new segments based on data analysis which is persisted in a new Customer Segment MySQL Database 
-  - Data Analysts build interactive web applications for high-level data exploring for interested stakeholders in R Shiny, Dash, Tableau or Kibana
+  - Data Analysts cluster the companys customers into new segments which are persisted in a Customer Segment Database in MySQL
+  - Data Analysts build interactive web applications for high-level data exploring for interested stakeholders in R Shiny, Dash, Tableau or Kibana. This way managers can find patterns on their own.
   
 
 ### 4. Model: Construct models to predict and forecast
 
-The cleaned and preprocessed data is  used to train machine or deep learning algorithms. You create models this way which are a mathematical representation of observed data.
+The cleaned and preprocessed data is used to train machine or deep learning algorithms. You create models this way which are a mathematical representation of observed data. They can be used for predictions,
 
 - The complete training process for a neural network for object detection on images is isolated to a Docker container, which is run on a GPU-enhanced cloud instance ([Nvidia Docker](https://github.com/NVIDIA/nvidia-docker)). The instance is runnable on Azure, Google Cloud, AWS or Alibaba cloud with no effort.
 - A Keras model is imported into DeepLearning4J and published as a Java Microservice due to performance issues with Python
