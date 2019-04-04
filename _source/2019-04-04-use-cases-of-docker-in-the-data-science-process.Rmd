@@ -38,11 +38,11 @@ __Advantages of Docker__:
 
     With Docker, you ensure that your software artefact (application, data analysis, predictive model etc.) runs on all docker runtime environments. Your shipments are more robust, as the container contains everything that's needed to run your artefact. You are not distributing only the code, but also the environment.
 
-2. _Consisitency_
+2. _Consistency_
 
     Docker equips you with one uniform and consistent runtime environment for all kinds of software artefacts. It reduces the time for system administration and lets you focus on your core work. You might know Anaconda environments; Docker is something similar for the __whole software ecosystem__.
 
-3. _Tracability:_ 
+3. _Traceability_ 
 
     a.) Version controlling of Docker container code
 
@@ -89,13 +89,13 @@ The Data which was obtained in Step 1 is the oil, but right now it's raw oil. Yo
 
   - Aggregation: An Application in Java gets the data from Kafka streams, does aggregations on the low-level data and stores it to an Oracle database
   - Data analysts clean and preprocess the data from a corporate web application as preparation for answering a business question with an RMarkdown Notebook, which they want to share with the management
-  - A Machine Learning Engineer combines data from different data sources, cleans and preprocesses data for a predictive model in a Juypter Notebook 
+  - A Machine Learning Engineer combines data from different data sources, cleans and preprocesses data for a predictive model in a Jupyter Notebook 
   - Data is combined, cleaned, aggregated and preprocessed and persisted for high-level interactive dashboards in Tableau
 
 
 Some of these use cases might be already done in the data retrieval step and have more a data engineering technology stack. Other use cases overlap with the exploration and modelling phase and involve technologies more typical for data analytics.
 
-A lot of data analytics work is done in Notebooks (Jupyter, RMarkdown) which need to be published. You can use a central Jupyter instance for the organisation. The problem with this approach is that you might be stuck with fixed configuations and library versions. Another method would be to publish one or more Notebooks with Docker containers. Then you are more flexibel with particular setups.  
+A lot of data analytics work is done in Notebooks (Jupyter, RMarkdown) which need to be published. You can use a central Jupyter instance for the organisation. The problem with this approach is that you might be stuck with fixed configurations and library versions. Another method would be to publish one or more Notebooks with Docker containers. Then you are more flexible with particular setups.  
 
 
 ### 3. Explore: Find patterns and trends
@@ -105,7 +105,7 @@ In the exploration phase, all you have to do is to understand what patterns and 
 
   - Data Analysts are creating Jupyter or RMarkdown Notebooks to answer a question they need to share with everyone interested in it.
   - Data Analysts cluster the companies customers into new segments which are persisted in a Customer Segment Database in MySQL
-  - Data Analysts build interactive web applications for high-level data exploring for interested stakeholders in , Dash, Tableau or Kibana. This way managers can find patterns on their own (danger zone!).
+  - Data Analysts build interactive web applications for high-level data exploring for interested stakeholders in RShiny, Dash, Tableau or Kibana. This way managers can find patterns on their own (danger zone!).
   
 
 ### 4. Model: Construct models to predict and forecast
@@ -115,7 +115,7 @@ The cleaned and preprocessed data is used to train machine or deep learning algo
 - The complete training process for a neural network for object detection in images is isolated to a Docker container that is run on Azure, AWS or Google Cloud
 - A Keras model is imported into DeepLearning4J and published as a Java Microservice due to performance issues with Python
 
-To train a neural networks you need a lot of GPU power. You need [Nvidia Docker](https://github.com/NVIDIA/nvidia-docker) for isolating the training process to a Docker container, as using GPU cannot be done in a hardware-agnostic and platform-agnostic way.
+To train neural networks you need a lot of GPU power. You need [Nvidia Docker](https://github.com/NVIDIA/nvidia-docker) for isolating the training process to a Docker container, as using GPU cannot be done in a hardware-agnostic and platform-agnostic way.
 
 
 ### 5. Interpret: Put the results into good use
