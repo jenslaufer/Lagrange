@@ -157,7 +157,7 @@ Docker is the way to go to manage the heterogeneous technology landscape in data
 
 [Dockerizing a Node.js web app](https://nodejs.org/de/docs/guides/nodejs-docker-webapp/)
 
-[https://vuejs.org/v2/cookbook/dockerize-vuejs-app.html](https://vuejs.org/v2/cookbook/dockerize-vuejs-app.html)
+[Dockerize Vue.js App](https://vuejs.org/v2/cookbook/dockerize-vuejs-app.html)
 
 [Running MongoDB as a Docker container](https://www.thachmai.info/2015/04/30/running-mongodb-container/)
 
