@@ -1,0 +1,121 @@
+---
+title: "Training a Neural Network in Docker"
+subtitle: "Case study of training a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within Docker on AWS"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In my last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  I was talking about Docker in Data Science in genaral. This time I want to get my hands dirty with a more practical example. The [source code for this project available on Github](https://github.com/jenslaufer/neural-network-training-with-docker)
+
+In this case study I want to show you how to train a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within a Docker container. I used a standard technology stack for this project with Tensorflow, Keras with Python. Before going into the details I want to define some requirements for this little project:
+
+- Training should be done in the cloud on AWS (or Azure, GCloud, Alibaba Cloud) on a GPU empowered instance
+- NVIDIA docker should used to enable the training is done GPU power
+- The whole data pipeline is covered within the container
+- The different models are persisted with all models meta data on MongoDB
+- Usage of Docker compose, as we have a multi container application (training container + MongoDB)
+- The whole training setup is "logged" to keep everything reproducable
+
+Input: 
+
+The docker container is parameterized with initial a json file with the parameters for the training session the mongodb with all parameters for each training session. 
+
+- session name 
+- optimizer
+- learning rate
+- learning rate decay
+- batch size
+- number of epochs
+
+Output:
+
+- hdf5 model file
+- model accuracy on test set
+- trainings parameter for training session (input paramters)
+
+
+
+
+### Training Scripts
+
+
+I put the whole training pipeline into one script src/training.py. The file consist of one class for the whole training pipeline:
+
+- Data retrieval: Images are downloaded from S3 and stored to folders needed for Keras.Images are splittedt inot traing and test set.
+- Data preporcessiong: Images are preprocessed for extracting bottleneck features. Image augmentation is done, 
+- Extracting bottleneck features. Features are persisted to mongodb
+- Shallow neural network is intilaized
+- Shallow neural network is trained on bottleneck features
+- Model is persisted to MongoDB, along with log from training process, and training parameters
+
+
+
+### Containerization
+
+You put everything you need for training the neural network into the Dockerfile, which defines the runtime environment for our training.
+Luckily you don't have to setup a linux container with python and all librariers from the scratch. We can use an offical tensorflow docker image. Here's the dockerfile we use for our project. It's fine, that there is not too much in.
+
+
+```{#numCode .Docker .numberLines} 
+FROM tensorflow/tensorflow:latest-gpu-py3
+ 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      bzip2 \
+      g++ \
+      git \
+      graphviz \
+      libgl1-mesa-glx \
+      libhdf5-dev \
+      openmpi-bin \
+      wget && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY src /src
+COPY entrypoints /src/entrypoints
+
+WORKDIR /src
+
+RUN pip install -r requirements.txt
+
+ENV PYTHONPATH='/src/:$PYTHONPATH'
+
+ENTRYPOINT ["entrypoints/entrypoint.train.gpu.sh"]
+
+```
+
+In the first line (with FROM) you define our base container. We use the official tensorflow image with python3 and gpu.
+
+Then we install several linux dependencies which are needed. With the COPY statement we copy everything from the src and entrypoints into the container. We set the WORKDIR. This is directory the container is in when it's started. We add our src directory to the python path. 
+
+The last line we define the entrypoint. This is the script to start our training.
+
+We can build our container
+
+
+
+#### Dockerfile
+
+#### Build Docker Container
+
+#### Multicontainer Application
+
+#### Setup cloud instance
+
+### Training the neural network
+
+### Models Evaluation
+
+### Conclusion
+
+
+
+
+
+
+
+
+
+
