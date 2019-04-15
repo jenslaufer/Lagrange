@@ -1,7 +1,9 @@
 ---
 title: "Training a Neural Network in Docker"
 subtitle: "Case study of training a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within Docker on AWS"
-output: html_document
+output: 
+  html_document:
+     highlight: haddock
 ---
 
 ```{r setup, include=FALSE}
@@ -55,11 +57,29 @@ I put the whole training pipeline into one script src/training.py. The file cons
 
 ### Containerization
 
-You put everything you need for training the neural network into the Dockerfile, which defines the runtime environment for our training.
-Luckily you don't have to setup a linux container with python and all librariers from the scratch. We can use an offical tensorflow docker image. Here's the dockerfile we use for our project. It's fine, that there is not too much in.
 
 
-```{#numCode .Docker .numberLines} 
+
+
+
+
+We use the official tensorflow image with python3 and gpu.
+
+Then we install several linux dependencies which are needed. With the COPY statement we copy everything from the src and entrypoints into the container. We set the WORKDIR. This is directory the container is in when it's started. We add our src directory to the python path. 
+
+The last line we define the entrypoint. This is the script to start our training.
+
+We can build our container
+
+
+
+#### Dockerfile
+
+You put everything you need for training for the neural network into the Dockerfile, which defines the runtime environment for our training.
+
+
+
+```{.Docker .numberLines} 
 FROM tensorflow/tensorflow:latest-gpu-py3
  
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -74,7 +94,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 COPY src /src
-COPY entrypoints /src/entrypoints
 
 WORKDIR /src
 
@@ -86,17 +105,67 @@ ENTRYPOINT ["entrypoints/entrypoint.train.gpu.sh"]
 
 ```
 
-In the first line (with FROM) you define our base container. We use the official tensorflow image with python3 and gpu.
-
-Then we install several linux dependencies which are needed. With the COPY statement we copy everything from the src and entrypoints into the container. We set the WORKDIR. This is directory the container is in when it's started. We add our src directory to the python path. 
-
-The last line we define the entrypoint. This is the script to start our training.
-
-We can build our container
+```shell
+docker build -t jenslaufer/neural-network-training-with-docker .
+docker-compose up -d  --force-recreate
+```
 
 
+Line 1: Definition of base image. The setup and configuration is inherited from this image. An official tensorflow image with python3 and gpu support is used.
 
-#### Dockerfile
+Line 3-12: Installation of additional linux packages with a standard apt-get.
+
+Line 14: Everthing from the local directeory src, which holds all trainings scripts and entrypoints, is copied into the image.
+
+Line 16: Initial directory, when the conatiner is started
+
+Line 18: Installation of python requirements
+
+Line 19: src directory is added to PYTHONPATH 
+
+Line 21: Definition of entrypoint for the image. This script is executed when the container is started. This scripts starts our python training script.
+
+
+Our entrypoint shell script looks like this and is pretty self-explaining.
+
+
+```bash
+#!/bin/bash
+
+python -m cnn.cifar10
+```
+
+
+First, you need to build the docker image.
+
+```bash
+docker build -t jenslaufer/neural-network-training-with-docker .
+```
+
+Theoretically you could start this container for the training. However it won't work as our training script needs a mongodb as persistence container for the trainings parameters and results.
+
+You have in this case a multicontainer application. docker-compose is your fiend in this scenario. You create a docker-compose.yml in which the different containers are setup.
+
+```{.yaml .numberLines} 
+version: '2'
+
+services:
+  training:
+    image: jenslaufer/neural-network-training-with-docker:latest
+    container_name: neural-network-training-with-docker
+    depends_on:
+      - trainingdb
+
+  trainingdb:
+    image: mongo:3.6.12
+    container_name: trainingdb
+    ports:
+      - 27018:27017
+    command: mongod
+```
+
+
+
 
 #### Build Docker Container
 
