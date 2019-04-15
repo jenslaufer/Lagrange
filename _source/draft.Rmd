@@ -164,6 +164,9 @@ services:
     command: mongod
 ```
 
+Line 4: Definition of the training container which uses the jenslaufer/neural-network-training-with-docker
+
+Line 10:
 
 
 
