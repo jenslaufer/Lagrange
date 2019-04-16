@@ -1,0 +1,71 @@
+---
+title: "Calendar Heatmap Visualisation with ggplot2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F)
+```
+```{r}
+library(tidyverse)
+```
+
+
+In this article I want to show you how to create a calendar heatmap with ggplot2.  For these example I am using a example we visualize the overall occupancy of holdiday flats in an area. With the heatmap you can easily spot days with higher occupancy, which can lead to further steps like increase prices. I am using this for a tiny data product for doing market analysis on Airbnb.
+
+
+```{r}
+prepare.time.series <- function(date_series_df, date_field) {
+  date <- as.Date(date_series_df[[grep(date_field, names(date_series_df))]])
+  date_series_df$year <- as.numeric(as.POSIXlt(date)$year + 1900)
+  date_series_df$month <- as.numeric(as.POSIXlt(date)$mon + 1)
+  date_series_df$day <- as.numeric(as.POSIXlt(date)$mday)
+  date_series_df$week <- as.numeric(format(date, "%W"))
+  date_series_df$weekday <- as.numeric(as.POSIXlt(date)$wday)
+  date_series_df$monthf <- factor(date_series_df$month,
+                                  levels = as.character(1:12),
+                                  labels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"),
+                                  ordered = TRUE)
+  date_series_df$weekdayf <- factor(date_series_df$weekday, 
+                                    levels = rev(0:6), 
+                                    labels = rev(c("Su", "Mo", "Tu", "We", "Th", "Fr", "Sa")),
+                                    ordered = TRUE)
+  
+  date_series_df <- date_series_df %>% 
+                        filter(!is.na(week)) %>% 
+                        group_by_(.dots = c("year", "month")) %>% 
+                        mutate(monthweek = 1 + week - min(week))
+  
+  date_series_df$monthweek <- as.factor(date_series_df$monthweek)
+  return(date_series_df)
+}
+
+heatmap <- function(df, var, title_label, fill_label, gradient_colours = c("lightgreen", "grey", "orange2")) {
+    df %>% 
+      ggplot(aes(x = weekdayf, y = monthweek)) + 
+      geom_tile(aes(fill = var)) +
+      geom_text(aes(label = day)) + 
+      scale_y_discrete(limits = rev(levels(df$monthweek)), labels = c("", "", "", "", "", "")) + 
+      scale_x_discrete(limits = c("Mo","Tu", "We", "Th", "Fr", "Sa", "Su")) + 
+      scale_fill_gradientn(colours = gradient_colours, breaks = pretty(var)) + 
+      labs(x = "", y = "", fill = fill_label, title = title_label) + 
+      facet_grid(year ~ monthf) + 
+      theme(line = element_blank())
+}
+
+```
+
+```{r}
+heatmap.data <- read_csv("../_data/heatmap_data.csv") %>% mutate(occupancy=occupancy*100)
+```
+
+```{r}
+heatmap.data <- prepare.time.series(heatmap.data, 'date') 
+```
+
+
+```{r , fig.width=20, fig.height=6}
+heatmap(heatmap.data, heatmap.data$occupancy, fill_label = 'Occupancy in %', title_label='Demo Heatmap')
+```
+
+
