@@ -1,7 +1,7 @@
 ---
 title: "Example Use Cases of Docker in the Data Science Process"
 subtitle: '...or how to avoid the It-works-on-my-computer-but-nowhere-else-problem'
-image: 'PnvK7v6.png'
+image: '/assets/img/PnvK7v6.png'
 output: html_document
 layout: post
 show_comments: yes
