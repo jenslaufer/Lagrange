@@ -6,7 +6,7 @@ categories:
   - "data retrieval"
 show_comments: true
 tags: scraping, "data retrieval"
-image: scraping.jpg
+image: '/assets/img/scraping.jpg'
 output:
   html_document: default
 ---
