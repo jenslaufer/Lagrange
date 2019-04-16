@@ -1,7 +1,7 @@
 ---
 title: "Image aesthetics quantification with a convolutional neural network (CNN)"
 subtitle: "Project report for training a MobileNetV1 based convolutional neural network (CNN) with  only 14,000 images with transfer learning"
-image: nima.jpg
+image: /assets/img/nima.jpg
 image_subtitle: "Photo by Jakob Owens on Unsplash"
 layout: post
 output:
