@@ -10,33 +10,36 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In my last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  I was talking about Docker in Data Science in genaral. This time I want to get my hands dirty with a more practical example. The [source code for this project available on Github](https://github.com/jenslaufer/neural-network-training-with-docker)
+In my last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  I was talking about Docker in Data Science in general. This time I want to get my hands dirty with a more practical example. The [source code for this project](https://github.com/jenslaufer/neural-network-training-with-docker)  available on Github.
 
 In this case study I want to show you how to train a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within a Docker container. I used a standard technology stack for this project with Tensorflow, Keras with Python. Before going into the details I want to define some requirements for this little project:
 
 - Training should be done in the cloud on AWS (or Azure, GCloud, Alibaba Cloud) on a GPU empowered instance
 - NVIDIA docker should used to enable the training is done GPU power
-- The whole data pipeline is covered within the container
-- The different models are persisted with all models meta data on MongoDB
+- The whole pipeline is covered within the container
+- The different models are persisted with all models meta data on MongoDB for model versioning and reproducability
 - Usage of Docker compose, as we have a multi container application (training container + MongoDB)
-- The whole training setup is "logged" to keep everything reproducable
 
 Input: 
 
-The docker container is parameterized with initial a json file with the parameters for the training session the mongodb with all parameters for each training session. 
+The docker container is parameterized from a MongoDB collection with all parameters of a training session. 
 
-- session name 
+- loss function
 - optimizer
-- learning rate
-- learning rate decay
 - batch size
 - number of epochs
+- subset percentage of all samples used for training (used for testing with less images)
+
+![Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/v1555506062/screenshot_input.png)
 
 Output:
 
-- hdf5 model file
-- model accuracy on test set
-- trainings parameter for training session (input paramters)
+- Model architecture file
+- Model weights file
+- Model accuracy on test set
+- Trainings parameter for training session (input paramters)
+
+![Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/screenshot_output.png)
 
 
 
@@ -53,14 +56,18 @@ I put the whole training pipeline into one script src/training.py. The file cons
 - Shallow neural network is trained on bottleneck features
 - Model is persisted to MongoDB, along with log from training process, and training parameters
 
+1. Keras is downloading the CIFAR-10 images to the local filesystem. CIFAR-10 dataset is part of Keras
+2. Base model (InceptionV3) is loaded with imagenet weights. Top fully connetced layer is removed.
+3. Bottleneck features are extracted for training and test images
+4. Our shallow fully connected model is created and compiled
+5. The fully connected model is trained
+6. Model is tested on test set. 
+
+[Source Code](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py)
+
 
 
 ### Containerization
-
-
-
-
-
 
 
 We use the official tensorflow image with python3 and gpu.
@@ -108,6 +115,7 @@ ENTRYPOINT ["entrypoints/entrypoint.train.gpu.sh"]
 ```shell
 docker build -t jenslaufer/neural-network-training-with-docker .
 docker-compose up -d  --force-recreate
+docker logs -f neural-network-training-with-docker
 ```
 
 
@@ -180,7 +188,14 @@ Line 10:
 
 ### Models Evaluation
 
-### Conclusion
+## Conclusion
+
+### Improvements
+
+- Find a way to load shallow model architecture from MongoDB
+- More generic way to persist the validation metric (in this case accuracy)
+- More generic way to persist optimizer and it's unique parameters
+
 
 
 
