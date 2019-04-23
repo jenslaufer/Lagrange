@@ -1,6 +1,6 @@
 ---
-title: "Deep Learning in Docker"
-subtitle: "Case study of training a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within Docker on AWS"
+title: "Practical example of Transfer Learning in Docker"
+subtitle: "Training a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within Docker on AWS"
 output: 
   html_document:
      highlight: haddock
@@ -10,9 +10,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-My last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  was about Docker in Data Science in general. This time I want to get my hands dirty with a more practical example. 
+My last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  was about Docker in Data Science in general. This time I want to get my hands dirty with a practical example. 
 
-In this case study I want to show you how to train a shallow neural network on top of a InterceptionV3 model on CIFAR-10 images within a Docker container. I used a standard technology stack for this project with Python, Tensorflow and Keras. The [source code for this project](https://github.com/jenslaufer/neural-network-training-with-docker)  available on Github. 
+In this case study I want to show you how to train a shallow neural network on top of a deep InterceptionV3 model on CIFAR-10 images within a Docker container. I used a standard technology stack for this project with Python, Tensorflow and Keras. I use transfer learning in this example. The [source code for this project](https://github.com/jenslaufer/neural-network-training-with-docker) is available on Github. 
 
 
 Before going into the details I want to define some requirements for this little project:
@@ -25,9 +25,9 @@ Before going into the details I want to define some requirements for this little
 - Usage of docker-compose for the multi container application (training container + MongoDB)
 - Usage of docker-machine to manage the cloud instance and start the training from the local command line with docker-compose
 
-Input: 
+__Input__
 
-The docker container is parameterized from a MongoDB collection with all parameters of a training session. 
+The docker container is parameterized from a MongoDB collection with all parameters for a training session. 
 
 - loss function
 - optimizer
@@ -39,7 +39,7 @@ I just use a subset of optimization parameters for simplification
 
 [Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1713/v1555506062/screenshot_input.png)
 
-Output:
+__Output__
 
 - Model architecture file
 - Model weights file
@@ -50,19 +50,19 @@ Output:
 Persisting the results (and models) this way improves the model performance analysis and parameter tuning. 
 
 
-## Prerequisites
+### Prerequisites
 
 1. Install [Docker](https://docs.docker.com/install/) along with [Docker Machine](https://docs.docker.com/machine/) and [Docker Compose](https://docs.docker.com/compose/) (On Mac and Windows all tools are installed with the standard installation of Docker)
 2. Create an Account on [AWS](https://aws.amazon.com)
 3. Install [AWS Command Line Client](https://github.com/aws/aws-cli) and set it up with your AWS account.
 
 
-### Training Scripts
+### Training Script
 
 
 I put the whole training pipeline into one script [src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) The file consist of one class for the whole training pipeline:
 
-1. Keras is downloading the CIFAR-10 images to the local file.
+1. Keras is downloading the CIFAR-10 images to the container file system.
 2. Base model (InceptionV3) is loaded with imagenet weights. Top fully connetced layer is removed.
 3. Bottleneck features are extracted for training and test images and persisted to MongoDB for further usage.
 4. The shallow model is created, compiled and persisted to MongoDB 
@@ -120,13 +120,13 @@ Our entrypoint shell script looks like this and is pretty self-explaining.
 python -m cnn.cifar10
 ```
 
-We just start the cifar module with no parameters. The cifar10 scripts fetches the the training parameters from MongoDB.
+We just start the cifar module with no parameters. The cifar10 scripts fetches the training parameters from MongoDB.
 
 
 
 #### Docker Container Build
 
-First, you need to build the docker image. You can skip this step as I shared the ready-built [Docker image on Docker Hub](https://hub.docker.com/r/jenslaufer/neural-network-training-with-docker/tags).
+First, you need to build the docker image. You can skip this step as I shared the ready-built [Docker image on Docker Hub](https://hub.docker.com/r/jenslaufer/neural-network-training-with-docker/tags). The image is automatically downloaded when it is referenced the first time.
 
 ```bash
 docker build -t jenslaufer/neural-network-training-with-docker .
@@ -158,29 +158,48 @@ services:
 ```
 
 _Line 4-5: Definition of the training container which uses the jenslaufer/neural-network-training-with-docker image with tag 0.1.0-gpu. This image is automatically downloaded from the public Docker Hub repository_
+
 _line 6: The runtime environment for tensorflow_
-_line 9: The training containers needs the trainingdb container for execution. In the code use mongodb://trainingdb as Mongo URI_
+
+_line 9: The training containers needs the trainingdb container for execution. In the code you use mongodb://trainingdb as Mongo URI_
+
 _Line 11-12: Definition of MongoDB database. A official mongo image on Docker Hub is used with version 3.6.12_
+
 _Line 14-15: The internal port 27017 is available as port 27018 from outsite_
+
 _Line 16: Mongo deameon is started_
 
 You can see that it's very easy to setup a multi application with docker compose. You just setup a database with a few lines of code without complicated installation routines.
 
 
 
-#### Setup cloud instance
+### AWS 
 
-We want to train the neural network on the AWS. You need to have account for [Amazon AWS](https://aws.amazon.com). However an account is setup within minutes.
+#### Cloud Instance Setup
+
+We want to train the neural network on the AWS. This steps takes the most effort. However, once the AWS instance is setted up you can reuse it.
 
 
 
 ```shell
-docker-machine create --driver amazonec2 --amazonec2-ami ami-0a313d6098716f372 --amazonec2-instance-type  p2.xlarge --amazonec2-vpc-id vpc-1513d06f   cifar10-deep-learning
+docker-machine create --driver amazonec2 --amazonec2-ami ami-0a313d6098716f372 --amazonec2-instance-type  p2.xlarge --amazonec2-vpc-id <YOUR VPC-ID>   cifar10-deep-learning
 ```
-[Docker Amchine with AWS](https://docs.docker.com/machine/get-started/)
-[Documentation](https://docs.docker.com/machine/drivers/aws/)
+We create a AWS instance with Docker Machine. I use a Amazon Image with Ubuntu 18.04 (ami-0a313d6098716f372) with a p2.xlarge instance type. The p2.xlarge uses one Tesla K80 GPU. You have to find out your VPC-ID for the setup.
 
-Please check 
+Use this command to find out  the VPC-ID:
+```shell
+aws ec2 describe-vpcs --filters "Name=isDefault, Values=true"
+```
+
+
+
+For more information check the [Docker Machine with AWS](https://docs.docker.com/machine/get-started/) Documentation.
+
+
+__*Warning: The p2.xlarge cost $0.9 per HOUR. Please don't forget to stop the instance after training*__
+
+#### Installation of CUDA drivers and nvidia-docker
+
 ```shell
  docker-machine ssh cifar10-deep-learning
 ```
@@ -261,6 +280,9 @@ PS C:\Users\jensl\Documents\neural-network-training-with-docker>docker-compose -
 ### Models Evaluation
 
 ## Conclusion
+
+We setup in this case study a GPU-empowered instance on AWS to use this additional computer to train a 
+
 
 ### Improvements
 
