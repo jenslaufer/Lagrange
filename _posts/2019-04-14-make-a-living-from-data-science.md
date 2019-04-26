@@ -5,6 +5,7 @@ image: https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_750/v1555402
 image_subtitle: "Photo by Jakob Owens on Unsplash"
 tags: data science, entrepreneurship
 categories: data science
+redirect_from: "/make-a-living-from-data-science.html"
 ---
 
 You made yourself a plan.
