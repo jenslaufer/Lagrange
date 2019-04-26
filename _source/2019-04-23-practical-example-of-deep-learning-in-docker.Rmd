@@ -3,6 +3,8 @@ title: "Practical example of Training a Neural Network in the AWS cloud with Doc
 subtitle: "How to train a shallow neural network on top of an InceptionV3 model on CIFAR-10 within Docker on an AWS GPU-instance"
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_948/v1556113451/samuel-zeller-358865-unsplash.png"
 image_caption: "Photo by Samuel Zeller on Unsplash"
+tags: docker, data science, deep learning, transfer learning, mongodb, convolutional neural network
+categories: data science
 output: 
   html_document:
      highlight: haddock
