@@ -3,6 +3,8 @@ title: "Make A Living in Data Science and Not Trading Time for Money"
 subtitle: "5 product ideas for Single Person Entrepreneurs"
 image: https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_750/v1555402552/john-forson-1497891-unsplash.png
 image_subtitle: "Photo by Jakob Owens on Unsplash"
+tags: data science, entrepreneurship
+categories: data science
 ---
 
 You made yourself a plan.
