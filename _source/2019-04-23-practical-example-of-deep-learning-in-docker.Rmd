@@ -439,6 +439,10 @@ Next steps to improve the process:
 - A goal could be to remove the Python script from the container and load it as a python module from a repository in the entry point script with the help of environment variables in the docker-compose file.
 
 
+_Do you need advise with your Data Science setup?_ 
+
+_Please let me know. Send me a [mail](mailto:jenslaufer@jenslaufer.com)_
+
 
 
 
