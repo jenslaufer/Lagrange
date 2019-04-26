@@ -4,7 +4,7 @@ subtitle: "How to train a shallow neural network on top of an InceptionV3 model 
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_948/v1556113451/samuel-zeller-358865-unsplash.png"
 image_caption: "Photo by Samuel Zeller on Unsplash"
 output: 
-  html_document:
+  md_document:
      highlight: haddock
 ---
 
@@ -96,7 +96,7 @@ The Docker container is parameterised from a MongoDB collection with all paramet
 - subset percentage of all samples used for training (used for testing the pipeline with fewer images)
 
 
-[Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1713/v1555506062/screenshot_input.png)
+![Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1713/v1555506062/screenshot_input.png)
 
 __Output__
 
@@ -108,7 +108,7 @@ __Output__
 [Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1727/v1555506062/screenshot_output.png)
 
 
-I put the whole training pipeline into one script [src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) It consists of one class for the whole training pipeline:
+I put the whole training pipeline into one script ![src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) It consists of one class for the whole training pipeline:
 
 1. Downloading of the CIFAR-10 images to the container file system.
 2. Loading of the base model (InceptionV3) with imagenet weights and removal of the top layer
