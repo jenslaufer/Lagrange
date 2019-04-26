@@ -12,7 +12,7 @@ You made yourself a plan.
 
 You want to make a living in Data Science.
 
-Well, why are you applying for a data science job then?
+Well, why aren't you applying for a data science job then?
 There are tons of them right now, as we all know data science is hot right now.
 
 You tell me that you want to create a __valuable, repeatable and scalable business model__ and you don't want to trade time for money. 
