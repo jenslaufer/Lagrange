@@ -4,7 +4,7 @@ subtitle: "How to train a shallow neural network on top of an InceptionV3 model 
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_948/v1556113451/samuel-zeller-358865-unsplash.png"
 image_caption: "Photo by Samuel Zeller on Unsplash"
 output: 
-  md_document:
+  html_document:
      highlight: haddock
 ---
 
@@ -105,10 +105,10 @@ __Output__
 - Training Session Log
 - Model accuracy on the test set
 
-[Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1727/v1555506062/screenshot_output.png)
+![Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1727/v1555506062/screenshot_output.png)
 
 
-I put the whole training pipeline into one script ![src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) It consists of one class for the whole training pipeline:
+I put the whole training pipeline into one script [src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) It consists of one class for the whole training pipeline:
 
 1. Downloading of the CIFAR-10 images to the container file system.
 2. Loading of the base model (InceptionV3) with imagenet weights and removal of the top layer
@@ -129,18 +129,18 @@ Everything you need to train the neural network I put into the Dockerfile, which
 
 
 
-```{.Docker .numberLines} 
-FROM tensorflow/tensorflow:1.13.1-gpu-py3 
-
-COPY src /src
-
-WORKDIR /src
-
-RUN pip install -r requirements.txt
-
-ENV PYTHONPATH='/src/:$PYTHONPATH'
-
-ENTRYPOINT [ "entrypoints/entrypoint.sh" ]
+```Docker
+1   FROM tensorflow/tensorflow:1.13.1-gpu-py3 
+2 
+3   COPY src /src
+4
+5   WORKDIR /src
+6
+7   RUN pip install -r requirements.txt
+8
+9   ENV PYTHONPATH='/src/:$PYTHONPATH'
+10
+11  ENTRYPOINT [ "entrypoints/entrypoint.sh" ]
 ```
 
 
@@ -184,23 +184,23 @@ I have two docker containers in my setup: The Docker container for training and 
 
 You use docker-compose for this scenario. You define the containers that make your application in a docker-compose.yml
 
-```{.yaml .numberLines} 
-version: '2.3'
-
-services:
-  training:
-    image: jenslaufer/neural-network-training-with-docker:0.1.0-gpu
-    container_name: neural-network-training-with-docker
-    runtime: nvidia
-    depends_on:
-      - trainingdb
-
-  trainingdb:
-    image: mongo:3.6.12
-    container_name: trainingdb
-    ports:
-      - 27018:27017
-    command: mongod
+```Yaml
+1   version: '2.3'
+2
+3   services:
+4     training:
+5       image: jenslaufer/neural-network-training-with-docker:0.1.0-gpu
+6       container_name: neural-network-training-with-docker
+7       runtime: nvidia
+8       depends_on:
+9         - trainingdb
+10
+11    trainingdb:
+12      image: mongo:3.6.12
+13      container_name: trainingdb
+14      ports:
+15        - 27018:27017
+16      command: mongod
 ```
 
 _Line 4-5: Definition of the training container which uses the jenslaufer/neural-network-training-with-docker image with tag 0.1.0-GPU. This image is automatically downloaded from the public Docker Hub repository_
@@ -438,6 +438,10 @@ Next steps to improve the process:
 - You used the optimisers with default parameters. An improvement would be to load optimiser specific parameters generically.
 - A goal could be to remove the Python script from the container and load it as a python module from a repository in the entry point script with the help of environment variables in the docker-compose file.
 
+
+_Do you need advise with your Data Science setup?_ 
+
+_Please let me know. Send me a [mail](mailto:jenslaufer@jenslaufer.com)_
 
 
 
