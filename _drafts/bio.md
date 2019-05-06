@@ -5,4 +5,4 @@ Pushing his creativity to the limit with improv and combining his analytical ski
 Jens publishes articles on his website and the TowardsDataScience publication.
 
 Do you need a guy whose technical skills is paired with a lot of creativity? 
-Then Jens is the right guy for you. Feel free to contact him.
+Then Jens is the right person for you. Feel free to contact him.
