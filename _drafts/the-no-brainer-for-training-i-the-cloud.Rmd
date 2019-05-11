@@ -1,0 +1,17 @@
+---
+title: "One Docker Container to train any neural network"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I love programming, but I hate to write code. However, it seems that there not many developer like me. Most programmers love to write code, a lot of code without thinking too much. For me programming is about reducing the lines of code to the bare minimum. It saves me a lot of time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to do stuff in a few lines of code. I also like the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. I want to concentrate on the problem I want to solve rather then write a lot of boilerplate code. 
+
+Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. You ship your application with your infrastructure to run the application. This is powerful concept that is also very interesting in data science. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker(https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding. I thought it will be my master piece. However the article was a big fail. Besides being too long and complicated, there was another problem:
+
+Data Scientist simple doesn't care about Docker, as in there eyes it's not solving a relevant problem to them.
+
+A data scientist wants to concentrate to solve his problems in the most easiest way. It's one of the reasons most data scientists love Jupyter. Why should someone  train his neural network in the cloud with docker, when he can do this on Colab with free GPU.
+
