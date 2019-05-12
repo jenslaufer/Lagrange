@@ -1,5 +1,5 @@
 ---
-title: "One Docker Container to train any neural network"
+title: "How to use Docker in Data Science to your advantage without thinking about it"
 output: html_document
 ---
 
@@ -7,11 +7,42 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I love programming, but I hate to write code. However, it seems that there not many developer like me. Most programmers love to write code, a lot of code without thinking too much. For me programming is about reducing the lines of code to the bare minimum. It saves me a lot of time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to do stuff in a few lines of code. I also like the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. I want to concentrate on the problem I want to solve rather then write a lot of boilerplate code. 
+I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. 
 
-Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. You ship your application with your infrastructure to run the application. This is powerful concept that is also very interesting in data science. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker(https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding. I thought it will be my master piece. However the article was a big fail. Besides being too long and complicated, there was another problem:
+Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. You ship your application with your infrastructure to run the application. This is powerful concept that is also very interesting in data science. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding. I thought it will be my master piece. However, the article was a big fail. Besides being too long and complicated, there was another problem:
 
-Data Scientist simple doesn't care about Docker, as in there eyes it's not solving a relevant problem to them.
+__Data Scientist simple doesn't care too much about Docker__ 
 
-A data scientist wants to concentrate to solve his problems in the most easiest way. It's one of the reasons most data scientists love Jupyter. Why should someone  train his neural network in the cloud with docker, when he can do this on Colab with free GPU.
+But why is this? In the point of view of a data scientist is not solving a relevant problem.
+
+A data scientist wants to concentrate to solve his problems in a simple and straighforward way, like me in programming. It's the reason most data scientists love Jupyter. You can quickly craft data analyses and models. And why should someone train his neural network in the cloud with Docker, when he can do this on Colab with free GPU. However this attitude comes as it's price:
+
+- Data Science must be version controlled and Juypter sucks with version control.
+- Jupyter is not as comfortable as an IDE
+- Jupyter code is difficult to unit test
+- Jupyter coding always ends in a mess
+- Colab is nice, what happens if you need even more GPU?
+
+This article is not about the disadvantages of Juypter and note books in general, as I don't think they are bad, we just simple use them in a wrong way. We simple code too much in it.
+You can can still use Jupyter or Colab, but you use it in a different way. You will be much more flexible and you can use Docker to you advantage, without thing too much.
+
+
+## 1. Pack your code into modules
+
+Use functions and modules for your code. The module you put into a version control. You can easisly track the code this way, you can do branches, you can do diffs. For the functions you can write unit tests. In the module you define what libraries are need to use it. When you using it in a notebook, all module dependencies are installed along with the module. 
+For a module you just need a __init_.py and a setup.py and not more. It's not much effort. You can install modules with pip.
+
+Put, instead of doing to much of the coding 
+
+## 2. Keep the most code out Your Notebooks
+
+Use notebooks in a way to present your work. Keep the most code out 
+
+
+## 3. Build a docker container, when you need to it
+
+There are situation when building docker containers has many advantages:
+
+- You trained your model on Co
+
 
