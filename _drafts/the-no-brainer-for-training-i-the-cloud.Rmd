@@ -1,5 +1,5 @@
 ---
-title: "How to use Docker in Data Science to your advantage without thinking about it"
+title: "How to use Docker in data science to your advantage without knowing too much about it"
 output: html_document
 ---
 
@@ -7,36 +7,32 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. For me Docker is a essential part in my toolchain, as I can ship my work with the runtime environment it needs for its execution in a lightweight manner.
+I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. 
 
-I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding to show how great Docker is also in Data Science. I thought the article is my master piece, however instead the article was a big fail. Besides being too long and complicated, there was another problem:
+For me Docker is a essential part in my toolchain, as I can ship my work with the runtime environment it needs for its execution in a lightweight manner. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding to show an example how great Docker is also in Data Science. I thought the article is my master piece, however instead the article was a big fail. Besides being too long and complicated, there was another problem:
 
-__Data Scientists simple don't care too much about Docker__ 
+__Data Scientists simple don't care about Docker__ 
 
 But why is this? 
 
-Data scientists want to concentrate to solve their problems in a simple and straighforward way, like me in programming.  It's the reason why most data scientists love Jupyter. You can quickly craft data analyses and models. My article was about traing a a neural network in the cloud with Docker, but why should someone do this when he can do this on Colab with free GPU. However doing all the work in notebooks comes with it's price:
+As a data scientist you want to concentrate on solving problems in a simple and straighforward way, like me in programming.  It's the reason why most data scientists love Jupyter. You can quickly craft data analyses and models along with notes. However we over-use notebooks, which has its price. Notebooks fail terribly when it comes to deliver work. For sure it's easy to share the link to the notebook, but version control a notebook is a nightmare, a model which was trained in a notebook is difficult to bring into production. You cannot unit-test your code, which increases the time you spend on debugging.
 
-- Juypter and Version Controlling are not the best friends. However version controlling is a must.
-- Jupyter code is difficult to unit test
-- Code in Juypter notebooks is difficult to reuse
-- Bringing code from notebbooks into production is a nightmar power?
-- Colab is nice, what happens if you need even more GPU?
+In this article I have tipps how you can change your coding style in a way that you can still use Jupyter Notebooks for what they are good for and deliver you work in a lightweight manner. You learn how to ship your work in Docker container without knowing to much about Docker.
 
-This article is not about the disadvantages of Juypter and notebooks in general, as I don't think they are bad, we just simple use them in a wrong way. We simple code too much in it.
-You can can still use Jupyter or Colab, but you should use it in a different way. You will be much more flexible and you can use Docker to you advantage, without thing too much.
+## 1. Write functions and unit test them
 
-I want to show you how you improve your code, you can still use Notebooks and ship your work when you need to do with docker without thinking too much about the details.
+Use a function whenever possible and write a unit test for it. Keep the functions small and simple. I know people hate unit tests, but once you get used to them they feel right. They decrease the time you spend on stupid debugging and you have more time for you like to do.
 
 
-## 1. Pack your code into modules
+## 2. Pack your code into modules
 
-Use functions and modules for your code. Unit test the functions. Then you put the code for the module under version control. You can easisly track it this way, you can do branch it, you can do diffs  on code changes. In the module you define what libraries are need to use it. When you using it in a notebook, all module dependencies are installed along with the module. When you use pip to install a module all dendencies of your module are also installed.
+Pack you code into a module and put it unter version control. You can easisly track your code this way, you can do branch it, you can do diffs  on code changes. In the module you define what libraries are needed to use it. All dependent librariers are installed when you module is used.
 To setup a module you just need a __init_.py (from python > 3.4 you can skip it) and a setup.py. Creating a module is not a big deal.
 
 ## 2. Keep the most code out Your Notebooks
 
-Use notebooks in a way to present your work. Keep you code in the modules. The notebooks are clean and neat.  
+Try to keep your code out of the notebook. The noteboods looks more clear this way.
+
 
 
 ## 3. Build a docker container, when you need to it
