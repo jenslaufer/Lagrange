@@ -1,5 +1,5 @@
 ---
-title: "How to use Docker in data science to your advantage without knowing too much about it"
+title: "5 simple tricks to code better in your next data science project"
 output: html_document
 ---
 
@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to use as many librariers as possible to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. 
+I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. 
 
 For me Docker is a essential part in my toolchain, as I can ship my work with the runtime environment it needs for its execution in a lightweight manner. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding to show an example how great Docker is also in Data Science. I thought the article is my master piece, however instead the article was a big fail. Besides being too long and complicated, there was another problem:
 
@@ -19,23 +19,34 @@ As a data scientist you want to concentrate on solving problems in a simple and 
 
 In this article I have tipps how you can change your coding style in a way that you can still use Jupyter Notebooks for what they are good for and deliver you work in a lightweight manner. You learn how to ship your work in Docker container without knowing to much about Docker.
 
-## 1. Write functions and unit test them
+## 1. Write small functions and unit test them
 
-Use a function whenever possible and write a unit test for it. Keep the functions small and simple. I know people hate unit tests, but once you get used to them they feel right. They decrease the time you spend on stupid debugging and you have more time for you like to do.
+Code a function whenever possible and write a unit test for it. Keep the functions small and simple with just a few lines of code. Functions help to break a big problem in smaller chunks. 
 
+I know people hate unit tests, but once you get used to them they feel right. They make you feel secure, because you can execute whenever you like it. They decrease the time you spend on stupid debugging and you have more time for you like to do. The time 
 
-## 2. Pack your code into modules
+## 2. Use librariers whenever you can
 
-Pack you code into a module and put it unter version control. You can easisly track your code this way, you can do branch it, you can do diffs  on code changes. In the module you define what libraries are needed to use it. All dependent librariers are installed when you module is used.
+Do you want to develop a better pandas, while working on a project? Forget about reinventing the wheel is not worth your while. The more lines of code, the more potential there is for bugs. 
+
+There might be situations, when you want to learn something new and programing everything from the scratch helps you to learn it. Then you can do that, but not while you work on a project. Or you really want to program a better pandas then do it in a completely seperated open source project.
+
+## 3. Pack your code into modules or packages
+
+Pack your code into a module and put it under version control. You can easisly track your code this way, you can do branch it, you can do diffs  on code changes. In the module you define what libraries are needed to use it. All dependent librariers are installed when you module is used.
 To setup a module you just need a __init_.py (from python > 3.4 you can skip it) and a setup.py. Creating a module is not a big deal.
 
-## 2. Keep the most code out Your Notebooks
+## 4. Reduce the code in Notebooks
 
-Try to keep your code out of the notebook. The noteboods looks more clear this way.
+Notebooks are basically about taking notes It's great that we can enhance these notes with code, which makes notebooks very powerful. Notebooks come in two flavors. They are either exploratory  or they explantory. Most of the time exploratory notebooks are for personal use only. The code is dirty and everything is allowed. On the other hand you have explanatory notebooks. They must look beautiful and polished as you publish them to someone else. In the situation of exploratory notebooks you might have more code . But once you want to reuse the code e.g. in a explanatory notebook you have to copy and paste it, which is very bad practice. Better is to pack the reusable code into modules. On the the other hand you don't want too much code in explanatory notebooks as it makes the notebook a unreadable. 
+
+Crafting models in notebooks is bad practice, because you cannot track your code. Notebboks are not a development environment, they are about
+
+Try to keep your code out of the notebook, by using functions you packed in modules. The noteboods look more clear this way and your code is nicely packedc Think about using RMarkdown. You can build __beautiful notebooks Notebooks with RMarkdown with R and Python__
 
 
 
-## 3. Build a docker container, when you need to it
+## 5. Build a docker container, when you need ship your work to someone else
 
 There are situation when building docker containers has many advantages:
 
