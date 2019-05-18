@@ -1,5 +1,5 @@
 ---
-title: "5 simple tricks to code better in your next data science project"
+title: "5 simple dead simple things to code better in your next data science project"
 output: html_document
 ---
 
@@ -7,21 +7,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a software engineer and data scientist. I love programming, but I hate to write code. For me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to descrease the number of decisions. 
+I am a software engineer and data scientist. I love programming, but I hate to write code. You can call me lazy, but for me programming is about solving a problem with the bare minimum lines of code. It saves me time and every line less reduces the risk of having a bug. I dislike to reinvent the wheel, I rather like to keep things simple. I love the principle of [convention over configuration](https://en.wikipedia.org/wiki/Convention_over_configuration), which helps me to reduce the number of decisions. 
 
-For me Docker is a essential part in my toolchain, as I can ship my work with the runtime environment it needs for its execution in a lightweight manner. I wrote lately article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding to show an example how great Docker is also in Data Science. I thought the article is my master piece, however instead the article was a big fail. Besides being too long and complicated, there was another problem:
+For me Docker is a essential part in my toolchain, as I can ship my work with the runtime environment in a lightweight manner. I wrote lately an article with a [Practical example of Training a Neural Network in the AWS cloud with Docker](https://jenslaufer.com/data/science/practical-example-of-deep-learning-in-docker.html). I invested a lot of time into the article and the coding to show an example how great Docker is also in Data Science. I thought the article is my master piece, however instead the article was a big fail. Besides being too long and complicated, there is one problem:
 
 __Data Scientists simple don't care about Docker__ 
 
 But why is this? 
 
-As a data scientist you want to concentrate on solving problems in a simple and straighforward way, like me in programming.  It's the reason why most data scientists love Jupyter. You can quickly craft data analyses and models along with notes. However we over-use notebooks, which has its price. Notebooks fail terribly when it comes to deliver work. For sure it's easy to share the link to the notebook, but version control a notebook is a nightmare, a model which was trained in a notebook is difficult to bring into production. You cannot unit-test your code, which increases the time you spend on debugging.
+As a data scientist you want to concentrate on solving problems in a simple and straighforward way, like me in programming.  As data scientists we love Jupyter. You can quickly craft data analyses and models along with your notes. However we over-use notebooks, which has its price. Notebooks fail terribly when it comes to ship the work. For sure it's easy to share the link to the notebook, but version control a notebook is a nightmare, a model which was trained in a notebook is difficult to bring into production. Code in notebooks cannot be unit tests, which increases the time you spend on debugging.
 
 In this article I have tipps how you can change your coding style in a way that you can still use Jupyter Notebooks for what they are good for and deliver you work in a lightweight manner. You learn how to ship your work in Docker container without knowing to much about Docker.
 
 ## 1. Write small functions/methods and unit test them
 
-Code a function whenever possible and keep the function/method small and simple with just a few lines of code; the function/method should do one thing and only thing. Try to get things done in 20 lines, otherwise break things up in more functions/methods. With small functions you don't have to write comments, as the functions are self-explaining in case you use self explaining names for variables and function names. Writing functions will help you to break a big problem into smaller chunks. 
+Code a function whenever possible and keep the function/method small and simple with just a few lines of code; the function/method should do one thing and only thing. Try to get things done in 20 lines of code, otherwise break things up into more functions/methods. With small functions you don't have to write comments, as the functions are self-explaining in case you use self explaining names for variables and function names. Writing functions will help you to break a big problem into smaller chunks. 
 
 write a unit test for a function. I know people hate unit tests, but once you get used to them they feel right. They make you feel confident, because you can execute them whenever you like it to check if everything is still OK. You need less time to write a unit test than you spend on later debugging. At the end you have more time for coding. Unit tests are your fast-feedback-loop that keep you in a flow, while debugging break the coding flow.
 
@@ -31,11 +31,11 @@ Do you want to develop a better pandas, while working on a project? Forget about
 
 There might be situations, when you want to learn something new and programing everything from the scratch helps you with it. Then you can do that, but not while you work on a project. Or you really want to program a better pandas then you do it in a completely seperated open source project.
 
-## 3. Pack your code into modules/packages/libraries
+## 3. Pack your own code into modules/packages/libraries and version control it
 
-A module/package/library is a software artifacts that contains one or more routines that .
+A module/package/library is a software artifacts that contains one or more routines.
 
-Split up your code into meaningful modules/packages/libraries and put them under version control in their own respostories You can easisly track your code this way, you can do branch it, you can do diffs  on code changes. In the module you define what modules are needed to use it. All dependent modules are installed when you module is used.
+Split up your code into meaningful modules/packages/libraries and put them under version control in their own repositores, You can easisly track your code this way, you can branch it, you can do diffs on code changes. In the module you define what modules are needed to use it. All dependent modules are installed when you module is used.
 
 To setup a module in Python you just need a __init_.py (from python > 3.4 you can skip it) and a setup.py. Creating a module is not a big deal.
 
@@ -43,13 +43,14 @@ To setup a module in Python you just need a __init_.py (from python > 3.4 you ca
 
 Notebooks are basically about taking notes. It's great that we can enhance these notes with code, which makes notebooks very powerful. Notebooks come in two flavors. They are either exploratory or they explanatory. 
 
-Most of the time exploratory notebooks are for personal use and you are the only person who will ever see them. You might have more code in this type of notebooks; the code is dirtier. You craft often many notebooks. But once you want to reuse code from one to another you fell unto trap to copy and paste code. It's better to use functions and pack them into a modules, which you can reuse in different notebooks.
+Most of the time exploratory notebooks are for personal use and you are the only person who will ever see them. You might have more code in this type of notebooks; the code is dirtier. You craft often many notebooks. But once you want to reuse code from one to another we fell into the trap to copy and paste code and finally ending in a mess. Rather use functions and pack them into a modules, which you can reuse in different notebooks. The notebooks looks clearer.
 
-On the other hand you have explanatory notebooks. They must look beautiful and polished as other people see them. You have less code in these
+Explanatory notebooks must look beautiful and polished as other people see them. You want to have less code in explanoraty noebooks and you must reuse code from the explanatory notebooks. It's nice to have the code packed in modules then.
 
+Things are getting complicated when it comes to develop modules in Notebooks. It's very difficult to deliver model which are developed in Notebooks. We all love 
 Crafting models in notebooks is bad practice, because you cannot track your code. Notebboks are not a development environment, they are about
 
-Try to keep your code out of the notebook, by using functions you packed in modules. The noteboods look more clear this way and your code is nicely packedc Think about using RMarkdown. You can build __beautiful notebooks Notebooks with RMarkdown with R and Python__
+Try to keep your code out of the notebook, by using functions you packed in modules. There is a little trick that helps you out. Use github as your modules  repository. The noteboods look more clear this way and your code is nicely packedc Think about using RMarkdown. You can build __beautiful notebooks Notebooks with RMarkdown with R and Python__
 
 
 
