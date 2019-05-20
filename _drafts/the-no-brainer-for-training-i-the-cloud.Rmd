@@ -43,21 +43,20 @@ To setup a module in Python you just need a __init_.py (from python > 3.4 you ca
 
 Notebooks are basically about taking notes. It's great that we can enhance these notes with code, which makes notebooks very powerful. Notebooks come in two flavors. They are either exploratory or they explanatory. 
 
-Most of the time exploratory notebooks are for personal use and you are the only person who will ever see them. You might have more code in this type of notebooks; the code is dirtier. You craft often many notebooks. But once you want to reuse code from one to another we fell into the trap to copy and paste code and finally ending in a mess. Rather use functions and pack them into a modules, which you can reuse in different notebooks. The notebooks looks clearer.
+Most of the time exploratory notebooks are for personal use and you are the only person who will ever see them. You might have more code in this type of notebooks; the code is dirtier. You craft often many notebooks. But once you want to reuse code from one to another we fell into the trap to copy and paste code and finally ending in a mess. Rather use functions and pack them into a modules, which you can reuse in different notebooks. The notebooks looks clearer, as you reduce the code with the function calls.
 
-Explanatory notebooks must look beautiful and polished as other people see them. You want to have less code in explanoraty noebooks and you must reuse code from the explanatory notebooks. It's nice to have the code packed in modules then.
+Explanatory notebooks must look beautiful and polished as other people see them. You want to have less code in explanoraty noebooks and you must reuse code from the exploratory notebooks. It's nice to have the code packed in modules then.
 
-Things are getting complicated when it comes to develop modules in Notebooks. It's very difficult to deliver model which are developed in Notebooks. We all love 
-Crafting models in notebooks is bad practice, because you cannot track your code. Notebboks are not a development environment, they are about
-
-Try to keep your code out of the notebook, by using functions you packed in modules. There is a little trick that helps you out. Use github as your modules  repository. The noteboods look more clear this way and your code is nicely packedc Think about using RMarkdown. You can build __beautiful notebooks Notebooks with RMarkdown with R and Python__
+Things are getting complicated when it comes to develop models in Notebooks. On the the one we have [Colab](https://colab.research.google.com), which makes it easy to use GPU for your training task. You get GPU for free. On the other hand it's very difficult to deliver model which are developed in Notebooks and track your work. Using functions in modules is also the way to go here. You can easily import git-hosted modules into a CoLab Notebook. So can easily do your work locally and swicth then to a Colab, when you need GPU. In case you need more GPU you can also train your model easliy in the Cloud by using your module.
 
 
 
-## 5. Build a docker container, when you need ship your work to someone else
+## 5. Build a docker container, when you need ship something
 
-There are situation when building docker containers has many advantages:
+There are situation when building docker container make sense:
 
-- You train
+- You need to deliver your ready-trained-model into a production environment.
+- You need to train a model in the cloud on a specific instance type e.g. with a lot of GPU power
 
+In both cases it makes sense to ship your code in a docker container, because you deliver the code with everything which is needed to run it. And again, with the use of modules, things are very simple.
 
