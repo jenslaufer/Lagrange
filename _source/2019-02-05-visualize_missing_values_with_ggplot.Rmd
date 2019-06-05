@@ -1,7 +1,7 @@
 ---
 title: "Missing value visualization with tidyverse in R"
 subtitle: "A short practical guide how to find and visualize missing data with ggplot2, dplyr, tidyr"
-image: missing_values.jpg
+image: '/assets/img/missing_values.jpg'
 layout: post
 output:
   html_document:
