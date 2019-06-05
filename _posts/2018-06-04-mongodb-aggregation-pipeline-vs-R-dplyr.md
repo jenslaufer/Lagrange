@@ -5,7 +5,7 @@ categories:
   - data analysis
 show_comments: true
 tags: R, dplyr, MongoDB, data analysis
-image: 16702185956_0313e29b69_z.jpg
+image: /assets/img/16702185956_0313e29b69_z.jpg
 ---
 
 

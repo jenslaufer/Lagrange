@@ -8,3 +8,4 @@ _source/*.md
 _source/**/*.png
 _source/*.pdf
 _source/*.html
+_source/.Rhistory
