@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-image: Jens_Laufer-11.jpg
+image: /assets/img/Jens_Laufer-11.jpg
 ---
 
 
