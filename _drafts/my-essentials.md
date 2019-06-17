@@ -2,6 +2,10 @@
 
 ## What is important to live the life I want to live
 
+My goal 
+
+_I want to make a living time and location independent with own products_
+
 - Physical strength
 
 - Intellectual Strength
@@ -12,12 +16,13 @@
 
 - Writing
 
-- Programminng
+- Programming
 
 - Data Analysis
 
 - Modelling
 
+- Good social live
 
 ### Inbound (Consuming)
 
@@ -70,4 +75,60 @@ Higher level products are software application. I must keep avoid high level pro
 
 ##### Programming
 
-Programming is one of my core skills, as I have over 20 years of experience with it. Therefore I want to constantly produce software.
+Software development is my core skill, as I have over 20 years of experience with it. Therefore I want to constantly produce software and tools. I need software to get insights from data and to automate tasks.
+
+Software development as a freelancer is my main form of income.
+
+My software skills cover different programming languages with different scopes:
+
+- R
+  
+  Data Analysis & Data Visualization
+
+- Python
+
+  Scraping, Machine Learning, Deep Learning
+
+- Java
+
+  General purpose programming, Microservices
+
+- Javascript
+
+  Frontend
+
+## Social Live
+
+A wrong assumption is that I think I don't need other people in live. However, when I am alone I feel
+lonely. I like to talk to my family and to friends. I need a __balance with being on my own and being with others__. 
+
+I need more __quality time with my family__. Sometimes I am bored with the kids, because of the lack of intellitual input. Instead of spending more time with them I should rather look for quality time like playing games, handicrafting,
+ doing excursions.
+
+## Misc
+
+I want to live minimalistic life with less belongings. 
+
+## Financial
+
+I want to be financial independent. I am financial independent with a net income of 3000 €/month. I don't want to trade time for money to accomplish this.
+
+## Habits
+
+To live the live I want I have habits and routines. Everything you do in life needs willpower and the amount of willpower is limited a day. Habits are performed automatically without too much willpower on the other hand. Therefore I have these daily habits
+
+- 25 minutes workout a day
+- At least 25 minutes reading a day
+- At least 25 minutes writing a day
+- At least 25 minutes programming a day
+- At least 25 minutes tidying/cleaning/decluttering
+
+## Goals
+
+I must concentrate on the process with powerful habits instead of goals. However, I need goals to fill some habits with content. E.g. 25 minutes of programming can be either useless programming exercise or programming a product. 
+
+### Daily 
+
+- Write and Publish every day to promote me or my businesses
+- Program every day to gain insights with data or create a product
+
