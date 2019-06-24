@@ -3,7 +3,7 @@
 - Tradeoff
 - Programming gives you more flexibility
 - Cost: Python, R and Databases are for free
-- Learning curve: Porgramming has a steeper learning curve
+- Learning curve: Programming has a steeper learning curve
 - job market
 
 I would recommend to learn Python and/or R, as you are more flexible with a programming language. In the programming language you should focus on __data manipulation__ and __data visualisation__.
