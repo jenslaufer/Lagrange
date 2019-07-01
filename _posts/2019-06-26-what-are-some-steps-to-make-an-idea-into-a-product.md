@@ -5,7 +5,7 @@ categories:
   - business
 show_comments: true
 tags: product development, business idea, marketing
-image: /assets/img/nima.jpg
+image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_66,w_740/v1559383415/florian-olivo-1561171-unsplash.jpg"
 image_subtitle: "Photo by Daniel Lee on Unsplash"
 ---
 
