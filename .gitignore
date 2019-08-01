@@ -10,3 +10,4 @@ _source/*.pdf
 _source/*.html
 _source/.Rhistory
 *.html
+.pytest_cache/
