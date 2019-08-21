@@ -8,17 +8,20 @@ Working for a client from overseas is an adventure by itself, but we guess that 
 
 ## Reinforcement Learning for our trading agent
 
-Classical algorithmic trading is a method of executing orders using automated pre-programmed trading instructions.
+>Classical algorithmic trading is a method of executing orders using automated pre-programmed trading instructions. Algorithmic trading makes use of much more complex formulas, combined with mathematical models and human oversight, to make decisions to buy or sell financial securities on an exchange. Algorithmic traders often make use of high-frequency trading technology, which can enable a firm to make tens of thousands of trades per second.
+https://www.investopedia.com/terms/a/algorithmictrading.asp
+
   
 ## It's our first full lifecycle data science project, from analysis and preprocessing of the raw data to bringing the models into production
 
 We worked before  in many corporate software engineering projects as freelancers, but also on our own full stack software projects. In data science our experience is limited so far to one part of the stack like data analysis, machine learning modelling or shipping models into production.
 
-The trading project is our first full lifecycle data science project, which includes data analysis, cleaning and preprocessing of the data, building a trading simulation environment with Open AI gym, training a reinforcment algorithm, shipping a model into production. 
+The trading project is our first full life cycle data science project, which includes data analysis, cleaning and preprocessing of the data, building a trading simulation environment with Open AI gym, training a reinforcement algorithm, shipping a model into production.
 
 We have several ideas about the project. We want to use R for data analysis and preprocessing and Python for algorithm training, for handling life data we might use a reactive Java Spring Boot application. D For the trading simulation we want to use our own customized Open AI gym environment and the stable-baseline reinforcement algorithm implementations from stable-baseline as our main technology stack. Our goal is to implement a library that allows us to dynamically load and initialize configuartions from a database to limit codes changes to the bare minimum while evaluating different configurations. Results of the training process should be also persisted in the database to increase the reproducibility. To handle our polyglot technology stack (R, Python, Java) we want to use Docker.
 
-## Client provides a deep learning machine 
+## Client provides a deep learning machine
 
+The client buys a customized machine for deep learning for the project, as the costs for training in the cloud are too high in the long run. This is great, as we don't have to always check for the cost. 
  
 
