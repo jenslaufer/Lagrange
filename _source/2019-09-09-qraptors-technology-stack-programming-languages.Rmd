@@ -1,6 +1,11 @@
 ---
-title: "Our Technology Stack: Architecture and Programming Languages"
+title: "qraptor Technology Stack Part One: Architecture and Programming Languages"
+subtitle: "The technology stack and programming languages we use for our reinforcement learning based trading platform"
 output: html_document
+image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_74,w_800/v1568015884/matt-artz-pH6wLT6TVFc-unsplash.jpg"
+image_caption: "Photo by Matt Artz on Unsplash"
+tags: docker, programming languages, technology stacks
+categories: qraptor
 ---
 
 ```{r setup, include=FALSE}
@@ -26,12 +31,15 @@ Right now we use four programming languages, but we think we might use more in f
 While there are many discussions about the pros and cons of Python and R in data science, we think R is superior in the field of data analysis. For analysis and preprocessing, R is our choice. The syntax of
 base R sometimes feels a bit strange; however, with the libraries from the tidyverse ecosystem, the code is pretty readable. We love the grammar of graphics and data manipulation approach in ggplot2 and dplyr. We use Shiny Apps for creating analysis dashboards with bare minimum lines of codes.
 
+![tidyverse](https://res.cloudinary.com/jenslaufer/image/upload/v1568015884/tidyverse-768x310.png)
+
 ### Python
 
-We use Python for modelling. Our core reinforcement learning framework, which uses stable_baselines a lot, is developed with Python. We use Python also for several backend services. 
+We use Python for modelling. Our core reinforcement learning framework, which uses OpenAI gym and stable_baselines a lot, is developed with Python. We use Python also for several backend services. 
 
 We have developed a framework that lets us quickly set up training sessions in the MongoDB, and the framework initializes all the objects that are needed generically. The frameworks persist all artefacts that a training session produces in the database, e.g. the model, training parameters, along with everything that is needed for a training session.
 
+![OpenAI](https://res.cloudinary.com/jenslaufer/image/upload/v1568015883/openai-1.png)
 
 ### Java
 
@@ -39,7 +47,13 @@ The world hates Java, but we love it. We have many discussions when to use Java 
 Java has many advantages, but that are also use cases when scripting languages are the better option. Sometimes you need even less code in Java than in Python, e.g. with the usage of the Spring Framework. 
 We use Java when multi-threading is essential. 
 
+![Spring Franework](https://res.cloudinary.com/jenslaufer/image/upload/v1568015883/spring-featured-image.png)
+
 ## JavaScript
 
 We use JavaScript for our web-based UIs. For this, we use VueJS with the Quasar framework. We can quickly develop UIs this way for microservices that need one, besides analysis dashboards. We don't use JavaScript in the backend. 
 However, we are sure one day we might have NodeJS backend microservices as well.
+
+![VueJs](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_672/v1568015884/1_ACR0gj0wbx91V_xgURifWg.png)
+
+![Quasar Framework](https://res.cloudinary.com/jenslaufer/image/upload/v1568015884/68747470733a2f2f63646e2e7175617361722e6465762f6c6f676f2f7376672f7175617361722d6c6f676f2d66756c6c2d696e6c696e652e737667.svg)
