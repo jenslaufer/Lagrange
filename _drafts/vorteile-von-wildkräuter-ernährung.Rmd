@@ -1,0 +1,33 @@
+---
+title: "Vorteile von Wildkräutern in deinem Speiseplan"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+```
+
+
+Wildkräuter in deine Ernährung einzubauen hat verschiedene Vorteile
+
+## Kosten ##
+
+Die besten Dinge im Leben kosten nichts und genau das gilt auch für Wildkräuter. Wenn man sich überlegt wieviel Geld man für Obst und Gemüse ausgiebt. Der verpackte Salat in der Mittagspause kostet schnell mal 4,00 €. Die Kosten summieren sich schnell auf 800 € im Jahr. Natürlich kauft man sich den salat auch wegen des Geschmacks und ein paar am Wegesrand gesammlte 
+wildkräuter sind nicht immer das beste Geschmackserlebnis. Du kannst jedoch Kosten sparen, in dem du die Ernährung mit Wildkräutern ergänzt. Mische beim nächste Mal ein paar wildkräuter unter den
+Saat mischt.
+
+## Verfügbarkeit ##
+
+Wildkräuter sind einfach überall verfügbar. Selbst in Großstädten findest du überall Gänseblümchen, Löwenzahn oder spitzwegerich. Allerdings solltest du in Großstädten die Wildkräuter immer ausgiebig waschen, da sie in Parks
+mit Hundekot verunreinigt sein könnten oder Unkrautvernichter eingesetzt werden.
+
+## Müll ##
+
+Obst und Gemüse aus Läden haben ein großes Problem. Sie sind häufig in Folien eingeschweisst, in Plastikschalen verpackt oder du wiegst sie in Plastiktüten ab. All diese nach dem Verzehr auf dem Müll und 
+mussten irgendwann unter Energieaufwand hergestellt werden.
+[@TODO Plot Plastik)
+
+## Nährstoffe ##
+
+Wildkräuter sind wahre Nährstoffbomben und verfügen alle Nährstoffe, die du für deine Ernährung benötigst. 
+
