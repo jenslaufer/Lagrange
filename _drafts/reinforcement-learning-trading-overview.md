@@ -11,6 +11,7 @@ Working for a client from overseas is an adventure by itself, but we guess that 
 >Classical algorithmic trading is a method of executing orders using automated pre-programmed trading instructions. Algorithmic trading makes use of much more complex formulas, combined with mathematical models and human oversight, to make decisions to buy or sell financial securities on an exchange. Algorithmic traders often make use of high-frequency trading technology, which can enable a firm to make tens of thousands of trades per second.
 https://www.investopedia.com/terms/a/algorithmictrading.asp
 
+While classical algorithmic trading often includes relatively simple logics 
   
 ## It's our first full lifecycle data science project, from analysis and preprocessing of the raw data to bringing the models into production
 
