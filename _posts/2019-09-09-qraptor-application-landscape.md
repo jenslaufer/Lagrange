@@ -30,7 +30,7 @@ We save the complete the Meta Data for each training session with all the parmet
 
 - Trained Models from Trainer in hdf5 file
 
-What we haven't done so far is to persist the source data files into the MongoDB, although they should be there to be fully . To be honest we are bit to scared to save hundreds of GB in the GridFS.
+What we haven't done so far is to persist the source data files into the MongoDB, although they should be there to be fully straighforward. To be honest we are bit to scared to save hundreds of GB in the GridFS.
 filesystem.
 
 - Training results as CSV
@@ -46,20 +46,31 @@ Every application/service we use is packed as a Docker container. We use docker-
 
 For the exploratory data analysis we use RMarkdown a lot. As the data files are very big we apply some data reducing before. We seperate the core logic and visualisations from the Rmarkdown code to reuse it in other notebooks and in Shiny Apps. We use Shiny Dashboards for on the fly data analysis or for Dashboarding for our clients.
 
-## Data Preprocessing ##
+## Data Wrangling ##
 
 ### Data Reducing ###
 
-### Data Cleaning ###
+For our one client we are having data for each instruments for very second for 9 years with about 30 datapoints. It adds about to about 15 GB of data each instrument. Importing this amount of data into a dataframe with pandas in Python or dplyr in R is challenge. So we perform a kind of reducing on the data for data analysis or our first training sessions. You can reduce the data to a certain unit and interval e.g. five minutes or 30 seconds. The Libraries from [tidyverse](https://www.tidyverse.org/) ecosystem in R lets us do this redcution. The code is pretty self-explaining with a bare minimum lines of code. We added REST-like interface to the reducer microservice with [plumber](https://www.rplumber.io/).
 
+### Data Preprocessing ###
+
+We created a data preprocessing microservice also with a REST-like API with plumber. We can select what features we want to include into the datasets and which of these fields need to be preprocessed. The services splits in a first step the training and test data. The data are time series data, so we detrended the data by differencing.
 
 ## Training Environment ##
 
-### Trainer Framework ###
+### Training Framework ###
 
-### Session Tool ###
+Our Training frameworks loads training sessions from the MongoDB and initializes dynamically the Python objects for the training. We do the Then a training is performed and the model is tested against the test set. The training and test process, the model and test metrics are persisted in the MongoDB. We keep our  training process reproducable this way. The heart of the training framework are [OpenAI Gym Environment](https://github.com/openai/gym/blob/master/docs/creating-environments.md) and the [Stable Baseline](https://stable-baselines.readthedocs.io/en/master/) implementations of reinforcement learning algorithms, although the framework should also be able to use other libraries like [Keras-RL](https://github.com/keras-rl/keras-rl).
+
+### Training Session Tool ###
+
+The JSON for training session is very complicated, as it holds all attributes for a training session. Adding new training sessions into the DB takes therefore a lot of time and is error prone. Parameter tuning requires strategies: You change e.g. one parameter and observe if the performance on the test set is getting better or not. We created a tool that lets us easily create multiple training sessions for different parameter set ups. The tool is written with [Vue.js](https://vuejs.org/) and [Quasar](https://quasar.dev/) with a [Spring Boot](https://spring.io/projects/spring-boot) Java Backend.
+
+
+### Tensorboard ###
+
+We use Tensorboard to visualize the training process.
 
 ## Training Result Analysis ##
 
-### Tensorflow ###
-
+We created a dashboard for analysis of the training results. 
