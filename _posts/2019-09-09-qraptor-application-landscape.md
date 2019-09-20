@@ -1,5 +1,5 @@
 ---
-title: "qraptor Technology Stack Part Two: Applications"
+title: "qraptor Technology Stack Part Two: Applications in September 2019"
 subtitle: "The application we use for our reinforcement trading platform"
 output: html_document
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_74,w_800/v1568015884/matt-artz-pH6wLT6TVFc-unsplash.jpg"
@@ -16,7 +16,7 @@ several parts. First, we show you the shared technical services we use and secon
 
 ## MongoDB ##
 
-![MongoDB Logo](@TODO)
+![@TODO MongoDB Logo]()
 
 MongoDb is our persistence container for a variety of artefacts, some of them are saved as MongoDB documents, which is basically simple JSON. We use also the GridFS-Filesystem for persisting
 file-like structures. We love MongoDB, because of it's simplicity. You don't need schemas to persist data. However, we know that having no schema is in some situations risky.
@@ -41,6 +41,7 @@ filesystem.
 Every application/service we use is packed as a Docker container. We use docker-compose and docker-machine for the management of the application. We use [Portainer](https://www.portainer.io/) for web based Docker management. Portainer is a Docker container by itself and is dead-simple to install and makes life easy.
 
 ![Portainer Screenshot for qrapotor Applications](@TODO)
+
 
 ## Exploratory Data Analysis ##
 
@@ -69,8 +70,14 @@ The JSON for training session is very complicated, as it holds all attributes fo
 
 ### Tensorboard ###
 
-We use Tensorboard to visualize the training process.
+Tensorboard lets us track session experiment metrics, visualise the training process and model graphs. We use Tensorboard hand in hand with out Training Analysis Dasboard to analyse our training sessions.
+
+[@Todo Screenshot]()
+
 
 ## Training Result Analysis ##
 
-We created a dashboard for analysis of the training results. 
+We created a dashboard for analysis of the training results. It's a shiny app with very lines of code. ggplot2 is our visualisation library, as it is the vis library we are the most familiar with. The ggplot visualisations by itself are not per se interactive, but we might use plot.ly in future to accomplish this.
+Another option is to integrate our own datapoints into Tensorboard visualisations.
+
+[@Todo Screenshot ]()

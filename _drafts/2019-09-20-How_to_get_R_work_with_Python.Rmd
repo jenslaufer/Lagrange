@@ -1,0 +1,39 @@
+---
+title: "How to get R work with Python"
+subtitle: "A practical example of how to use R code in Python"
+author: "Jens Laufer"
+date: "20 9 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+```
+
+
+R and Python are outstanding languages for data science. While Python is a easy-to-learn general-purpose language R is a niche language from the statistics fields. Python's pandas and numpy library  and base R are very similiar for data processing. One could say, that there is no need to learn R, however thanks to Hadley Wickham's tidyverse libraries with their grammar of graphics (ggplot2) and grammar of data manipulation (dpylr) R is superior for data analysis and processing. It's therefore worth to have both languages in your toolset. 
+
+Is it possible to use the language site-by-site? Let's think of a scenario where we use R for data preprocessing and Python for training machine learning models. In this article I want to show you how to use R functions in our Python code. We want to use [rpy2](https://rpy2.readthedocs.io), which lets us call functions in R library like functions in Python code. However there are several pitfalls I want to show you. We use Docker in this example to get reprocable environment.
+
+
+## 1. A R library living in Github ##
+
+In ou
+- Github repository install of Python library
+- Pitfalls:
+   - magrittr pipe %>%
+   - no library and require statements in library code
+   - full name with imported libs mutate -> dplyr::mutate
+   - private function exclusion
+
+## 2. We live in a container ##
+
+To have a reliable reproducable runtime environment it's a good idea with [Docker](https://docker.com). Docker is software is software tool to create lightweight containers with everything needed to run an application.
+
+- Docker container with R and Python installed
+
+
+## 3. Let's call or R function like it would be a python function ##
+
+
+
