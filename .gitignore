@@ -10,3 +10,7 @@ _source/*.pdf
 _source/*.html
 _source/.Rhistory
 .pytest_cache/
+.Rproj.user
+.Rbuildignore
+jenslaufer.github.io.Rproj
+_drafts/*copy.Rmd
