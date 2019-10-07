@@ -1,6 +1,6 @@
 ---
 title: "How to get R work with Python"
-subtitle: "A practical example of how to use R code in Python"
+subtitle: "7 Steps to use a R library from Python with rpy2"
 author: "Jens Laufer"
 date: "20 9 2019"
 output: html_document
@@ -9,7 +9,6 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 ```
-
 
 R and Python are outstanding languages for data science. While Python is a easy-to-learn general-purpose language R 
 is a niche language from the statistics fields. Python's pandas and numpy library  and base R are very similiar for 
@@ -21,8 +20,110 @@ Is it possible to use the language site-by-site? Let's think of a scenario where
 data preprocessing and Python for training machine learning models. In this article I want to show you 
 how to use R functions in our Python code. We want to use [rpy2](https://rpy2.readthedocs.io), which lets us 
 call functions in R library like functions in Python code. However there are several pitfalls I want to show you. 
-We use Docker in this example to get reprocable environment.
+We use Docker in this example to get reproducable environment.
 
-## Step 1: Setup of the library boilerplate code in r
 
-## Step 2: S
+## Step 1- Create the skeleton for the R library
+
+
+We change into a R console and execute the following commands:
+
+```R
+install.packages('devtools')
+library('devtools')
+devtools::create('reducer')
+```
+
+These commands create a basic file structure for our module. The R directory will hold all R files for our library.
+
+```shell
+.
+├── DESCRIPTION
+├── NAMESPACE
+└── R
+```
+The NAMESPACE
+
+```R
+exportPattern("^[^\\.]")
+importFrom("magrittr","%>%")
+```
+
+The DESCRIPTION file is to describe your librry with some meta data about the library like version, 
+ownership, description, license and dependent libraries needed for our libraries
+
+```yaml
+Package: reducer
+Title: Reduces time series
+Version: 0.1.0
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Reduces time series
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports:  
+    tidyverse,
+    lubridate
+```
+
+We switch into the R folder and create a R script called with some dummy code to test our first iteration:
+
+```R
+reduce <- function(){
+    print("reducing.")
+}
+```
+
+
+## Step 2- Use GitHub for version controlling and as R library repository
+
+
+We create a new Git repository for our project on the Github website:
+
+![Project Creation on Github](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_888/v1569306497/github_repo_create.png)
+
+```shell
+git init
+git add .
+git commit -m "initial"
+git remote add origin git@github.com:jenslaufer/sample-r-library-reducer.git
+git push -u origin master
+```
+
+Once we pushed our code to Github, we can install our library with the install.github function with the devtools library in R. 
+We use a public repository  in our case which makes live easy, however you can install as well install libraries from private repositories.
+In case you have R already installed you can install and use our library now. Don't mind if you don't have R. We will use Docker in 
+this example, so there is no need to install it.
+
+```R
+install.github('jenslaufer/sample-r-library-reducer')
+library(reducer)
+reducer::reduce()
+```
+
+This should print "reducing." to the screen.
+
+## Step 3- Write Python code to call function R library
+
+We create the code to call the first simple implementation of our code:
+
+```python
+import rpy2.robjects.packages as rpackages
+
+reducer = rpackages.importr('reducer')
+
+reducer.reduce()
+```
+
+## Step 4- Get everything run up and running Docker
+
+## Step 5- Implement the R functions
+
+## Step 6- Call the R function from Python
+
+## Step 7- Pack everything up in a Docker container
