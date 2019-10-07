@@ -14,3 +14,5 @@ _source/.Rhistory
 .Rbuildignore
 jenslaufer.github.io.Rproj
 _drafts/*copy.Rmd
+.Rhistory
+_drafts/2019-09-20-How_to_get_R_work_with_Python.html
