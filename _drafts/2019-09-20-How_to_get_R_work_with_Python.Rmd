@@ -1,6 +1,6 @@
 ---
 title: "How to get R work with Python"
-subtitle: "5 Steps to use a R library from Python with rpy2"
+subtitle: "4 Steps to use a R library from Python with rpy2"
 author: "Jens Laufer"
 date: "20 9 2019"
 output: html_document
@@ -10,19 +10,13 @@ output: html_document
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 ```
 
-R and Python are outstanding languages for data science. While Python is a easy-to-learn general-purpose language R
-is a niche language from the statistics fields. Python's pandas and numpy library  and base R are very similiar for
-data processing. One could say, that there is no need to learn R, however thanks to Hadley Wickham's tidyverse
-libraries with their grammar of graphics (ggplot2) and grammar of data manipulation (dpylr)
-R is superior for data analysis and processing. It's therefore worth to have both languages in your toolset.
+R and Python are outstanding languages for data science. While Python is a easy-to-learn general-purpose language is R a niche language for statistics. Python's pandas and numpy library  and base R are very similiar for data processing. One could say, that there is no need to learn R, however thanks to Hadley Wickham's tidyverse libraries with their grammar of graphics (ggplot2) and grammar of data manipulation (dpylr) R is superior for data analysis and processing. It's therefore worth to have both languages in your toolset.
 
-Is it possible to use the language site-by-site? Let's think of a scenario where we use R for 
-data preprocessing and Python for training machine learning models. In this article I want to show you 
-how to use R functions in our Python code. We want to use [rpy2](https://rpy2.readthedocs.io), which lets us 
-call functions in R library like functions in Python code. However there are several pitfalls I want to show you. 
-We use Docker in this example to get reproducable environment.
+Is it possible to use the language site-by-site? Let's think of a scenario where we use R for
+data preprocessing and Python for training machine learning models. In this article I want to show you
+how to use R functions in our Python code. We want to use [rpy2](https://rpy2.readthedocs.io), which lets us call functions in R library like functions in Python code. However there are several pitfalls I want to show you. We use Docker in this example to get a reproducable environment.
 
-## Step 1- Create the skeleton for the R library
+## Step 1- Setup our R library and implement our function 
 
 We change into a R console and execute the following commands:
 
@@ -41,15 +35,14 @@ These commands create a basic file structure for our module. The R directory wil
 └── R
 ```
 
-The NAMESPACE
+> The NAMESPACE file specifies the interface to the package that is presented to the user. This is done via a series of export() statements, which indicate which functions in the package are exported to the user. Functions that are not exported cannot be called directly by the user (although see below). In addition to exports, the NAMESPACE file also specifies what functions or packages are imported by the package. If your package depends on functions from another package, you must import them via the NAMESPACE file. [[1]](https://rstats-pkgs.readthedocs.io/en/latest/namespace.html)
 
 ```R
 exportPattern("^[^\\.]")
 importFrom("magrittr","%>%")
 ```
 
-The DESCRIPTION file is to describe your librry with some meta data about the library like version, 
-ownership, description, license and dependent libraries needed for our libraries
+> The DESCRIPTION file is an essential part of an R package because it contains key metadata for the package that is used by repositories like CRAN and by R itself. In particular, this file contains the package name, the version number, the author and maintainer contact information, the license information, as well as any dependencies on other packages.  [[2]](https://rstats-pkgs.readthedocs.io/en/latest/description.html)
 
 ```yaml
 Package: reducer
@@ -69,9 +62,13 @@ Imports:
     tidyverse
 ```
 
-We switch into the R folder and create a R script called with some dummy code to test our first iteration:
+We switch into the R folder and create a R script called api.R with our implementation.
+We have helper function, that starts with a dot to ensure, that the function is not exported.
+Our main function called 'reduce' accepts a data frame with timeseries, that we can reduce the data frame
+to a certain time.interval and time.unit. The time interval for our data frame is e.g. 1 second, we can then reduce to 10 seconds. For the data the mean function is applied. It's important that we use in our code the full library path (@TODO check how it is called) and don't used any library and require statements. The importatnt libaries are handeld durcing library installed and referenced in the Imports section in the DESCRIPTION file.
 
 ```R
+
 .get.super.unit <- function(unit) {
   switch(
     unit,
@@ -83,15 +80,15 @@ We switch into the R folder and create a R script called with some dummy code to
   )
 }
 
-reduce <- function(df, time.interval, unit, date_field) {
-  super.unit <- .get.super.unit(unit)
-  unit.pl <- "lubridate::{unit}s" %>% glue::glue()
-  unit <- "lubridate::{unit}" %>% glue::glue()
+reduce <- function(df, time.interval, time.unit, date_field) {
+  super.unit <- .get.super.unit(time.unit)
+  unit.pl <- "lubridate::{time.unit}s" %>% glue::glue()
+  unit <- "lubridate::{time.unit}" %>% glue::glue()
   
   df %>%
     dplyr::mutate(
       interval = lubridate::floor_date(!!as.name(date_field), unit = super.unit) + eval(parse(text = unit.pl))(ceiling(
-        eval(parse(text = unit))(!!as.name(date_field)) / time.interval
+        eval(parse(text = time.unit))(!!as.name(date_field)) / time.interval
       ) * time.interval)
     ) %>%
     dplyr::group_by(interval) %>%
@@ -100,6 +97,7 @@ reduce <- function(df, time.interval, unit, date_field) {
     dplyr::select(-date) %>%
     dplyr::rename(date = interval)
 }
+
 ```
 
 
@@ -126,7 +124,10 @@ this example, so there is no need to install it.
 ```R
 install.github('jenslaufer/sample-r-library-reducer')
 library(reducer)
-reducer::reduce()
+
+@TODO code for creating a data frame
+data
+reducer::reduce(data, 5, "minute", date)
 ```
 
 This should print "reducing." to the screen.
@@ -136,14 +137,23 @@ This should print "reducing." to the screen.
 We create the code to call the first simple implementation of our r rlibrary and put into a file named test.py:
 
 ```python
+import pandas as d
 import rpy2.robjects.packages as rpackages
+from rpy2.robjects import r, pandas2ri
+
+pandas2ri.activate()
+
+df = p
 
 reducer = rpackages.importr('reducer')
 
 reducer.reduce()
 ```
 
-## Step 4- Get everything run up and running Docker
+You can see, that it is pretty simple to import our R library. The trickest part is to ensure that our 
+Pandas data frame is automatically transformed into an R data frame. We do this by using pandas2ri.activate() in rpy2 in the beginning.
+
+## Step 4- Get everything up and running Docker
 
 To have a reliable reproducable runtime environment it's a good idea to run your application unto [Docker](https://docker.com). 
 You can download it from the website for the most important  operating systems.
@@ -179,5 +189,3 @@ docker exec -it jenslaufer/reducer:latest bash
 What does this line do? It downloads our already-built computer to your machine and opens a bash in the container. So we can easily execute our Python example code now, 
 everything what we need for excution is packed in the container.
 
-
-## Step 5- Implement the R function and the python call
