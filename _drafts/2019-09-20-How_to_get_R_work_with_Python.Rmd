@@ -167,14 +167,9 @@ In our case we need a container with R, Python, our preinstalled libary and rpy2
 - Docker container with R and Python installed
 
 ```Dockerfile
-FROM python:3.7-slim-buster
+FROM jenslaufer/python-r:py37
 
-RUN apt-get update && apt-get install -y r-base
-
-RUN R -e "install.packages(c('tidyverse', 'devtools'), repos = 'http://cran.us.r-project.org')"
 RUN R -e "install.github('jenslaufer/sample-r-library-reducer')"
-
-RUN pip install rpy2
 ```
 
 We use a base container with pre installed Python 3.7. On top we are installing base R, afterwards are are installing serveral important libarires in the contain
