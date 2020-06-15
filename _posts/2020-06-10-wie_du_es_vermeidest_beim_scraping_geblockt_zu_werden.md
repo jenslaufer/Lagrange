@@ -4,7 +4,7 @@
 
 Die letzten Stunden hatte ich einen Scraper geschrieben, um die Produkte eines großen Internetmrktplatzes für eine Nischenanalyse zu ziehen. Der Scraper erforderte einigen Aufwand, weil die Website JavaScript für das Rendering verwendet, d.h. viel Code wird erst im Browser ausgeführt. Dies muss erhöht den Aufwand beim Scraping. Die Verwendung von Selenium mit einem Headless Chromebrowser brachte schliesslich den Erfolg. Nun kam die Stunde der Wahrheit, ich wollte nun zum ersten Mal Rohdaten im großen Stile ziehen. Voll freudiger Erwartung startete ich meinen Scraper, der die Seiten in meine MongoDB-Datenbank schaufeln sollte. Bald würde ich Daten analysieren könne, Scraping ist der nervige Teil auf dem Weg da hin. Hat man erst einmal die Rohdaten dann ist das die halbe Miete, die Extraktion der interessanten Felder ein Kinderspiel. Durch die Parallelverarbeitung sollte das Ganze recht schnell sein. Während ich gespannt wartete passierte es: Die Größe der Files war auf einmal immer gleich und viel kleiner als am Anfang und...
 
-<larger>__Http Status: 429__</larger>
+__Http Status: 429__
 
 Mir war sofort klar, was passiert war: __Ich war geblockt worden.__ Selbstverständlich war ich mir dieser Gefahr von Anfang an bewusst gewesen, aber meine Ungeduld hatte mir wieder einmal einen Strich duch die Rechnung gemacht: Der Versuch ohne Massnahmen war gescheitert. Zwar sind Blocks häufig nur temporär, aber sie verhindern, dass du die Menge an Daten ziehen kannst, die du möchtest. Gerade bei Parallelverarbeitung ist die Gefahr sehr groß. Du solltest dir auch bewusst sein, dass du bei wiederholten Verstössen lebenslang geblockt werden kannst.
 
@@ -25,4 +25,9 @@ Eine andere Möglichkeit ist die Kauf von kommerziellen Proxylisten. Du bezahlst
 ### Proxy per API-Call
 
 Etwas eleganter sind APIs, die einem eine Proxyadresse für jeden Request zurückliefern. Das Schöne ist, dass man keine lokalen Proxylisten vorhalten muss. Man setzt einen Request ab bekommt eine IP-Adresse zu einen Proxy zurück, die man dann verwendet. 
-Das ist viel eleganter hat jedoch einen Nachteil. Ich setze einen Request ab, um eine IP-Adresse zu erhalten, die ich dann für den eigentlichen Request verwende. Ich mache also zwei REquests statt einem. Codetechnisch erfodert das ganuz ein wenig Boilerplatecode, der allerdings überschaubar ist.
+Das ist viel eleganter hat jedoch einen Nachteil. Ich setze einen Request ab, um eine IP-Adresse zu erhalten, die ich dann für den eigentlichen Request verwende. Ich mache also zwei REquests statt einem. Codetechnisch erfordert das ganz ein wenig Boilerplatecode, der allerdings überschaubar ist.
+
+### Blackbox Call zur Zieladresse
+
+Ein viel besserer Ansatz ist, wenn du den verwendeten Proxy gar nicht erst in der deiner Logik handeln musst, weil du dem API-Provider die Ziel-Url übermittlest und dieser den Aufruf abarbeitet. Wenn der Provider dann noch in der Lage ist Seiten mit JavaScript Code über einen Headless Browsern zu rendern, dann kannst du dich voll auf die Extraktion der Daten konzentrieren. 
+Du sparst enorm viel Zeit. Lange Zeit habe ich nach einer solchen API gesucht. Schliesslich bin ich fündig geworden: [ScraperAPI](https://www.scraperapi.com?fpr=jens78) bietet genau die Features, die ich immer gesucht habe.
