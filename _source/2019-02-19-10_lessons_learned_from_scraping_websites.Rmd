@@ -7,6 +7,7 @@ categories:
 show_comments: true
 tags: scraping, "data retrieval"
 image: '/assets/img/scraping.jpg'
+language: en
 output:
   html_document: default
 ---

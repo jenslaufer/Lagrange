@@ -13,6 +13,7 @@ output:
 show_comments: yes
 tags: CNN, "data science", "transfer learning"
 categories: "machine learning"
+language: en
 ---
 
 ## I. Definition
