@@ -28,12 +28,25 @@ Als ich das Erstemal vor dem Problem stand, hatte ich die Idee über Cloudservic
 
 ### Kommerzielle Proxylisten verwenden
 
-Eine andere Möglichkeit ist die Kauf von kommerziellen Proxylisten. Du bezahlst eine monatlich Gebühr und erhälst Zugriff auf eine Reihe von Proxies, die du beim Scrapen verwendest. Das funktioniert sehr gut, allerdings musst du deinen Code verändern. Der Aufwand hält sich in Grenzen, was mir jedoch nicht daran gefällt, dass ich die Proxylisten irgendwo vorhalten muss. Ändere ich meinen Vertrag weil ich z.B. mehr Proxies benötige dann muss ich meine lokale Liste nachpflegen. Sicher kann man das z.B in eine getrennte Bibliothek auslagern, aber es ist doch ein wenig unschön. Lange Zeit habe ich [Bonanza Proxies](https://proxybonanza.com/?aff_id=831) verwendet und habe die Proxyliste in einem Python module unter [scrpproxies on Github](https://github.com/jenslaufer/scrpproxies) ausgelagert. Die Proxies von Bonanza funktionieren sehr gut, jedoch gefiel mir das mit der Bibliothek nie wirklich. Wenn ich ehrlich bin interessieren mich die genauen IP-Adressen nicht und ich möchte auch keinen Code pflegen für so etwas.
+Eine andere Möglichkeit ist die Kauf von kommerziellen Proxylisten. Du bezahlst eine monatlich Gebühr und erhälst Zugriff auf eine Reihe von Proxies, die du beim Scrapen verwendest. Das funktioniert sehr gut, allerdings musst du deinen Code verändern. Der Aufwand hält sich in Grenzen, was mir jedoch nicht daran gefällt, dass ich die Proxylisten irgendwo vorhalten muss. Ändere ich meinen Vertrag weil ich z.B. mehr Proxies benötige dann muss ich meine lokale Liste nachpflegen. Sicher kann man das z.B in eine getrennte Bibliothek auslagern, aber es ist doch ein wenig unschön. Lange Zeit habe ich [Bonanza Proxies](https://proxybonanza.com/?aff_id=831) verwendet und habe die Proxyliste in einem Python module unter [scrpproxies on Github](https://github.com/jenslaufer/scrpproxies) ausgelagert. Die Proxies von Bonanza funktionieren sehr gut, jedoch gefiel mir das mit der Bibliothek nie wirklich. Wenn ich ehrlich bin interessieren mich die genauen IP-Adressen nicht und ich möchte auch keinen Code pflegen für so etwas. 
+
+Hie ein kleines Codebeipiel, um einen Request mit einem Proxy abzusetzen. Ichinitialisiere zuerst die den Proxydienst. Über get wählt das Modul zufällig eine Proxyadresse aus, die ich dann für den Request benutze.
+
 
 ```python
-proxies = 
+from scrpproxies import proxy
+import requests
+
+# Initialisation of proxy service with credentials
+proxies = proxy.BonanzaProxy(username, password)
+
+# Get returns random proxy ip address
 proxy = proxies.get()['http']
+
+# use proxy for the request
+r = requests.get(url, proxies={"http": proxy})
 ```
+
 
 ### Proxies per API-Call
 
@@ -41,7 +54,23 @@ Etwas eleganter sind APIs, die einem eine Proxyadressen zurücliefern. Das Schö
 
 Das ist viel eleganter als die Lösung vorher hat jedoch einen Nachteil. Du setzt einen Request ab, um IP-Adressen zu erhalten, die du dann für den eigentlichen Request verwende. Ich mache also zwei Requests statt einem. Codetechnisch erfordert das zwar ganz ein wenig Boilerplatecode, der allerdings überschaubar ist.
 
+
 ### Blackbox Call zur Zieladresse
 
 Ein viel besserer Ansatz ist, wenn du den verwendeten Proxy gar nicht erst in der deiner Logik handeln musst, weil du dem API-Provider die Ziel-Url übermittlest und dieser den Aufruf abarbeitet. Wenn der Provider dann noch in der Lage ist Seiten mit JavaScript Code über einen Headless Browsern zu rendern, dann kannst du dich voll auf die Extraktion der Daten konzentrieren. 
 Du sparst enorm viel Zeit. Lange Zeit habe ich nach einer solchen API gesucht. Schliesslich bin ich fündig geworden:  [ScraperAPI](https://www.scraperapi.com?fpr=jens78) bietet genau die Features, die ich immer gesucht habe.
+
+```python
+# Scraper Api url template
+SCRAPER_API_URL = "http://api.scraperapi.com?api_key={api_key}&url={url}"
+
+# target url
+url = "https://somesitetoscrape.com"
+
+# parsed request url
+scraper_url = SCRAPER_API_URL.format(api_key=api_key, url=url)
+
+# fetch target url
+r = requests.get(scraper_url)
+
+```
