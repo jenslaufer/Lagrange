@@ -40,11 +40,9 @@ You also need to check what headers your browser sends to your website. The deve
 Build a docker container for your scraping application. Scraping configurations can be a bit complicated, especially if you fetch the data from the resource with Selenium, which uses a browser like Chromium or Firefox. You need operating system dependent drivers for this situation. You can use my [docker image with Firefox/Geckodriver and Chromium/Chromedriver](https://cloud.docker.com/repository/docker/jenslaufer/docker-chromedriver-geckodriver) on Dockerhub as a base image for your scraping application. The source can be downloaded from [Github](https://github.com/jenslaufer/docker-chromedriver-geckodriver). Use [Docker Compose](https://docs.docker.com/compose/): It is a tool for defining and running multi-container Docker applications. This way you can set up a database with no effort along with your scraping container.
 If you are not familiar with [Docker](https://github.com) then try it out. It's a secret weapon for reliable runtime environments for all kind of software projects.
 
-
-
 ### 4. Always use first class proxies for scraping
 
-Use proxies already during development. Rotate the proxies randomly. This saves you a lot of trouble. My rule of a thumb is to use 10 proxies per scraping process/thread. Try to avoid free proxies lists. The proxies on these lists are often slow or already blocked. It is a waste of time to try them out. Google for proxy providers. You need to invest some money here. You can even buy non-shared proxies, but they have their costs.
+Use proxies already during development. Rotate the proxies randomly. This saves you a lot of trouble. My rule of a thumb is to use 10 proxies per scraping process/thread. Try to avoid free proxies lists. The proxies on these lists are often slow or already blocked. It is a waste of time to try them out. Google for proxy providers. You need to invest some money here. You can even buy non-shared proxies, but they have their costs. I can recommend [ScraperAPI](https://www.scraperapi.com?fpr=jens78) and [Bonanza Proxies](https://proxybonanza.com/?aff_id=831), which I use both.
 
 
 ### 5. Write a dump scraper first, then the parser

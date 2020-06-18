@@ -47,12 +47,22 @@ proxy = proxies.get()['http']
 r = requests.get(url, proxies={"http": proxy})
 ```
 
-
 ### Proxies per API-Call
 
 Etwas eleganter sind APIs, die einem eine Proxyadressen zurücliefern. Das Schöne ist, dass man keine lokalen Proxylisten vorhalten muss. Man setzt einen Request ab und bekommt IP-Adressen, die man dann verwendet. [Luminati](https://luminati.io/?affiliate=ref_5ee711e0c7669177ab29ff24) ist ein solcher Dienst, den ich allerdings nur kurz verwendet habe.
 
 Das ist viel eleganter als die Lösung vorher hat jedoch einen Nachteil. Du setzt einen Request ab, um IP-Adressen zu erhalten, die du dann für den eigentlichen Request verwende. Ich mache also zwei Requests statt einem. Codetechnisch erfordert das zwar ganz ein wenig Boilerplatecode, der allerdings überschaubar ist.
+
+```python
+import requests
+
+# Api call to get Proxy
+proxy = requests.get(f"https://luminati.io/api/get_proxy/key={api_key}").text
+
+# use proxy for the request
+r = requests.get(url, proxies={"http": proxy})
+
+```
 
 
 ### Blackbox Call zur Zieladresse
@@ -61,6 +71,8 @@ Ein viel besserer Ansatz ist, wenn du den verwendeten Proxy gar nicht erst in de
 Du sparst enorm viel Zeit. Lange Zeit habe ich nach einer solchen API gesucht. Schliesslich bin ich fündig geworden:  [ScraperAPI](https://www.scraperapi.com?fpr=jens78) bietet genau die Features, die ich immer gesucht habe.
 
 ```python
+import requests
+
 # Scraper Api url template
 SCRAPER_API_URL = "http://api.scraperapi.com?api_key={api_key}&url={url}"
 
