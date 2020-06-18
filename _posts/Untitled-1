@@ -1,9 +1,0 @@
----
-title: "How to avoid to get blocked in scraping"
-subtitle: "The application we use for our reinforcement trading platform"
-output: html_document
-image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_74,w_800/v1568015884/matt-artz-pH6wLT6TVFc-unsplash.jpg"
-image_caption: "Photo by Matt Artz on Unsplash"
-tags: data gathering, scraping python, scraper api
-categories: qraptor
----
