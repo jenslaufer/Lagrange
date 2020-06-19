@@ -7,6 +7,9 @@ curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/sc
 sudo apt-get install gitlab-runner
 ```
 4. Register the GitLab Runner
+docker-ssh
+Docker image docker dind!
+
 
 
 4. Setup gitlab ci pipeline
