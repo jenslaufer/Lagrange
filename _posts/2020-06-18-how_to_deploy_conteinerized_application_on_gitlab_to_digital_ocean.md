@@ -20,7 +20,7 @@ sudo add-apt-repository \
    stable"
 
  sudo apt-get update
- $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
 ```shell
@@ -29,10 +29,6 @@ chmod +x /usr/local/bin/docker-compose
 ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 ```
 
-```shell
-usermod -aG docker gitlab-runner
-sudo service docker restart
-``` 
 
 
 3. Install Gitlab runner
@@ -41,10 +37,16 @@ sudo service docker restart
 curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
 sudo apt-get install gitlab-runner
 ```
-4. Register the GitLab Runner
-docker
-Docker image docker dind!
 
-shell
+
+```shell
+usermod -aG docker gitlab-runner
+sudo service docker restart
+``` 
+
+4. Register the GitLab Runner
+
+shell runner
+
 
 4. Setup gitlab ci pipeline
