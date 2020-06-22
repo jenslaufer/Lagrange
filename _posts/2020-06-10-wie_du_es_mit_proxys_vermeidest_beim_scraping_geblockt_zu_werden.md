@@ -1,5 +1,5 @@
 ---
-title: "Wie du es vermeidest beim Scrapen geblockt zu werden"
+title: "Wie du es mit Proxys vermeidest beim Scrapen geblockt zu werden"
 subtitle: "Verschiedene Ansätze, die dir mit wenigen Änderungen im Code helfen"
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_800/v1592394603/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg"
 image_caption: "Photo by Anita Jankovic on Unsplash"
@@ -8,7 +8,6 @@ categories: scraping
 layout: post
 language: de
 ---
-
 
 Die letzten Stunden hatte ich einen Scraper geschrieben, um die Produkte eines großen Internetmarktplatzes für eine Nischenanalyse zu ziehen. Der Scraper erforderte einigen Aufwand, weil die Website JavaScript für das Rendering verwendet, d.h. viel Code wird erst im Browser ausgeführt. Dies muss erhöht den Aufwand beim Scraping. Die Verwendung von Selenium mit einem Headless Chromebrowser brachte schliesslich den Erfolg. Nun kam die Stunde der Wahrheit, ich wollte nun zum ersten Mal Rohdaten im großen Stile ziehen. Voll freudiger Erwartung startete ich meinen Scraper, der die Seiten in meine MongoDB-Datenbank schaufeln sollte. Bald würde ich Daten analysieren könne, Scraping ist der nervige Teil auf dem Weg da hin. Hat man erst einmal die Rohdaten dann ist das die halbe Miete, die Extraktion der interessanten Felder ein Kinderspiel. Durch die Parallelverarbeitung sollte das Ganze recht schnell sein. Während ich gespannt wartete passierte es: Die Größe der Files war auf einmal immer gleich und viel kleiner als am Anfang und...
 
