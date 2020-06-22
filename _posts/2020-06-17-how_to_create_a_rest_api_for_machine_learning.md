@@ -10,7 +10,7 @@ easy part. You might think this is not a task of a machine learning engineer, ho
 there not always software enigneers in the data science team.
 
 In this little tutorial __I want to show you how to create a microservice with a REST API for a machine learning model__. For this approach I am using
-Python Eve which is a brilliant module for creating RESTful APIs with a bare minimum lines of code. The module is a bit like Spring Boot which is a game changer in the Java world. Python Eve uses MongoDB in the backend. Eve encapsulates the whole database access so you don't have to be scared about it. 
+Python Eve which is a brilliant module for creating RESTful APIs with a bare minimum lines of code. The module is a bit like Spring Boot which is a game changer in the Java world. Python Eve uses MongoDB in the backend. Eve encapsulates the whole database access so you don't have to be scared about it.
 With the use of Docker containers and docker compose I reduce the effort of installing and setting up the database.
 
 In our example we create a model that maps the BSR (Best seller rank) of a product on Amazon into an estimation of monthly sales.
@@ -22,4 +22,52 @@ Procedure Call (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call), whic
 
 In case you create a REST API by "hand" you have to keep the concept around REST in mind. However, the good news are that Eve is creating the API with all endpoints for you according the specification of REST. You can concentrate on Machine Learning instead of the concept around REST.
 
+So let's get the hands dirty. Our resource we want to to use is called "prediction". With a POST request a "prediction" resource is created in the database. It's not just created, a prediction is also performed. With a GET request we can get the prediction "resource", with a PUT we can change it and DELETE removes it. To setup the the API we need a settings.py 
 
+```python
+# -*- coding: utf-8 -*-
+
+# URI of our database
+MONGO_URI = 'mongodb://localhost/prediction'
+
+# What methods we are able to perform on resources
+RESOURCE_METHODS = ['GET', 'POST']
+
+# What methods we are able to perform on items
+ITEM_METHODS = ['GET', 'DELETE']
+
+CACHE_CONTROL = 'max-age=20'
+CACHE_EXPIRES = 20
+
+X_DOMAINS = '*'
+X_HEADERS = 'Content-Type,Authorization'
+
+# The schema of our 
+predictions = {
+    'item_title': 'suggestions',
+    'schema': {
+        'bsr': {
+            'type': 'int',
+            'required': True
+        },
+
+        'sales': {
+            'type': 'int'
+        }
+    }}
+
+
+DOMAIN = {
+    'predictions': predictions
+}
+```
+
+To start our REST API we have another python file app.py with just a few lines of code:
+
+```python
+from eve import Eve
+
+app = Eve()
+app.run()
+
+```
