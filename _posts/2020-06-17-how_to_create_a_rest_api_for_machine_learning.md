@@ -25,8 +25,6 @@ In case you create a REST API by "hand" you have to keep the concept around REST
 So let's get the hands dirty. Our resource we want to to use is called "prediction". With a POST request a "prediction" resource is created in the database. It's not just created, a prediction is also performed. With a GET request we can get the prediction "resource", with a PUT we can change it and DELETE removes it. To setup the the API we need a settings.py 
 
 ```python
-# -*- coding: utf-8 -*-
-
 # URI of our database
 MONGO_URI = 'mongodb://localhost/prediction'
 
@@ -71,3 +69,5 @@ app = Eve()
 app.run()
 
 ```
+
+We run the app.py Voilà our REST API is ready to use. We
