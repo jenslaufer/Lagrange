@@ -7,6 +7,7 @@ show_comments: true
 tags: product development, business idea, marketing
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_66,w_740/v1559383415/florian-olivo-1561171-unsplash.jpg"
 image_subtitle: "Photo by Daniel Lee on Unsplash"
+language: en
 ---
 
 First and foremost: __Do not fall into the trap of doing product development for months for a product nobody wants__. 

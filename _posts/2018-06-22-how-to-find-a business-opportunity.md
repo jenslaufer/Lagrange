@@ -6,6 +6,7 @@ categories:
 show_comments: true
 tags: entrepreneurship, business, business opportunity, business idea, solopreneur
 image: /assets/img/runner.jpg
+language: en
 ---
 
 ## ...or how to be BOD (=Business Opportunity Detective)

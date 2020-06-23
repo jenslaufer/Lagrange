@@ -27,3 +27,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'jekyll-paginate'
 gem 'jekyll-sitemap'
 gem 'jekyll-seo-tag'
+gem 'jekyll-redirect-from'
+gem "jekyll-gist"
+gem "jemoji"
+gem "jekyll-data"
+gem "jekyll-include-cache"

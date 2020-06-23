@@ -6,6 +6,7 @@ categories:
 show_comments: true
 tags: R, dplyr, MongoDB, data analysis
 image: /assets/img/16702185956_0313e29b69_z.jpg
+language: en
 ---
 
 
