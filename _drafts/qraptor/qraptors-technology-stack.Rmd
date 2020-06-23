@@ -1,0 +1,41 @@
+---
+title: "The Technology Landscape"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The team members of qraptor have a variety of technology backgrounds. I'd say our team is polyglot from 
+However instead of pushing them into a certain technolgy we let the people decide which technology solves the problem in the best way.
+What#s the metric we are using which is the best technology to solve? It'S imsplier what you might think, it's the just lines of code. For us the best technology for solving problem is that one that needs 
+the fewest lines of code. Another approach is to devide the problem into smaller chunks. We pack modules into small executable containers, along with everything that is needed to execute. Docker is tool
+for this. The modules are microservices, often with RESTful API. For a lot of things we use ready-to-use packed containers for e.g. ElasticSearch, MongoDB. Our goal is not reinvent tools, instead we want focus on our core business.
+
+## Programming Languages
+
+Today, we want to showcase our technology stack. First, the programming languages we use:
+
+### R
+
+While there is a lot of discussions about the pros and cons of Python and R in data science, we think R is superior in the field of data analysis. For analsysis and preprocessing R is our choice. While the syntax of
+base R feels sometimes a bit strange, however with the tidyverse libraries the code is pretty readbable. We use Shiny Apps for creating dashboards with a bare minimum lines of codes, as you can use the powerful ggplot with its
+grammary of graphics. It would much longer to program a similiar dashboard.
+
+### Python
+
+We use Python for modeling. Our core reinforcment learning framework, which uses stable_baselines a lot is developed with Python. We use Python also for a number of backend services.
+
+
+### Java
+
+The world hates Java, but we love it. We have a lot of discussions when to use Java and when to use e.g. Python, but it has been always a discussion on a high standard. No stupid flame wars. We believe that a strong typed language like 
+Java has a lot of advantages, but that are also use cases when scripting languagesis the better option. Sometimes you need even less code than in Python, as we love the Spring Framework. Java is used when multi-threading is important. 
+
+## JavaScript
+
+We use JavaScript for our web based UIs. For this we use vueJS with Quasar. This lets quickly develop UIs for tools. We don't use JavaScript in the backend. Yet. But we are sure one day we will have also nodeJs backend microservices.
+
+
+

@@ -10,6 +10,7 @@ output:
   pdf_document:
     fig_caption: yes
 show_comments: yes
+language: en
 tags: R, ggplot, dplyr, tidyverse, data vizualisation, data analysis, EDA
 categories: data analysis
 ---
