@@ -6,6 +6,8 @@ image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_74,w_800/v1
 image_caption: "Photo by Matt Artz on Unsplash"
 tags: docker, programming languages, technology stacks, applications
 categories: qraptor
+layout: post
+language: en
 ---
 
 In [Part One: Architecture and Programming Languages](/qraptor/qraptors-technology-stack-programming-languages.html) we showed you that we using several programming 

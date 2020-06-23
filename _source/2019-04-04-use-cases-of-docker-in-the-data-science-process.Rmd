@@ -7,6 +7,7 @@ layout: post
 show_comments: yes
 tags: docker, process, data science
 categories: data science
+language: en
 ---
 
 ```{r setup, include=FALSE}
