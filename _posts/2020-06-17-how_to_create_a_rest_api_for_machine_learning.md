@@ -70,4 +70,15 @@ app.run()
 
 ```
 
-We run the app.py Voilà our REST API is ready to use. We
+We run the app.py Voilà our REST API is ready to use. Almost. We missed something very essential:
+
+__The MongoDB database__
+
+Installing the database that you don't know might be nightmare. However, we reduce the effort with the use docker-compose and Docker. 
+
+
+## Containerize our Application with Docker
+
+The usage of docker-compose is a way to start an application that consists of multiple sub-applications like services, frontends, databases.
+
+The first step for that is that you create for 
