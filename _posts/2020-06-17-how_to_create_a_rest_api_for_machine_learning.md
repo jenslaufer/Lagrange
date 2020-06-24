@@ -77,8 +77,65 @@ __The MongoDB database__
 Installing the database that you don't know might be nightmare. However, we reduce the effort with the use docker-compose and Docker. 
 
 
-## Containerize our Application with Docker
+### 2. Containerize your Application with Docker
 
 The usage of docker-compose is a way to start an application that consists of multiple sub-applications like services, frontends, databases.
+The docker-compose.yml file wraps up the application. Please ensure that you have [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed on your machine for the next steps.
 
-The first step for that is that you create for 
+The first step is to build a container for your REST API. It's easy, because you just need Dockerfile for it. There are just a few commands in the Dockerfile, that are easy to understand in case you are familiar with Linux/MacOS. 
+
+```Dockerfile
+# The base image we use
+FROM python:3.7
+
+# We copy the resources that are need for the application
+COPY requirements.txt requirements.txt
+COPY app.py app.py
+COPY settings.py settings.py
+
+# We need to install the requirements into the the container
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+CMD [ "python", "app.py" ]
+```
+
+You can build the docker container from the command line. However, I skip it, because I let docker-compose do the building of the container to keep this tutorial simple.
+
+Like I mentioned before, we need a a docker-compose.ym file. Let's take look on it.
+
+```docker-compose
+version: "3.7"
+
+services:
+
+  sales-predictor:
+    image: sales-predictor:latest
+    ports:
+      - 5000:5000
+    depends_on:
+        - predictor-db
+    environment:
+      - MONGO_URI=mongodb://predictor-db/predictions
+    build: .
+  
+  predictor-db:
+    image: mongo:3.7
+    container_name: predictor-db
+    ports:
+      - 27017
+
+```
+
+Your application consists of three containers: 
+
+- sales-predictor: Your REST Service
+- predictor-db: The MongoDB for your REST Service
+
+We can start our application with a docker-compose command in the directory where the 
+Dockerfile and the docker-compose.yml is located:
+
+```shell
+docker-compose up -d
+```
+
+What's happenin
