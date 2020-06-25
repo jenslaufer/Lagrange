@@ -70,12 +70,11 @@ app.run()
 
 ```
 
-We run the app.py Voilà our REST API is ready to use. Almost. We missed something very essential:
+You can execute the app.py now and your REST API is ready to use. Almost. We missed something very essential:
 
 __The MongoDB database__
 
-Installing the database that you don't know might be nightmare. However, we reduce the effort with the use docker-compose and Docker. 
-
+Installing a database that you don't know might be nightmare. However, we reduce the effort with the use docker-compose and Docker.
 
 ### 2. Containerize your Application with Docker
 
@@ -126,7 +125,7 @@ services:
 
 ```
 
-Your application consists of three containers: 
+Your application is consisting of two containers: 
 
 - sales-predictor: Your REST Service
 - predictor-db: The MongoDB for your REST Service
@@ -138,4 +137,75 @@ Dockerfile and the docker-compose.yml is located:
 docker-compose up -d
 ```
 
-What's happenin
+What exactly happens when you execute this command?
+
+- sales-predictor: Docker builds your container and starts it.
+- predictor-db: Docker fetches the image for MongoDB from the [Dockerhub registry](https://hub.docker.com/_/mongo) and starts it.
+
+Especially the "set up" of the database is a no-brainer. Exactly what you need, as you want to concentrate on Data Science and not database administration.
+
+You can now create a prediction resource with a POST request. You can use a REST client for it:
+I recommend the [Advanced REST client](https://install.advancedrestclient.com/install), which is very is easy to use. You can also get a Chrome plugin for it. [Postman](https://www.postman.com/product/api-client/) has much more features, however it's a bit more complicated.
+
+Let's create a prediction for a bestseller rank of 70. We send a POST request with a JSON body:
+
+```json
+{
+  "bestseller_rank": 70
+}
+```
+
+We get a HTTP status 201 back, which means "CREATED" and information about the created resource:
+
+```json
+{
+    "_updated": "Thu, 25 Jun 2020 06:42:02 GMT",
+    "_created": "Thu, 25 Jun 2020 06:42:02 GMT",
+    "_etag": "ed58e79f053c76083372af1d3f48393c924fd824",
+    "_id": "5ef4473b16d99e36701ba03b",
+    "_links": {
+        "self": {
+            "title": "suggestions",
+            "href": "predictions/5ef4473b16d99e36701ba03b"
+        }
+    },
+    "_status": "OK"
+}
+```
+
+Python Eve added also valuable information like the timestamp the resource was created and updated.
+
+
+You can now fire a GET request with the id "5ef4473b16d99e36701ba03b" do get all "content" of our resource. The url for this request is: http://localhost:5000/predictions/5ef4473b16d99e36701ba03b
+
+We get a HTTP 200 back a JSON response:
+
+```json
+{
+    "_id": "5ef4473b16d99e36701ba03b",
+    "bestseller_rank": 70,
+    "_updated": "Thu, 25 Jun 2020 06:42:02 GMT",
+    "_created": "Thu, 25 Jun 2020 06:42:02 GMT",
+    "_etag": "ed58e79f053c76083372af1d3f48393c924fd824",
+    "_links": {
+        "self": {
+            "title": "suggestions",
+            "href": "predictions/5ef4473b16d99e36701ba03b"
+        },
+        "parent": {
+            "title": "home",
+            "href": "/"
+        },
+        "collection": {
+            "title": "predictions",
+            "href": "predictions"
+        }
+    }
+}
+```
+
+The whole REST API is according to specification of REST with correct HTTP codes. Thanks to Eve!
+
+However, there is still something missing: 
+
+__Prediting__
