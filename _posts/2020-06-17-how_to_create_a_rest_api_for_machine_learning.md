@@ -125,7 +125,7 @@ services:
 
 ```
 
-Your application is consisting of two containers: 
+Your application is consisting of two containers:
 
 - sales-predictor: Your REST Service
 - predictor-db: The MongoDB for your REST Service
@@ -209,3 +209,7 @@ The whole REST API is according to specification of REST with correct HTTP codes
 However, there is still something missing: 
 
 __Prediting__
+
+### 3. Integration of the predictor
+
+In a different git repository I created a predictor. It uses data from
