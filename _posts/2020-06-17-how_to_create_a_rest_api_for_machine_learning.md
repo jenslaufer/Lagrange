@@ -25,13 +25,15 @@ In case you create a REST API by "hand" you have to keep the concept around REST
 So let's get the hands dirty. Our resource we want to to use is called "prediction". With a POST request a "prediction" resource is created in the database. It's not just created, a prediction is also performed. With a GET request we can get the prediction "resource", with a PUT we can change it and DELETE removes it. To setup the the API we need a settings.py 
 
 ```python
-# URI of our database
-MONGO_URI = 'mongodb://localhost/prediction'
+import os
+import pymongo
 
-# What methods we are able to perform on resources
+# Fetch mongouri fro environent, otherwise use localhost
+MONGO_URI = os.environ.get("MONGO_URI", 'mongodb://localhost/estimation')
+
+
 RESOURCE_METHODS = ['GET', 'POST']
 
-# What methods we are able to perform on items
 ITEM_METHODS = ['GET', 'DELETE']
 
 CACHE_CONTROL = 'max-age=20'
@@ -40,24 +42,28 @@ CACHE_EXPIRES = 20
 X_DOMAINS = '*'
 X_HEADERS = 'Content-Type,Authorization'
 
-# The schema of our 
-predictions = {
-    'item_title': 'suggestions',
+
+estimations = {
+    'item_title': 'estimations',
     'schema': {
-        'bsr': {
-            'type': 'int',
+        'bestseller_rank': {
+            'type': 'integer',
             'required': True
         },
-
-        'sales': {
-            'type': 'int'
+        'category': {
+            'type': 'string',
+            'required': True
+        },
+        'estimated_sales': {
+            'type': 'integer'
         }
     }}
 
 
 DOMAIN = {
-    'predictions': predictions
+    'estimations': estimations
 }
+
 ```
 
 To start our REST API we have another python file app.py with just a few lines of code:
@@ -106,23 +112,22 @@ Like I mentioned before, we need a a docker-compose.ym file. Let's take look on 
 version: "3.7"
 
 services:
-
-  sales-predictor:
-    image: sales-predictor:latest
+  sales-estimator-backend:
+    image: sales-estimator-backend:latest
+    container_name: sales-estimator-backend
     ports:
       - 5000:5000
     depends_on:
-        - predictor-db
+        - sales-estimator-db
     environment:
-      - MONGO_URI=mongodb://predictor-db/predictions
+      - MONGO_URI=mongodb://sales-estimator-db/estimations
     build: .
-  
-  predictor-db:
-    image: mongo:3.7
-    container_name: predictor-db
+
+  sales-estimator-db:
+    image: mongo:4.0
+    container_name: sales-estimator-db
     ports:
       - 27017
-
 ```
 
 Your application is consisting of two containers:
