@@ -16,5 +16,17 @@ Keine Angst, ich habe ihm keine Morddrohung geschickt oder ihn wüst auf Twitter
 Drosten in der Tagesschau einfach auf wenige Sätze reduziert wurde, die vielleicht aus dem Zusammenhang gerissen wurden. Vielleicht war der Zweck einfach keine Panik zu verbreiten. Man stelle sich
 der Chefvirologe hätte gesagt, dass wir bald eine Pandemie haben. Wir hätten vermutlich schon Mitte Januar keine Toilettenpapier bekommen.
 
-Zum Fan von Herrn Drosten wurde ich durch den NDR Podcast, in dem er sehr verständlich die Wissenschaft der Virologie näher bringt. Mich fasziniert wie er in saubere druckreiferen Sätze spricht.
-Die Sätze sind jedoch nicht nur sprachlich rein, sie sind fachlich sauber. 
+Zum Fan von Herrn Drosten wurde ich durch den NDR Podcast, in dem er sehr verständlich die Wissenschaft der Virologie näher bringt. Mich fasziniert wie er in saubere druckreiferen Sätze formuliert.
+Die Sätze sind jedoch nicht nur sprachlich rein, sie sind fachlich sauber. Der Sprache fehlt jegliche Flapsigkeit, was trocken erscheinen mag, das sie aber ganz und gar nicht. Herr Drosten
+kommt sehr sympathisch rüber.
+
+Wenn man Kommentare in sozialen Medien verfolgt, dann liest man häufig, Drosten würde ständig seine Meinung ändern. Als Verfolger des Podcasts weiss man jedoch, dass diese "Meinungen" auf wissenschaftlichen
+Erkenntnisse beruhen und weniger auf Heuristiken. Wenn Drosten seine Meinung ändert, weil es neue bessere Erkenntnisse gibt. Wird er nach seiner Meinung über etwas gefragt, dass ausserhalb seines Fachgebiets
+gefragt, so sagt er klar, dass er eine spersönliche Meinung zu dem Thema. Er "kennzeichnet" solche Meinungen mit "meine private Meinung", "das ist nicht mein Fachgebiet". 
+
+Mein Loblied mag den Eindruck erwecken, dass Herr Drosten ein Übermensch sei. Nein, Herr Drosten ist nicht unfehlbar. Sind ihm im Podcast Fehler unterlaufen dann wurde diese in späteren Folgen korrigiert.
+Auch das kommt sehr glaubhaft rüber, man hat überhaupt zu keinem Moment den Eindruck Herr Drosten sei arrogant.
+
+Man könnte eine Metrik für saubere Kommunikation einführen den Drostenzahl. 1 für ideal saubere und 0 für unsaubere Kommunikation. 
+
+| Me
