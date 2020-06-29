@@ -14,7 +14,7 @@ liegt vermutlich bei 50 %; ich könnte also genausogut eine Münze werfen. Triff
 "Confirmation Bias"; man präferiert die Quellen, die die eigene Meinung bestärken und über die Quellen, die gegenteilige Positionen einnehmen rist man erzürnt. Deswegen war ich "sauer" auf diesen Herrn Drosten. 
 Keine Angst, ich habe ihm weder Morddrohungen geschicktnoch ihn wüst auf Twitter beschimpft. Ich habe gehört, dass es Menschen geben soll, die das tun. Heute denke ich mir, dass das Interview mit Herrn
 Drosten in der Tagesschau einfach auf wenige Sätze reduziert wurde, die vielleicht aus dem Zusammenhang gerissen wurden. Vielleicht war der Zweck keine Panik zu verbreiten. Man stelle sich
-der Chefvirologe der Cahrité hätte gesagt, dass bald eine Pandemie über die Welt hereinbrechen wird. Wir hätten vermutlich schon Mitte Januar keine Toilettenpapier bekommen.
+der Chefvirologe der Charité hätte gesagt, dass bald eine Pandemie über die Welt hereinbrechen wird. Wir hätten vermutlich schon Mitte Januar keine Toilettenpapier bekommen.
 
 Zum Fan von Herrn Drosten wurde ich durch den NDR Podcast, in dem er sehr verständlich die Wissenschaft der Virologie näher bringt. Mich fasziniert wie er in saubere druckreiferen Sätze formuliert.
 Die Sätze sind jedoch nicht nur sprachlich rein, sie sind fachlich sauber. Der Sprache fehlt jegliche Flapsigkeit, was trocken zurnächst erscheinen mag, das sie aber ganz und gar nicht. Herr Drosten
