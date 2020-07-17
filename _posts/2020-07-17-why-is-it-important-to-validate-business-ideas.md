@@ -1,6 +1,6 @@
 ---
 title: "Why is it important to validate business ideas with Minimal Viable Products (MVP)"
-subtitle: "4 reasons that "
+subtitle: "4 reasons, why should never build the whole product in one go"
 output: html_document
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,q_74,w_800/v1568015884/matt-artz-pH6wLT6TVFc-unsplash.jpg"
 image_caption: "<span>Photo by <a href="https://unsplash.com/@battlecreekcoffeeroasters?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Battlecreek Coffee Roasters</a> on <a href="https://unsplash.com/s/photos/test?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>"
