@@ -17,20 +17,38 @@ In case you want to start to start your own business don't fall into the same tr
 
 ### 1. You reduce the financial risk
 
+Guess of a great business idea you are in love with. You are sure it's a once in a lifetime opportunity. Unfortunatly you cannot produce the product by yourself. You actually need a team of people you must pay for.
+Maybe you have savings to pay for the team or you apply for the loan. 
+Over the next months you develop the product with a lot of spirit. You kept your product as a secret for the big launch. Finally launch day is there, but nobody wants the product. 
+After trying everything to sell the product you give up. You are financially ruined with all the money spend. You realize that you won't be able to start a new business for the next years.
+
+Something like this happens to many entrepreneurs.
+
+
+
 ### 2. You save time
+
+Building a product 
 
 ### 3. Marketing and Sales is part of the game
 
-Especially as developer you think that a great product sells by itself. That might happen from time to time. However, most products fail and you lose a lot of time (and money) with this approach. Marketing and Sales are essential parts of the process to start a business. You have to show the world that your product exists and you have to be able to sell it.
+Many people think that a great product sells by itself. That might happen from time to time. However, most products fail and you lose a lot of time (and money) with the approach of developing the final product. Marketing and Sales are essential parts of the process of starting a business. You must be able to show the world that your product exists and you have to be able to sell it.
 
-Honestly, in case you are not able to get your marketing and sales right you are not a business woman/man. That is a bitter truth. You might think that you can outsource this, but do you think it is important to hand something like this to somebody else who doesn't have the same passion like you have. 
+Honestly, in case you are not able to get your marketing and sales right you are not a business woman/man. That is a bitter truth. You might think that you can outsource this, but do you think it is important to hand something like this to somebody else who doesn't have the same passion like you have? I think it's 
+not a good idea.
 
-The good news is that you can learn maketing and sales. Try do visualize your target customers and learn where you can find them. Show them your minimal viable products.
+The good news is that you can learn maketing and sales. Try do visualize your target customers, what there typically day is and learn where you can find them. 
+
+Talk to these customers and show them your product vision, demos, mockups or simple first versions of your product. 
+
+Your focus must be to learn as much as possible in the shortest amount of time.
+
 
 
 ### 4. You find the best idea
 
-
+Maybe you are in the lucky situation that you have business ideas all the time.
+In that case you have the problem to find out which of this ideas is the most promising one. It takes most probably the life to try them all out, your financial situation is another limiting factor.
 
 Bonus:
 
