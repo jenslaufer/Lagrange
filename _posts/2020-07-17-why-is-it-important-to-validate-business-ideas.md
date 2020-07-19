@@ -28,7 +28,14 @@ Something like this happens to many entrepreneurs.
 
 ### 2. You save time
 
-Building a product 
+When we have a business idea we often fall in love with it. We develop a future vision for it. In our mind 
+we develop products we want to sell, which is normally not something bad. However, we often tend to start product development right away, which takes a lot of effort and time. What we forget is that starting a business is more than product development; there are other elements that make a successful business. What does a great product help, when you cannot sell it?
+
+Therefore it's important to focus on all parts of what makes a business from the beginning. This way we 
+work more efficient, we save time, because we ensure that the business as a whole is working. If it's not working out, we can stop following the idea. We can change or do something else.
+
+But how can you focus on all parts, isn't even more work instead of less? No, by building tiny minimal viable products (MVP) you save a lot of time. The art is to build the right product, the goal is deliver value. However, it's also possible to sell a vision.
+
 
 ### 3. Marketing and Sales is part of the game
 
