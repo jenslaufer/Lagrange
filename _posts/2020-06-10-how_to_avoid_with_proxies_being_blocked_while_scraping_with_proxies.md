@@ -1,5 +1,5 @@
 ---
-title: "How You Avoid Being Blocked While Scraping Wesites with Proxies"
+title: "How You Avoid Being Blocked While Scraping Websites with Proxies"
 subtitle: "Different approaches that help you with few changes in code"
 image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_800/v1592394603/anita-jankovic-KGbX1f3Uxtg-unsplash.jpg"
 image_caption: "Photo by Anita Jankovic on Unsplash"
