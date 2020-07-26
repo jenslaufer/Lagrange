@@ -9,3 +9,4 @@ Erfasst alle Anforderungen an euren Wunschnamen schriftlich. Achtet darauf, dass
 Wenn ihr im Laufe der Namenssuche.
 
 Interessant ist auch sich in die Lage des Kindes hieinzuversetzes, was den Namen einen Leben lang führt.
+sa 
