@@ -1,0 +1,458 @@
+---
+title: "Practical example of Training a Neural Network in the AWS cloud with Docker"
+subtitle: "How to train a shallow neural network on top of an InceptionV3 model on CIFAR-10 within Docker on an AWS GPU-instance"
+image: "https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_948/v1556113451/samuel-zeller-358865-unsplash.png"
+image_caption: "Photo by Samuel Zeller on Unsplash"
+tags: docker, data science, deep learning, transfer learning, mongodb, convolutional neural network
+categories: data science
+language: en
+output: 
+  html_document:
+     highlight: haddock
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+My last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  was about Docker in Data Science in general. This time I want to get my hands dirty with a practical example. 
+
+In this case study, I want to show you how to train a shallow neural network on top of a deep InceptionV3 model on CIFAR-10 images within a Docker container on AWS. I am using a standard technology stack for this project with Python, Tensorflow and Keras.  The [source code for this project](https://github.com/jenslaufer/neural-network-training-with-docker) is available on Github. 
+
+What you will learn in this case study:
+
+- Setup of GPU empowered cloud instance on AWS from your command line with docker-machine
+- Usage of a tensorflow docker image in your Dockerfile
+- Setup of a multi-container Docker application for training a neural network with docker-compose
+- Setup of a MongoDB as Persistence container for training meta-data and file storage for models
+- Simple data inserting and querying with MongoDB
+- Some simple docker, docker-compose and docker-machine commands 
+- Transfer learning of a convolutional neural network (CNN)
+
+
+Let's define the requirements for this little project:
+
+- Training must be done in the cloud on a GPU empowered instance in AWS
+- Flexibility to port the whole training pipeline also to Google Cloud or Microsoft Azure 
+- Usage of nvidia-docker to activate the full GPU-power on the cloud instance
+- Persistence of models metadata on MongoDB for model reproducibility. 
+- Usage of docker-compose for the multi-container application (training container + MongoDB)
+- Usage of docker-machine to manage the cloud instance and start the training from the local command line with docker-compose
+
+Let's dive deeper.
+
+### 1. Prerequisites
+
+1. Installation of [Docker](https://docs.docker.com/install/) along with [Docker Machine](https://docs.docker.com/machine/) and [Docker Compose](https://docs.docker.com/compose/) (The tools are installed with the standard docker installation on Mac and Windows)
+2. Creation of an Account on [AWS](https://aws.amazon.com)
+3. Installation and Setup of the [AWS Command Line Client](https://github.com/aws/aws-cli)
+
+
+
+### 2. AWS instance as Docker runtime environment
+
+To train the neural network on AWS you first need to set up an instance there. You can do this from the [AWS Web Console](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Home:) or from the command line with the [AWS Command Line Client](https://github.com/aws/aws-cli).
+
+I show you a convenient third way with the docker-machine command. The command wraps the drivers for different cloud and local providers. You get a unique interface for the Google Compute Cloud, Microsoft Azure and Amazon AWS this way, which makes it easy to setup instances on the platforms. Keep in mind that once you have set up the instance, you can reuse for other purposes.
+
+
+I am creating an AWS instance with Ubuntu 18.04 Linux (ami-0891f5dcc59fc5285) which has [CUDA 10.1](https://developer.nvidia.com/cuda-zone) and [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) already installed. The components are needed to enable the GPU for the training. The basis for the AMI is a standard AWS Ubuntu 18.04 Linux instance (ami-0a313d6098716f372), which I extended with these components. I shared the image to the public to make life easier.
+
+
+I am using the p2.xlarge instance type, which is cheapest GPU instance on AWS. The p2.xlarge instance type equips you with the GPU power of a Tesla K80. 
+
+```bash
+docker-machine create --driver amazonec2 --amazonec2-instance-type p2.xlarge --amazonec2-ami ami-0891f5dcc59fc5285 --amazonec2-vpc-id <YOUR VPC-ID> cifar10-deep-learning
+```
+
+You need a VPC-ID for the setup. You can use the AWS command to get it:
+
+```bash
+aws ec2 describe-vpcs --filters "Name=isDefault, Values=true"
+```
+You can get the VPC-ID as well from the [AWS Web Console](https://console.aws.amazon.com/vpc/home?region=us-east-1#vpcs:sort=VpcId)
+
+
+For more information check the [Docker Machine with AWS](https://docs.docker.com/machine/drivers/aws/) Documentation.
+
+
+__*WARNING: The p2.xlarge costs $0.90 per HOUR. Please don't forget to stop the instance after completing your training sessions*__
+
+### 3. Training Script
+
+You want to train the neural network with different training parameters to find the best set up. After the training, you test the model quality on the test set. It's a classification problem; I suggest to use the accuracy metric for simplicity. In the end, you persist the training log, model weights and architecture for further usage. Everything is reproducible and traceable this way. 
+
+You can do transfer learning by replacing the top layers of the base model with your shallow network, then you freeze the weights of the base model and perform the training on the whole network.
+
+I am doing it differently in this case study. I am removing the top layers of the base model, then I feed the images into the base model and persist the resulting features in the MongoDB. Predictions need less computing power than training, and I can reuse the bottleneck features once they are extracted. You train the shallow network on the bottleneck features.
+
+The input and output requirements for the training script:
+
+__Input__
+
+The Docker container is parameterised from a MongoDB collection with all parameters for a training session. 
+
+- loss function
+- optimiser
+- batch size
+- number of epochs
+- subset percentage of all samples used for training (used for testing the pipeline with fewer images)
+
+
+![Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1700/v1555506062/screenshot_input.png)
+
+__Output__
+
+- Model architecture file
+- Model weights file
+- Training Session Log
+- Model accuracy on the test set
+
+![Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1700/v1555506062/screenshot_output.png)
+
+
+I put the whole training pipeline into one script [src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) It consists of one class for the whole training pipeline:
+
+1. Downloading of the CIFAR-10 images to the container file system.
+2. Loading of the base model (InceptionV3) with imagenet weights and removal of the top layer
+3. Extracting of bottleneck features for training and test images; persisting of the features in MongoDB for further usage.
+4. Creation and Compilation of the shallow neural network; persisting the model architecture in MongoDB 
+5. Training of the shallow model; persisting of model weights and training log in MongoDB
+6. Model testing on test set; persisting the accuracy metric in MongoDB
+
+
+
+
+### 4. Containerization
+
+
+#### a.) Dockerfile
+
+Everything you need to train the neural network I put into the Dockerfile, which defines the runtime environment for the training.
+
+
+
+```Docker
+1   FROM tensorflow/tensorflow:1.13.1-gpu-py3 
+2 
+3   COPY src /src
+4
+5   WORKDIR /src
+6
+7   RUN pip install -r requirements.txt
+8
+9   ENV PYTHONPATH='/src/:$PYTHONPATH'
+10
+11  ENTRYPOINT [ "entrypoints/entrypoint.sh" ]
+```
+
+
+
+_Line 1: Definition of the base image. The setup and configuration are inherited from this image. An official tensorflow image with python3 and GPU support is used._
+
+_Line 3: Everything in the local directory src, like the training script and entry point, is copied into the Docker image._
+
+_Line 5: Container is started in src directory_
+
+_Line 7: Installation of python requirements_
+
+_Line 9: src directory is added to PYTHONPATH to tell python to look for modules in this directory_
+
+_Line 11: Definition of the entry point for the image. This entry point script is executed when the container is started. This script starts our python training script._
+
+
+The entry point shell script is pretty self-explaining: It starts the python module with no parameters. The module fetches then the training parameter from the MongoDB on startup.
+
+
+
+```bash
+#!/bin/bash
+
+python -m cnn.cifar10
+```
+
+
+#### b.) Docker Container Build
+
+First, I need to build a Docker image. You can skip this step as I shared the ready-built [Docker image on Docker Hub](https://hub.docker.com/r/jenslaufer/neural-network-training-with-docker/tags). The image is automatically downloaded when it is referenced the first time.
+
+```bash
+docker build -t jenslaufer/neural-network-training-with-docker .
+```
+
+
+#### c.) Multicontainer Application
+
+I have two docker containers in my setup: The Docker container for training and a MongoDB for persisting meta-data and as a file server.
+
+You use docker-compose for this scenario. You define the containers that make your application in a docker-compose.yml
+
+```Yaml
+1   version: '2.3'
+2
+3   services:
+4     training:
+5       image: jenslaufer/neural-network-training-with-docker:0.1.0-gpu
+6       container_name: neural-network-training-with-docker
+7       runtime: nvidia
+8       depends_on:
+9         - trainingdb
+10
+11    trainingdb:
+12      image: mongo:3.6.12
+13      container_name: trainingdb
+14      ports:
+15        - 27018:27017
+16      command: mongod
+```
+
+_Line 4-5: Definition of the training container which uses the jenslaufer/neural-network-training-with-docker image with tag 0.1.0-GPU. This image is automatically downloaded from the public Docker Hub repository_
+
+_Line 7: The runtime environment for tensorflow_
+
+_Line 9: The training container needs the trainingdb container for execution. In the code, you use mongodb://trainingdb as Mongo URI_
+
+_Line 11-12: Definition of the MongoDB database. An official mongo image from Docker Hub is used with version 3.6.12_
+
+_Line 14-15: The internal port 27017 is available at port 27018 from outsite_
+
+_Line 16: Mongo daemon is started_
+
+You can see that it's straightforward to set up a multi-application with docker compose — you just set up a database with a few lines of code without complicated installation routines.
+
+
+
+
+
+### 5. Training the neural network
+
+You need to execute this command to ensure that the docker commands are going against our AWS instance:
+
+```bash
+docker-machine env cifar10-deep-learning
+
+```
+
+Afterwards, you can list your machines
+```bash
+docker-machine ls
+```
+
+```bash
+NAME                    ACTIVE   DRIVER      STATE     URL                      SWARM   DOCKER     ERRORS
+cifar10-deep-learning   *        amazonec2   Running   tcp://3.83.26.763:2376           v18.09.5
+```
+
+Ensure that you see the star for the active environment. It's the environment against all docker commands are executed.
+Keep in mind that you execute the commands in your local shell. It's very convenient.
+
+You can now start the containers the first time. 
+
+
+```bash
+docker-compose -f docker-compose-gpu.yml up -d
+```
+Docker downloads all images to the AWS instance. The MongoDB started and keep running until you stop the containers. The neural-network-training-with-docker executes the training module. The module fetches the training sessions from the MongoDB, which is empty on the first start.  The container stops after finishing the training sessions.
+
+
+Let's add training session parameters.
+
+You log into the MongoDB container for this (everything from your local shell):
+
+```bash
+docker exec -it trainingdb bash
+```
+
+You open the mongo client. Then you are selecting the DB 'trainings' with the use command. You can add then a training session with only 5% of the images, a rmsprop optimizer with a
+batch size of 50 and 20 epochs. It's a quick test if everything works smoothly.
+
+```bash
+
+root@d27205606e59:/# mongo
+MongoDB shell version v3.6.12
+
+> use trainings
+switched to db trainings
+> db.sessions.insertOne({"loss" : "categorical_crossentropy", "subset_pct" : 0.05, "optimizer" : "rmsprop", "batch_size" : 50.0, "epochs": 20})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("5cb82c7e552612f42ba7831b")
+}
+```
+
+You leave the MongoDB and restart the containers:
+
+```bash
+docker-compose -f docker-compose-gpu.yml up -d
+
+```
+
+The problem is now that you don't see what's going. You can get the logs of a docker container with the docker log command.
+
+
+```bash
+docker logs -f neural-network-training-with-docker
+```
+
+You can now follow the training session on the remote docker container on your local machine this way.
+
+
+
+### 6. Models Evaluation
+
+You can compare the results from the different training sessions quickly with the MongoDB, as I persisted all parameters and the accuracy metric on the test set. The advantage of a database is that you can execute queries against it, which is much better than saving results in CSV or JSON.
+
+Let's list the three model with the highest accuracy.
+
+```bash
+
+root@f070523a5d05:/# mongo
+MongoDB shell version v3.6.12
+> use trainings
+switched to db trainings
+
+> db.sessions.find({"accuracy":{'$exists':1}}).sort({"accuracy":-1}).limit(4).pretty()
+{
+        "_id" : ObjectId("5cc03fa4f7d2acdfd7e1a452"),
+        "loss" : "categorical_crossentropy",
+        "subset_pct" : 0.5,
+        "optimizer" : "sgd",
+        "batch_size" : 50,
+        "epochs" : 20,
+        "test_sample_size" : 5000,
+        "train_sample_size" : 25000,
+        "accuracy" : 0.8282,
+        "date" : ISODate("2019-04-24T11:05:56.743Z")
+}
+{
+        "_id" : ObjectId("5cc03fa4f7d2acdfd7e1a450"),
+        "loss" : "categorical_crossentropy",
+        "subset_pct" : 0.5,
+        "optimizer" : "rmsprop",
+        "batch_size" : 50,
+        "epochs" : 20,
+        "test_sample_size" : 5000,
+        "train_sample_size" : 25000,
+        "accuracy" : 0.8044,
+        "date" : ISODate("2019-04-24T10:59:40.469Z")
+}
+{
+        "_id" : ObjectId("5cc03fa4f7d2acdfd7e1a451"),
+        "loss" : "categorical_crossentropy",
+        "subset_pct" : 0.5,
+        "optimizer" : "adam",
+        "batch_size" : 50,
+        "epochs" : 20,
+        "test_sample_size" : 5000,
+        "train_sample_size" : 25000,
+        "accuracy" : 0.7998,
+        "date" : ISODate("2019-04-24T11:02:43.122Z")
+}
+{
+        "_id" : ObjectId("5cc03fa4f7d2acdfd7e1a453"),
+        "loss" : "categorical_crossentropy",
+        "subset_pct" : 0.5,
+        "optimizer" : "rmsprop",
+        "batch_size" : 20,
+        "epochs" : 20,
+        "test_sample_size" : 5000,
+        "train_sample_size" : 25000,
+        "accuracy" : 0.7956,
+        "date" : ISODate("2019-04-24T11:11:25.041Z")
+}
+
+```
+
+You can also query the database for the model files for a specific training session. You can see that you have hdf5 files for the model architecture and weights. There is also a JSON file with the training history you can use to analyse the training itself. It can be used to visualise the training process. 
+
+You can load the best model automatically from the MongoDB and ship it in Flask, Spring Boot or Tensorflow Application.
+
+
+```bash
+root@f070523a5d05:/# mongo
+MongoDB shell version v3.6.12
+> use trainings
+switched to db trainings
+> db.fs.files.find({'session_id': ObjectId("5cc01ab927d7bcb89d69ab58")})
+{
+        "_id" : ObjectId("5cc01b030127a90009952c33"),
+        "length" : 3298104,
+        "contentType" : "application/x-hdf",
+        "type" : "model_arch",
+        "md5" : "9fd27e4c8fdca43c89709f144547dfe8",
+        "session_id" : ObjectId("5cc01ab927d7bcb89d69ab58"),
+        "filename" : "model_arch.hdf5",
+        "uploadDate" : ISODate("2019-04-24T08:14:59.399Z"),
+        "chunkSize" : 261120
+}
+{
+        "_id" : ObjectId("5cc01b0c0127a90009952c41"),
+        "length" : 1621,
+        "contentType" : "text/json",
+        "chunkSize" : 261120,
+        "type" : "training_history",
+        "md5" : "ddaa898e428189af9a3c02865087ed79",
+        "session_id" : ObjectId("5cc01ab927d7bcb89d69ab58"),
+        "filename" : "training_history.json",
+        "uploadDate" : ISODate("2019-04-24T08:15:08.371Z"),
+        "encoding" : "utf-8"
+}
+{
+        "_id" : ObjectId("5cc01b0c0127a90009952c43"),
+        "length" : 6584512,
+        "contentType" : "application/x-hdf",
+        "type" : "model_weights",
+        "md5" : "b8cd48c4b9f17b3230c6890faabc2aac",
+        "session_id" : ObjectId("5cc01ab927d7bcb89d69ab58"),
+        "filename" : "model_weights.hdf5",
+        "uploadDate" : ISODate("2019-04-24T08:15:08.415Z"),
+        "chunkSize" : 261120
+}
+```
+
+
+You can download the files to the local filesystem with the mongofiles command.
+
+```bash 
+
+root@f070523a5d05:/# mongofiles -d trainings get_id 'ObjectId("5cc01b0c0127a90009952c41")'
+
+```
+
+
+
+
+
+## Conclusion
+
+You set up in this case study a GPU-empowered cloud instance on AWS from the command line with docker-machine. The goal was to train a neural network faster with additional computing power. The instance is reusable for other training containers. 
+
+In the next step, you implemented a script with all steps needed to train a shallow fully connected neural network on top of InceptionV3 model with transfer learning. The script uses a MongoDB instance as a persistence layer to store training metadata and model files. You created a Dockerfile with the infrastructure needed to train the network with Tensorflow on a GPU cloud instance.
+You defined then a multi-container setup with training container and MongoDB container in a docker-compose file.
+
+You trained the neural network on the AWS cloud within Docker. You started the training from the local command line. You logged from the local command line into the MongoDB to add training sessions and to get insights on the training sessions afterwards.
+
+
+Next steps to improve the process:
+
+- The architecture of the shallow neural network is hard coded. It would be better to load it from the persistence layer as well.
+- Generic way to use as well other base models than the InceptionV3
+- You used the accuracy metric to test the quality of the model. It would be better to find a more generic way to persist more metrics.
+- You used the optimisers with default parameters. An improvement would be to load optimiser specific parameters generically.
+- A goal could be to remove the Python script from the container and load it as a python module from a repository in the entry point script with the help of environment variables in the docker-compose file.
+
+
+_Do you need advise with your Data Science setup?_ 
+
+_Please let me know. Send me a [mail](mailto:jenslaufer@jenslaufer.com)_
+
+
+
+
+
+
+
+
+
+
+

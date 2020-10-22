@@ -1,0 +1,279 @@
+---
+title: "Deep Learning in Docker"
+subtitle: "Case study of training a shallow neural network on top of a InterceptionV3 model on CIFAR-10 within Docker on AWS"
+output: 
+  html_document:
+     highlight: haddock
+---
+
+
+
+My last article [Example Use Cases of Docker in the Data Science Process](https://jenslaufer.com/data/science/use-cases-of-docker-in-the-data-science-process.html)  was about Docker in Data Science in general. This time I want to get my hands dirty with a more practical example. 
+
+In this case study I want to show you how to train a shallow neural network on top of a InterceptionV3 model on CIFAR-10 images within a Docker container. I used a standard technology stack for this project with Python, Tensorflow and Keras. The [source code for this project](https://github.com/jenslaufer/neural-network-training-with-docker)  available on Github. 
+
+
+Before going into the details I want to define some requirements for this little project:
+
+- Training must be done in the cloud on a GPU empowered instance in AWS
+- Flexibility to port the whole training pipeline also to Google Cloud or Microsoft Azure 
+- Usage of nvidia-docker to activate the full GPU-power on the cloud instance
+- Encapsulation of the training pipeline in the Docker container
+- The different models must be persisted with all models meta data on MongoDB for model versioning and reproducability. 
+- Usage of docker-compose for the multi container application (training container + MongoDB)
+- Usage of docker-machine to manage the cloud instance and start the training from the local command line with docker-compose
+
+Input: 
+
+The docker container is parameterized from a MongoDB collection with all parameters of a training session. 
+
+- loss function
+- optimizer
+- batch size
+- number of epochs
+- subset percentage of all samples used for training (used for testing the pipeline with less images)
+
+I just use a subset of optimization parameters for simplification
+
+[Studio 3T Screenshot Input Parameters Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1713/v1555506062/screenshot_input.png)
+
+Output:
+
+- Model architecture file
+- Model weights file
+- Model accuracy on test set
+
+[Studio 3T Screenshot Output Files](https://res.cloudinary.com/jenslaufer/image/upload/c_scale,w_1727/v1555506062/screenshot_output.png)
+
+Persisting the results (and models) this way improves the model performance analysis and parameter tuning. 
+
+
+## Prerequisites
+
+1. Install [Docker](https://docs.docker.com/install/) along with [Docker Machine](https://docs.docker.com/machine/) and [Docker Compose](https://docs.docker.com/compose/) (On Mac and Windows all tools are installed with the standard installation of Docker)
+2. Create an Account on [AWS](https://aws.amazon.com)
+3. Install [AWS Command Line Client](https://github.com/aws/aws-cli) and set it up with your AWS account.
+
+
+### Training Scripts
+
+
+I put the whole training pipeline into one script [src/cnn/cifar10.py](https://github.com/jenslaufer/neural-network-training-with-docker/blob/c045323c372bb46535f563c456117a8befa4b05f/src/cnn/cifar10.py) The file consist of one class for the whole training pipeline:
+
+1. Keras is downloading the CIFAR-10 images to the local file.
+2. Base model (InceptionV3) is loaded with imagenet weights. Top fully connetced layer is removed.
+3. Bottleneck features are extracted for training and test images and persisted to MongoDB for further usage.
+4. The shallow model is created, compiled and persisted to MongoDB 
+5. The shallow model is trained and model weights are persisted to MongoDB
+6. Model performance is tested on test set, accuracy is persisted to MongoDB
+
+
+
+
+### Containerization
+
+
+#### Dockerfile
+
+You put everything you need for training for the neural network into the Dockerfile, which defines the runtime environment for our training.
+
+
+
+```{.Docker .numberLines} 
+FROM tensorflow/tensorflow:1.13.1-gpu-py3 
+
+COPY src /src
+
+WORKDIR /src
+
+RUN pip install -r requirements.txt
+
+ENV PYTHONPATH='/src/:$PYTHONPATH'
+
+ENTRYPOINT [ "entrypoints/entrypoint.sh" ]
+```
+
+
+
+_Line 1: Definition of base image. The setup and configuration is inherited from this image. An official tensorflow image with python3 and gpu support is used._
+
+_Line 3: Everthing from the local directeory src, which holds all trainings scripts and entrypoints, is copied into the image._
+
+_Line 5: Initial directory, where the container is started_
+
+_Line 7: Installation of python requirements_
+
+_Line 9: src directory is added to PYTHONPATH to tell python to look for modules in this directory_
+
+_Line 11: Definition of entrypoint for the image. This script is executed when the container is started. This scripts starts our python training script._
+
+
+Our entrypoint shell script looks like this and is pretty self-explaining.
+
+
+
+```bash
+#!/bin/bash
+
+python -m cnn.cifar10
+```
+
+We just start the cifar module with no parameters. The cifar10 scripts fetches the the training parameters from MongoDB.
+
+
+
+#### Docker Container Build
+
+First, you need to build the docker image. You can skip this step as I shared the ready-built [Docker image on Docker Hub](https://hub.docker.com/r/jenslaufer/neural-network-training-with-docker/tags).
+
+```bash
+docker build -t jenslaufer/neural-network-training-with-docker .
+```
+
+
+#### Multicontainer Application
+
+
+You have in our case a multicontainer application. docker-compose Is the tool for this scenario. You create a docker-compose.yml in which the different containers are setup.
+
+```{.yaml .numberLines} 
+version: '2.3'
+
+services:
+  training:
+    image: jenslaufer/neural-network-training-with-docker:0.1.0-gpu
+    container_name: neural-network-training-with-docker
+    runtime: nvidia
+    depends_on:
+      - trainingdb
+
+  trainingdb:
+    image: mongo:3.6.12
+    container_name: trainingdb
+    ports:
+      - 27018:27017
+    command: mongod
+```
+
+_Line 4-5: Definition of the training container which uses the jenslaufer/neural-network-training-with-docker image with tag 0.1.0-gpu. This image is automatically downloaded from the public Docker Hub repository_
+_line 6: The runtime environment for tensorflow_
+_line 9: The training containers needs the trainingdb container for execution. In the code use mongodb://trainingdb as Mongo URI_
+_Line 11-12: Definition of MongoDB database. A official mongo image on Docker Hub is used with version 3.6.12_
+_Line 14-15: The internal port 27017 is available as port 27018 from outsite_
+_Line 16: Mongo deameon is started_
+
+You can see that it's very easy to setup a multi application with docker compose. You just setup a database with a few lines of code without complicated installation routines.
+
+
+
+#### Setup cloud instance
+
+We want to train the neural network on the AWS. You need to have account for [Amazon AWS](https://aws.amazon.com). However an account is setup within minutes.
+
+
+
+```shell
+docker-machine create --driver amazonec2 --amazonec2-ami ami-0a313d6098716f372 --amazonec2-instance-type  p2.xlarge --amazonec2-vpc-id vpc-1513d06f   cifar10-deep-learning
+```
+[Docker Amchine with AWS](https://docs.docker.com/machine/get-started/)
+[Documentation](https://docs.docker.com/machine/drivers/aws/)
+
+Please check 
+```shell
+ docker-machine ssh cifar10-deep-learning
+```
+
+```shell
+sudo wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.1.105-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804_10.1.105-1_amd64.deb
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+sudo apt-get update
+sudo apt-get install cuda-drivers
+```
+
+
+```shell
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install -y nvidia-docker2
+sudo pkill -SIGHUP dockerd
+```
+
+
+### Training the neural network
+
+
+```shell
+docker-compose -f docker-compose-gpu.yml up -d
+```
+
+
+```shell
+docker logs -f neural-network-training-with-docker
+```
+
+
+```shell
+docker exec -it trainingdb bash
+```
+
+
+```shell
+
+root@d27205606e59:/# mongo
+MongoDB shell version v3.6.12
+connecting to: mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("95ea729a-0fd1-4dca-b925-9cf7231952b2") }
+MongoDB server version: 3.6.12
+
+> use trainings
+switched to db trainings
+> db.sessions.insertOne({"loss" : "categorical_crossentropy", "subset_pct" : 0.05, "optimizer" : "rmsprop", "batch_size" : 50.0, "epochs": 20})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("5cb82c7e552612f42ba7831b")
+}
+> db.sessions.find({"_id": ObjectId("5cb82c7e552612f42ba7831b")})
+{ "_id" : ObjectId("5cb82c7e552612f42ba7831b"), "loss" : "categorical_crossentropy", "subset_pct" : 0.05, "optimizer" : "rmsprop", "batch_size" : 50, "epochs" : 20 }
+```
+
+```shell
+
+> db.sessions.find({"_id": ObjectId("5cb82c7e552612f42ba7831b")})
+{ "_id" : ObjectId("5cb82c7e552612f42ba7831b"), "loss" : "categorical_crossentropy", "subset_pct" : 0.05, "optimizer" : "rmsprop", "batch_size" : 50, "epochs" : 20, "test_sample_size" : 500, "train_sample_size" : 2500, "accuracy" : 0.7580000009536744, "date" : ISODate("2019-04-18T07:56:58.350Z") }
+>
+```
+
+
+```code
+PS C:\Users\jensl\Documents\neural-network-training-with-docker> docker-machine ls
+NAME                    ACTIVE   DRIVER      STATE     URL                      SWARM   DOCKER     ERRORS
+cifar10-deep-learning   *        amazonec2   Running   tcp://3.94.xxx.16:2336           v18.09.5
+
+PS C:\Users\jensl\Documents\neural-network-training-with-docker>docker-compose -f docker-compose-gpu.yml up -d
+```
+
+
+
+### Models Evaluation
+
+## Conclusion
+
+### Improvements
+
+- Load shallow model from MongoDb instead of hard-code into the code
+- More generic way to persist the validation metric (in this case accuracy)
+- More generic way to persist optimizer and unique parameters for a certain optimizer
+- Load the python module into the container in a generic way. This would 
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,222 @@
+---
+title: "Visualising Time Series with Calendar Heatmap with ggplot2"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,
+                      message = F,
+                      warning = F)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(tsbox)
+library(bbplot)
+library(lubridate)
+library(timeDate)
+library(forcats)
+library(forecast)
+```
+
+One way to visualize time series for data on a daily basis are calendar heatmaps. GitHub e.g. is using them to show the users activity.
+
+[Image Github Heatmap]
+
+You could use them to show, if a holiday apartment is available or not. In this case we visualize a binary variable. Or you could visualize a numerical varliavle like the
+daily rate of all holiday apartments. This way people can easily spot periods with lower rates. 
+
+However, why should you use a calendar heatmap instead of simple line graph?
+
+
+By using a calendar heatmap you add some additonal extra dimesion into the visualisation like weekday and the week of the month into graph.
+This extra information lets you spot patterns for working days or weekends. Years and months are better seperated than in a simple time line plot. 
+The calendar heatmap lets you pack a lot of information on little space without losing too much readability.
+
+
+
+
+```{r}
+uk.driver.deaths <- Seatbelts %>% ts_data.frame %>% as_tibble %>% spread(id, value)
+```
+```{r}
+uk.driver.deaths %>% head
+```
+
+
+```{r}
+deaths.dec <-
+  uk.driver.deaths %>% select(time, DriversKilled) %>% ts_ts %>% decompose(type='multiplicative')
+petrol.price.dec <-  uk.driver.deaths %>% select(time, PetrolPrice) %>% ts_ts %>% decompose
+drivers.dec <-  uk.driver.deaths %>% select(time, drivers) %>% ts_ts %>% decompose
+rear.dec <-  uk.driver.deaths %>% select(time, rear) %>% ts_ts %>% decompose
+```
+```{r}
+plot(drivers.dec)
+```
+
+
+
+
+```{r}
+deaths.trend <- deaths.dec$trend  %>%
+  ts_data.frame %>%
+  as_tibble %>%
+  na.omit %>%
+  mutate(var = "deaths") %>%
+  spread(var, value) %>% 
+  inner_join( uk.driver.deaths %>% select(time, law), by='time') %>% 
+  mutate(law=as.factor(law))
+
+deaths.seasonal <- deaths.dec$seasonal  %>%
+  ts_data.frame %>%
+  as_tibble %>%
+  na.omit %>%
+  mutate(var = "deaths") %>%
+  spread(var, value) %>% 
+  inner_join( uk.driver.deaths %>% select(time, law), by='time') %>% 
+  mutate(law=as.factor(law))
+
+
+petrol.price.trend <- petrol.price.dec$trend  %>%
+  ts_data.frame %>%
+  as_tibble %>%
+  na.omit %>%
+  mutate(var = "PetrolPrice") %>%
+  spread(var, value) %>% 
+  inner_join( uk.driver.deaths %>% select(time, law), by='time') %>% 
+  mutate(law=as.factor(law))
+
+petrol.price.seasonal <- petrol.price.dec$seasonal  %>%
+  ts_data.frame %>%
+  as_tibble %>%
+  na.omit %>%
+  mutate(var = "PetrolPrice") %>%
+  spread(var, value) %>% 
+  inner_join( uk.driver.deaths %>% select(time, law), by='time') %>% 
+  mutate(law=as.factor(law))
+```
+```{r fig.width=25}
+petrol.price.seasonal %>% 
+  ggplot(aes(x = time, y = PetrolPrice, color=law)) +
+  geom_line() +
+  scale_x_date(date_breaks = "1 month") + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  facet_wrap(~year(time), scales = 'free')
+```
+
+
+```{r fig.width=25}
+deaths.seasonal %>% 
+  ggplot(aes(x = time, y = deaths, color=law)) +
+  geom_line() +
+  scale_x_date(date_breaks = "1 month") + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  facet_wrap(~year(time), scales = 'free')
+```
+```{r}
+uk.driver.deaths %>% 
+  filter(time > '1980-11-01' & time < '1982-04-01')
+```
+
+
+```{r}
+deaths.trend %>%
+  ggplot(aes(x = time, y = deaths, color=law)) +
+  geom_line() +
+  scale_x_date(date_breaks = '1 year') +
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_color_tableau()
+```
+
+```{r}
+plot(deaths.dec$trend)
+```
+
+```{r}
+plot(deaths.dec)
+```
+
+```{r}
+deaths.seasonal <- deaths.dec$seasonal  %>% ts_data.frame %>% as_tibble %>% na.omit %>% mutate(var="deaths") %>% spread(var, value)
+```
+
+
+
+
+
+```{r}
+uk.driver.deaths
+```
+```{r fig.height=10, fig.width=20}
+uk.driver.deaths %>% 
+  mutate(law=as.factor(law)) %>% 
+  ggplot +
+  geom_line(aes(x=time, y=DriversKilled, color=law), size=1.5) +
+  scale_x_date(date_breaks = "1 year") +
+  scale_color_tableau()
+```
+```{r}
+library(anomalize)
+uk.driver.deaths.dec <- uk.driver.deaths %>% decompo
+```
+
+
+
+```{r}
+eu.stock.market <- EuStockMarkets %>% 
+  ts_data.frame %>%
+  spread(key=id, value=value) %>% 
+  mutate(year=year(time), month=month(time, label=T), day=day(time), week=week(time), weekday=as.factor(as.POSIXlt(time)$wday), monthweek=as.factor(1 + week - min(week)))
+```
+
+
+
+
+```{r}
+eu.stock.market %>% head(30)
+```
+
+```{r fig.height=10, fig.width=20}
+eu.stock.market %>%
+  gather(-time,
+         -year,
+         -month,
+         -day,
+         -weekday,
+         -weekmonth,
+         key = instrument,
+         value = value) %>%
+  mutate(weekmonth = factor(monthweek, levels = c(5, 4, 3, 2, 1))) %>%
+  filter(instrument == 'CAC') %>%
+  ggplot(aes(x = weekday, y = monthweek)) +
+  geom_raster(aes(fill = value)) +
+  geom_text(aes(label = day)) +
+  scale_x_discrete(breaks = seq(0, 6, 1),
+                   labels = c("Su", "Mo", "Tu", "We", "Th", "Fr", "Sa")) +
+  theme(
+    axis.title.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  facet_grid( ~ year ~ month)
+```
+
+
+
+
+```{r fig.height=10, fig.width=20}
+eu.stock.market %>% 
+  gather(-time, key=index, value=value) %>% 
+  ggplot +
+  geom_line(aes(x=time, y=value, color=index), size=1) +
+  scale_color_tableau() +
+  bbc_style()
+```
+
+
+
