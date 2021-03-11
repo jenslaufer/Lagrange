@@ -76,11 +76,11 @@ Yes, I am a fail, but maybe they were right, but I am visionary
 
 ## Final words
 
-I wrote this article, because I failed with some marketing effort for a new idea to get rid of my frustration. While writing the article I got reminded of the website [FuckedCompany](https://en.wikipedia.org/wiki/Fucked_Company). It was founded by Phillip Kaplan, who worked for several
+I wrote this article to get rid of my frustration, because I failed with some marketing effort for a new idea. While writing the article I got reminded to the website [FuckedCompany](https://en.wikipedia.org/wiki/Fucked_Company). It was founded by Phillip Kaplan, who worked for several
 failed startups during the dot.com bubble. Instead of having proper salaries he had shares in the companies that were worth nothing at the end. He founded FuckedCompany as site for employees to share rumors about their companies, but also comments about unethitical managers, defective products. He sold rumor listings to subscribers like investors. With the site he made more money than working startup especially before the dot.com bubble bursted.
 
-In the community I want to share my ideas, my anxious moments, my learning. It's maybe a place where we love about our fails. The place for finding the most stupid ideas. Sometimes.
-There is the business tipp that you have to surround yourself only the best of the breed to succeed. I am tired of these business tipps you read 10x times a day. I believe, that you sometimes you have surround yourself
-with big fails.
+I am having the idea to create a little bit different business community. In the community I want to share my ideas, my anxious moments, my learnings. Everybody else can do the same. It's maybe a place of vulneriabilty where we allowed to laugh about our fails. The place for finding the most stupid ideas to find finally genious ideas.
 
-Me as visionary idea machine hope to meet in the group the marketing god who is an idea dumbo.
+There is the business tipp that you should surround yourself only the best of the breed to succeed. I am tired of these business tipps you read 10x times a day. I believe, that you sometimes you have surround yourself with big fails to learn. The most intelligent person in the room is not always the best teacher.
+
+Me as visionary idea machine marketing fail hope to meet in the group the marketing god who is an idea dumbo. This is called synergy.
